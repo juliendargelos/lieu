@@ -62,18 +62,6 @@ rails s
 
 ## Deploy
 
-### With Heroku pipeline (recommended)
-
-Push to Heroku staging remote:
-
-```shell
-git push heroku-staging
-```
-
-Go to the Heroku Dashboard and [promote the app to production](https://devcenter.heroku.com/articles/pipelines).
-
-### Directly to production (not recommended)
-
 Push to Heroku production remote:
 
 ```shell

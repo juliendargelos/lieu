@@ -1,24 +1,81 @@
-# README
+# Lilu
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[lilu-gobelins.herokuapp.com](https://lilu-gobelins.herokuapp.com)
 
-Things you may want to cover:
+## Install
 
-* Ruby version
+### Clone the repository
 
-* System dependencies
+```shell
+git clone git@github.com:juliendargelos/lilu.git
+cd lilu
+```
 
-* Configuration
+### Check your Ruby version
 
-* Database creation
+```shell
+ruby -v
+```
 
-* Database initialization
+The ouput should start with something like `ruby 2.5.0`
 
-* How to run the test suite
+If not, install the right ruby version using [rbenv](https://github.com/rbenv/rbenv) (it could take a while):
 
-* Services (job queues, cache servers, search engines, etc.)
+```shell
+rbenv install 2.5.0
+```
 
-* Deployment instructions
+### Install dependencies
 
-* ...
+Using [Bundler](https://github.com/bundler/bundler):
+
+```shell
+bundle
+```
+
+### Set environment variables
+
+Using [Figaro](https://github.com/laserlemon/figaro):
+
+See [config/application.yml.sample](https://github.com/juliendargelos/lilu/blob/master/config/application.yml.sample) and contact the developer: [contact@juliendargelos.com](mailto:contact@juliendargelos.com) (sensitive data).
+
+### Initialize the database
+
+```shell
+rails db:create db:migrate db:seed
+```
+
+### Add heroku remotes
+
+Using [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli):
+
+```shell
+heroku git:remote -a lilu
+heroku git:remote --remote heroku-staging -a lilu-staging
+```
+
+## Serve
+
+```shell
+rails s
+```
+
+## Deploy
+
+### With Heroku pipeline (recommended)
+
+Push to Heroku staging remote:
+
+```shell
+git push heroku-staging
+```
+
+Go to the Heroku Dashboard and [promote the app to production](https://devcenter.heroku.com/articles/pipelines).
+
+### Directly to production (not recommended)
+
+Push to Heroku production remote:
+
+```shell
+git push heroku
+```

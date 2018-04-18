@@ -51,7 +51,6 @@ Using [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli):
 
 ```shell
 heroku git:remote -a lilu
-heroku git:remote --remote heroku-staging -a lilu-staging
 ```
 
 ## Serve

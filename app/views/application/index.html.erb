@@ -1,1 +1,19 @@
-Home
+<div class="homepage">
+  <div class="homepage__content">
+    <div class="homepage__logo">
+      <h1>LI.LU</h1>
+    </div>
+    <div class="homepage__buttons">
+      <div class="homepage__signup">
+        <button class="homepage__button">
+          <%= link_to 'Connexion', new_user_path(), :class => "homepage__button-link" %>
+        </button>
+      </div>
+      <div class="homepage__login">
+        <button class="homepage__button">
+          <%= link_to 'Inscription', new_user_path(), :class => "homepage__button-link" %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

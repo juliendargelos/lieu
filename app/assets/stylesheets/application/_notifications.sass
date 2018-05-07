@@ -1,0 +1,18 @@
+.notifications
+  width: 100%
+  top: 0
+  left: 0
+  position: fixed
+  animation: notifications .4s
+
+  &--hidden
+    transform: translateY(-150%)
+    transition: .4s
+    animation: none
+
+@keyframes notifications
+  from
+    transform: translateY(-150%)
+
+  to
+    transform: translateY(0)

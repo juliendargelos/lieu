@@ -1,7 +1,20 @@
-<ul class="notifications">
+<ul class="notifications" onclick="">
   <% notifications.each do |type:, message:| %>
     <li class="notifications__item notification notification--<%= type %>">
       <%= simple_format message %>
     </li>
   <% end %>
 </ul>
+
+<script>
+  (function() {
+    var notifications = document.querySelector('.notifications');
+
+    var hide = function() {
+      notifications.classList.add('notifications--hidden');
+    };
+
+    notifications.addEventListener('click', hide);
+      setTimeout(hide, 4000);
+  })();
+</script>

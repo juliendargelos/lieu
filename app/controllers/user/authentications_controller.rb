@@ -15,7 +15,7 @@ class User::AuthenticationsController < ApplicationController
       redirect_to root_path
     else
       if @authentication.errors[:base].any?
-        error @authentication.errors[:base].join("\n")
+        error 'Identifiants incorrects'
       end
 
       render :new

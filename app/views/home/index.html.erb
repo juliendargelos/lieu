@@ -1,5 +1,5 @@
 <main class="wrapper home-index__wrapper">
-  <h1 class="home-index__title">LI.LU</h1>
+  <%= image_tag("logo.svg", :class => "home-index__logo") %>
   <% if current_user.present? %>
     <%= link_to 'Déconnexion', destroy_user_authentication_path, class: 'button home-index__action' %>
   <% else %>

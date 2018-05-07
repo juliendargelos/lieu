@@ -7,7 +7,7 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,6 +17,5 @@ document.addEventListener('DOMContentLoaded', () => {
     template: '<App/>',
     components: { App }
   })
-
   console.log('Coucou VueJS')
 })

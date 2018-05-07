@@ -47,7 +47,7 @@ SimpleForm.setup do |config|
   config.input_field_error_class = 'is-invalid'
   config.input_field_valid_class = 'is-valid'
 
-  config.wrappers :form_field, tag: 'div', class: :form__field, error_class: 'form__field--invalid', valid_class: 'form__field--valid' do |b|
+  config.wrappers :form_field, tag: 'div', class: :form__group, error_class: 'form__field--invalid', valid_class: 'form__field--valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -55,8 +55,10 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: :form__label
-    b.use :input, class: :form__input, error_class: 'form__input--invalid', valid_class: 'form__input--valid'
+    b.wrapper tag: 'div', class: :form__field do |ba|
+      ba.use :label, class: :form__label
+      ba.use :input, class: :form__input, error_class: 'form__input--invalid', valid_class: 'form__input--valid'
+    end
     b.use :full_error, wrap_with: { tag: 'p', class: :form__error }
     b.use :hint, wrap_with: { tag: 'p', class: :form__hint }
   end

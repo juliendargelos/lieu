@@ -2,5 +2,8 @@
   <%= f.input :pseudo %>
   <%= f.input :password %>
 
-  <%= f.button :submit %>
+  <div class="form__actions form__actions--fill">
+    <%= button_link_to 'Inscription', new_user_path, class: :form__action %>
+    <%= f.button :submit, 'Connexion', class: :form__action %>
+  </div>
 <% end %>

@@ -1,17 +1,92 @@
 .form
+  &__group
+    display: flex
+    flex-direction: column
+    align-items: start
+    &:not(:last-child)
+      margin-bottom: 20px
+
   &__field
-    background: $white
+    width: 100%
+    background: rgba($white, .1)
+    border-radius: 30px
+    display: flex
+    position: relative
+    align-items: center
+
+  &__label, &__input
+    margin: 0
+    padding: 20px 24px
+    +font-default
 
   &__label
-    color: $blue
+    padding-right: 0
+    color: $white
+    font-size: 12px
+    font-weight: $font-bold
+    white-space: nowrap
+    flex-grow: 0
+    flex-shrink: 0
     +uppercase
 
   &__input
-    color: $dark-grey
-    font-family: $font-family
+    background: transparent
+    width: 0
+    padding-left: 10px
+    color: $white
+    border: none
+    flex-grow: 1
+    flex-shrink: 1
+    flex-basis: 0
 
   &__hint
     color: $grey
 
   &__error
-    color: $red
+    background: $red
+    padding: 0 9px
+    margin: -12px 15px 0 15px
+    border-radius: 10px
+    overflow: hidden
+    font-size: 0
+    color: $white
+    letter-spacing: .05em
+    align-self: flex-end
+    opacity: 0
+    animation: form__error .4s 1 forwards
+
+  &__actions
+    display: flex
+    justify-content: end
+    align-items: center
+
+  &__action
+    margin-left: 20px
+    flex-grow: 0
+    flex-shrink: 0
+
+  &__actions--fill &__action
+    flex-basis: 0
+    flex-grow: 1
+
+    &:first-child
+      margin-left: 0
+
+@keyframes form__error
+  0%
+    opacity: 0
+    padding: 0 9px
+    font-size: 0
+    transform: translateY(5px)
+
+  60%
+    opacity: 0
+    padding: 2px 9px
+    font-size: 12px
+    transform: translateY(5px)
+
+  100%
+    opacity: 1
+    padding: 2px 9px
+    font-size: 12px
+    transform: translateX(0)

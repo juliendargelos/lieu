@@ -1,9 +1,0 @@
-<main class="wrapper home-index__wrapper">
-  <h1 class="home-index__title">LI.LU</h1>
-  <% if current_user.present? %>
-    <%= link_to 'Déconnexion', destroy_user_authentication_path, class: 'button home-index__action' %>
-  <% else %>
-    <%= link_to 'Connexion', new_user_authentication_path, class: 'button button--block home-index__action' %>
-    <%= link_to 'Inscription', new_user_path, class: 'button button--block home-index__action' %>
-  <% end %>
-</main>

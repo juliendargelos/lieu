@@ -1,0 +1,15 @@
+=modifiers($property, $values, $name: null)
+  @each $key, $value in $values
+    +modifier($property, $key, $value, $name)
+
+=modifier($property, $key, $value, $name: null)
+  @if $key == default
+    #{$property}: $value
+
+  @else if $name == null
+    &--#{$key}
+      #{$property}: $value
+
+  @else
+    &--#{$name}--#{$key}
+      #{$property}: $value

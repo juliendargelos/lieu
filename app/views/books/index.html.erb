@@ -1,0 +1,16 @@
+<div class="library">
+
+</div>
+
+<h1>Choisis ton livre</h1>
+<ul>
+  <% @books.each do |book| %>
+  <li>
+    <img src="/assets/images/books_icons/<%= book.icon %>">
+    <p><%= book.title %></p>
+    <p><%= book.author %> chap.</p>
+    <p><%= book.summary %> chap.</p>
+    <p><%= book.chapter_nb %> chap.</p>
+  </li>
+  <% end %>
+</ul>

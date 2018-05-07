@@ -1,8 +1,20 @@
 Rails.application.routes.draw do
-  root to: 'application#index'
+  get 'books/index'
+  root to: 'home#index'
 
-  get 'library', to: 'library#index'
+  get 'library' => 'library#index', as: :library
 
-  resources :users, except: :index
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  scope :account do
+    get '/' => 'users#show', as: :user
+    get '/edit' => 'users#edit', as: :edit_user
+    patch '/edit' => 'users#update', as: :users
+    get '/destroy' => 'users#destroy', as: :destroy_user
+  end
+
+  get 'signup' => 'users#new', as: :new_user
+  post 'signup' => 'users#create', as: :create_user
+
+  get 'signin' => 'user/authentications#new', as: :new_user_authentication
+  post 'signin' => 'user/authentications#create', as: :user_authentications
+  get 'signout' => 'user/authentications#destroy', as: :destroy_user_authentication
 end

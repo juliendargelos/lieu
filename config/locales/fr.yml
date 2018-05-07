@@ -1,0 +1,5 @@
+activerecord:
+  errors:
+    models:
+      user_authentication:
+        invalid: Identifiants incorrects

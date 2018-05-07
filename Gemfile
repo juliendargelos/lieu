@@ -29,6 +29,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'vuejs-rails'
 gem 'authentication-rails'
 gem 'simple_form'
+gem 'paperclip'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

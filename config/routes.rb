@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  get 'books/index'
+  # get 'books/index'
   root to: 'home#index'
+
+  resources :books, only: [:index, :update]
 
   get 'library' => 'library#index', as: :library
 

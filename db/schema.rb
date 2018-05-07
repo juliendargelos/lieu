@@ -17,10 +17,15 @@ ActiveRecord::Schema.define(version: 2018_05_07_082038) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
-    t.string "icon"
-    t.integer "chapter_nb"
+    t.integer "number_of_chapters"
     t.text "summary"
+    t.string "icon_file_name"
+    t.string "icon_content_type"
+    t.integer "icon_file_size"
+    t.datetime "icon_updated_at"
     t.string "author"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

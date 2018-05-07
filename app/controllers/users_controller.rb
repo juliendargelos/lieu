@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  authenticates! :user, except: [:new, :create]
+  unauthenticates! :user, only: [:new, :create]
+  before_action :set_user, except: [:new, :create]
 
   def show
+
   end
 
   def new
@@ -9,31 +12,41 @@ class UsersController < ApplicationController
   end
 
   def edit
+
   end
 
   def create
     @user = User.new user_params
+
     if @user.save
-      redirect_to user_path(@user)
+      success "Bienvenue #{@user.pseudo}"
+      self.current_user = @user
+      redirect_to root_path
     else
       render :new
     end
   end
 
   def update
-    @user.update user_params
+    if @user.update user_params
+      success 'Les modifications ont bien été enregistrées'
+    else
+      error "Impossible d'enregistrer les modifications"
+    end
+
     render :edit
   end
 
   def destroy
     @user.destroy
+    success 'Le compte a bien été supprimé'
     redirect_to root_path
   end
 
   protected
 
   def set_user
-    @user = User.find params[:id]
+    @user = current_user
   end
 
   def user_params

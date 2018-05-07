@@ -1,0 +1,7 @@
+<ul class="notifications">
+  <% notifications.each do |type:, message:| %>
+    <li class="notifications__item notification notification--<%= type %>">
+      <%= simple_format message %>
+    </li>
+  <% end %>
+</ul>

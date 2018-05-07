@@ -4,4 +4,8 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, confirmation: true, allow_nil: true
 
   has_secure_password
+
+  def to_s
+    pseudo
+  end
 end

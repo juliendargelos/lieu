@@ -30,6 +30,7 @@ gem 'vuejs-rails'
 gem 'authentication-rails'
 gem 'simple_form'
 gem 'paperclip'
+gem 'webpacker'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

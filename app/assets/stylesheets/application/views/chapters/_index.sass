@@ -113,6 +113,26 @@
     &:active
       transform: scale(.95)
       transition: .1s
+  &__strip
+    position: absolute
+    left: 0
+    top: 50%
+    transform: translateY(-50%)
+    &-1
+      width: 40px
+      height: 40px
+      background: $orange
+      position: relative
+
+    &-2
+      position: absolute
+      right: 0
+      top: 0
+      height : 0
+      width : 0
+      border-top : 20px solid transparent
+      border-right : 20px solid $white
+      border-bottom : 20px solid transparent
   .order
     position: absolute
     top: 0

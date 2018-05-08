@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :books, only: [:index, :update]
-
-  get 'library' => 'library#index', as: :library
+  resources :books
 
   scope :account do
     get '/' => 'users#show', as: :user

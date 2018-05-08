@@ -1,4 +1,4 @@
-<main class="wrapper books-index__wrapper">
+<main class="wrapper wrapper--padding--both">
   <div class="books-index__top">
     <h1 class="books-index__title">Choisis ton livre</h1>
   </div>
@@ -21,7 +21,8 @@
           </p>
         </div>
         <div class="book__cta">
-          <%= link_to 'Commencer', new_user_path(), :class => "button" %>
+          <a href="<%= book_path(book.id)%>">Commencer</a>
+          <!-- <%= link_to 'Commencer', new_user_path(), :class => "button" %> -->
         </div>
       </li>
       <% end %>

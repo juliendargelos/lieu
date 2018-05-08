@@ -94,5 +94,5 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  Paperclip::Attachment.default_options = { storage: :cloudinary }
+  aperclip::Attachment.default_options.merge! storage: :cloudinary
 end

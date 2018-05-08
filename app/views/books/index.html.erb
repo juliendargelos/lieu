@@ -32,21 +32,21 @@
 
 <script>
   (function() {
-
     var books = document.querySelectorAll('.books-index__item');
+    var book;
 
     var open = function() {
-      for (j = 0; j < books.length; j++) {
-          el = books[j];
-          el.classList.remove('book--active');
+      for(var j = 0; j < books.length; j++) {
+        book = books[j];
+        book.classList.remove('book--active');
       }
-        this.classList.toggle('book--active');
+
+      this.classList.toggle('book--active');
     };
 
-    for (i = 0; i < books.length; i++) {
-        book = books[i];
-        book.addEventListener("click", open);
+    for(var i = 0; i < books.length; i++) {
+      book = books[i];
+      book.addEventListener('click', open);
     }
-
   })();
 </script>

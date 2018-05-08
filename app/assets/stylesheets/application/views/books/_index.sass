@@ -30,6 +30,7 @@
     height: 100%
     position: relative
     text-align: center
+    transition: all 0.8s ease
 
     &:nth-child(1)
       width: 10%
@@ -66,15 +67,17 @@
       background: $white
       color: $dark-blue
 
+    .book__symbol
+      height: 80px
+
     .book__icon
       margin: 20px
       width: 40px
 
-    .book__author
+    .book__author, .book__summary, .book__cta
       display: none
-
-    .book__summary
-      display: none
+      transition-delay: 800ms
+      transition-property: display
 
     .book__title
       writing-mode: vertical-lr
@@ -96,9 +99,32 @@
         font-weight: 600
         font-size: 30px
 
-    &-active
+    &.book--active
+      width: 700px
+      .book__header
+        margin-bottom: 50px
       .book__author
         display: block
 
       .book__summary
         display: block
+        padding: 0 50px
+        text-align: justify
+        font-size: 16px
+        max-height: 300px
+        overflow: hidden
+
+      .book__title
+        writing-mode: initial
+        transform: none
+        text-align: center
+
+      .book__chapters
+        left: 50px
+        transform: none
+
+      .book__cta
+        display: block
+        position: absolute
+        right: 20px
+        bottom: 20px

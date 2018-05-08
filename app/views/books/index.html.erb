@@ -23,3 +23,11 @@
     </ul>
   </div>
 </main>
+
+<%= content_tag :div,
+  id: "hello-vue",
+  data: {
+    message: "Hello!",
+    name: "David"
+  }.to_json do %>
+<% end %>

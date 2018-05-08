@@ -11,7 +11,7 @@
     <%= javascript_pack_tag 'application' %>
   </head>
 
-  <body class="view <%= controller_name %>-<%= action_name %>">
+  <body class="view <%= view_class %>">
     <%= render 'application/notifications', notifications: notifications %>
 
     <%= yield %>

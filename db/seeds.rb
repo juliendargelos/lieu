@@ -23,14 +23,14 @@ Book.create [
   {
     title: "Le buveur d'encre",
     number_of_chapters: 15,
-    summary: "Le fils du libraire déteste les livres. Son passe-temps favori consiste à guetter les pickpockets, qu'il encourage en pensée à le débarrasser de ces objets encombrants et pleins de feuilles. Un jour, il surprend un curieux voleur qui, muni d'une paille, avale les mots d'un livre entier. Il s'agit d'un vampire qui boit l'encre des livres…",
+    summary: "Le fils du libraire déteste les livres. Son passe-temps favori consiste à guetter les pickpockets, qu'il encourage en pensée à le débarrasser de ces objets encombrants et pleins de feuilles. Un jour, il surprend un curieux voleur qui, muni d'une paille, avale les mots d'un livre entier. Il s'agit d'un vampire qui boit l'encre des livres...",
     author: 'Eric Sanvoisin',
     icon: File.new(__dir__ + '/seeds/buveur-encre.svg')
   },
   {
-    title: "Petit Poilu - T.18 Superpoilu",
+    title: 'Petit Poilu - T.18 Superpoilu',
     number_of_chapters: 10,
-    summary: "Le fils du libraire déteste les livres. Son passe-temps favori consiste à guetter les pickpockets, qu'il encourage en pensée à le débarrasser de ces objets encombrants et pleins de feuilles. Un jour, il surprend un curieux voleur qui, muni d'une paille, avale les mots d'un livre entier. Il s'agit d'un vampire qui boit l'encre des livres…",
+    summary: "Le fils du libraire déteste les livres. Son passe-temps favori consiste à guetter les pickpockets, qu'il encourage en pensée à le débarrasser de ces objets encombrants et pleins de feuilles. Un jour, il surprend un curieux voleur qui, muni d'une paille, avale les mots d'un livre entier. Il s'agit d'un vampire qui boit l'encre des livres...",
     author: 'Céline Fraipont',
     icon: File.new(__dir__ + '/seeds/petit-poilu.svg')
   },
@@ -42,9 +42,9 @@ Book.create [
     icon: File.new(__dir__ + '/seeds/arbre-a-frites.svg')
   },
   {
-    title: "Les chevaliers",
+    title: 'Les chevaliers',
     number_of_chapters: 5,
-    summary: "Qui n’a jamais rêvé de devenir chevalier ? Vous saurez tout sur ces courageux combattants qui ont juré fidélité à un seigneur : leur formation, leur équipement, la cérémonie d’adoubement, les batailles… Plongez au cœur du Moyen Âge, l’âge d’or de la chevalerie, grâce à Quelle Histoire, qui propose une initiation ludique à l'histoire de ces guerriers.",
+    summary: "Qui n’a jamais rêvé de devenir chevalier ? Vous saurez tout sur ces courageux combattants qui ont juré fidélité à un seigneur : leur formation, leur équipement, la cérémonie d’adoubement, les batailles... Plongez au cœur du Moyen Âge, l’âge d’or de la chevalerie, grâce à Quelle Histoire, qui propose une initiation ludique à l'histoire de ces guerriers.",
     author: '',
     icon: File.new(__dir__ + '/seeds/les-chevaliers.svg')
   }

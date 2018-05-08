@@ -1,65 +1,81 @@
 .books-index
   width: 100vw
   height: 100vh
+
   &__top
     height: 120px
     display: flex
     align-items: center
     justify-content: center
+
   &__title
     text-align: center
     color: $white
     text-transform: uppercase
     letter-spacing: 1px
+
   &__content
     width: 100%
     height: calc(100vh - 120px)
     padding-bottom: 30px
+
   &__list
     display: flex
     align-items: center
     justify-content: center
     height: 100%
+
   &__item
     margin: 0 5px
     height: 100%
     position: relative
     text-align: center
+
     &:nth-child(1)
       width: 10%
       background: $orange
       color: $white
+
     &:nth-child(2)
       width: 15%
       background: $white
       color: $dark-blue
+
     &:nth-child(3)
       width: 10%
       background: $dark-blue
       color: $white
+
     &:nth-child(4)
       width: 15%
       background: $white
       color: $dark-blue
+
     &:nth-child(5)
       width: 20%
       background: $orange
       color: $white
+
     &:nth-child(6)
       width: 10%
       background: $dark-blue
       color: $white
+
     &:nth-child(7)
       width: 15%
       background: $white
       color: $dark-blue
+
     .book__icon
       margin: 20px
       width: 40px
+
     .book__author
       display: none
+
     .book__summary
       display: none
+
     .book__title
       writing-mode: vertical-lr
       transform: rotate(180deg)
@@ -68,17 +84,21 @@
       position: relative
       height: calc(100% - 180px)
       text-align: left
+
     .book__chapters
       position: absolute
-      bottom: 0
+      bottom: 20px
       left: 50%
       transform: translateX(-50%)
       line-height: 20px
+
       &__nb
         font-weight: 600
         font-size: 30px
+
     &-active
       .book__author
         display: block
+
       .book__summary
         display: block

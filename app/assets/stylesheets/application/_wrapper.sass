@@ -1,15 +1,11 @@
 $wrapper-padding: 30px
 $wrapper-paddings: (default: 0 $wrapper-padding, vertical: $wrapper-padding 0, both: $wrapper-padding)
-
-=wrapper-width($width, $padding: null)
-  @if $padding == null
-    $padding: $wrapper-padding
-
-  max-width: #{$width + 2*($padding)}
-
+$wrapper-widths: (default: 1000px, small: 350px, medium: 600px, large: 1200px)
 
 .wrapper
   width: 100%
+  margin: 0 auto
   nox-sizing: border-box
 
+  +modifiers(width, $wrapper-widths)
   +modifiers(padding, $wrapper-paddings, padding)

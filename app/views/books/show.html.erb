@@ -5,5 +5,5 @@
     <div class="books-show__separator"></div>
     <div class="books-show__chapters"><span class="books-show__chapters__number"><%= @book.number_of_chapters %></span><br>chapitres</div>
   </div>
-  <div class="next-step"></div>
+  <%= link_to '', chapters_path, class: 'next-step' %>
 </main>

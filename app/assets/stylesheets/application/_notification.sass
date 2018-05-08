@@ -1,0 +1,11 @@
+$notification-background-colors: (success: $dark-blue, info: $white, error: $red)
+$notification-colors: (success: $white, info: $blue, error: $white)
+
+.notification
+  padding: 20px 15px
+  text-align: center
+  cursor: default
+
+  +modifiers(background-color, $notification-background-colors)
+  +modifiers(color, $notification-colors)
+

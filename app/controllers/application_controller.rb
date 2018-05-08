@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     notifications(keep: true).push type: :"#{type}", message: message
   end
 
-  [:success, :info, :warning, :error].each do |type|
+  [:success, :info, :error].each do |type|
     define_method(type) { |message| notificate type, message }
   end
 end

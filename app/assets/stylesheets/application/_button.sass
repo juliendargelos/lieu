@@ -2,7 +2,7 @@ $button-border-radius: 30px
 $button-padding: 15px
 $button-displays: (default: inline-block, block: block)
 $button-font-sizes: (default: 12px, small: 10px, large: 14px)
-$button-backgrounds: (default: $white, red: $red, blue: $blue)
+$button-background-colors: (default: $white, red: $red, blue: $blue)
 $button-colors: (default: $blue, red: $white, blue: $white)
 $button-border-radiuses: (default: $button-border-radius, left: $button-border-radius 0 0 $button-border-radius, right: 0 $button-border-radius $button-border-radius 0)
 
@@ -17,6 +17,6 @@ $button-border-radiuses: (default: $button-border-radius, left: $button-border-r
 
   +modifiers(font-size, $button-font-sizes)
   +modifiers(color, $button-colors)
-  +modifiers(background, $button-backgrounds)
+  +modifiers(background-color, $button-background-colors)
   +modifiers(border-radius, $button-border-radiuses, rounded)
   +modifiers(display, $button-displays)

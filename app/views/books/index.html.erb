@@ -24,10 +24,9 @@
   </div>
 </main>
 
+<%= javascript_pack_tag "application" %>
 <%= content_tag :div,
-  id: "hello-vue",
-  data: {
-    message: "Hello!",
-    name: "David"
-  }.to_json do %>
-<% end %>
+  nil,
+  id: "books",
+  data: { books: @books.length }
+%>

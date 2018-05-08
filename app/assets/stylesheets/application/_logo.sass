@@ -1,0 +1,30 @@
+$logo-width: 164px
+$logo-height: 75px
+$logo-ratio: $logo-width/$logo-height
+$logo-displays: (default: inline-block, block: block)
+$logo-heights: (default: 30px, small: 15px, large: 60px)
+$logo-widths: ()
+
+@each $size, $height in $logo-heights
+  $logo-widths: map-merge($logo-widths, (#{$size}: $logo-ratio*$height))
+
+.logo
+  background: image-url('logo.svg') no-repeat center center / contain
+  display: inline-block
+  font-size: 0
+  color: transparent
+
+  +modifiers(height, $logo-heights)
+  +modifiers(width, $logo-widths)
+  +modifiers(display, $logo-displays)
+
+  &--circle
+    background:
+      color: $white
+      size: 60%
+    width: 80px
+    height: 80px
+    border-radius: 60px
+
+  &--center
+    margin: 0 auto

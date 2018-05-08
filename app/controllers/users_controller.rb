@@ -39,7 +39,8 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    success 'Le compte a bien été supprimé'
+    self.current_user = nil
+    success 'Votre compte a bien été supprimé'
     redirect_to root_path
   end
 

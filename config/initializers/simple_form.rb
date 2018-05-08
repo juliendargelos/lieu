@@ -59,7 +59,7 @@ SimpleForm.setup do |config|
       ba.use :label, class: :form__label
       ba.use :input, class: :form__input, error_class: 'form__input--invalid', valid_class: 'form__input--valid'
     end
-    b.use :full_error, wrap_with: { tag: 'p', class: :form__error }
+    b.use :error, wrap_with: { tag: 'p', class: :form__error }
     b.use :hint, wrap_with: { tag: 'p', class: :form__hint }
   end
 

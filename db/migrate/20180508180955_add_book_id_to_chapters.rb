@@ -1,6 +1,6 @@
 class AddBookIdToChapters < ActiveRecord::Migration[5.2]
   def change
-    add_column :chapters, :book_id, :integer
-    add_index :chapters, :book_id
+    add_reference :chapters, :book, index: true
+    add_foreign_key :chapters, :books
   end
 end

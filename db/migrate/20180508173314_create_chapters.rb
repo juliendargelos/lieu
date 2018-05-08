@@ -6,5 +6,6 @@ class CreateChapters < ActiveRecord::Migration[5.2]
       t.string :instruction
 
       t.timestamps
+    end
   end
 end

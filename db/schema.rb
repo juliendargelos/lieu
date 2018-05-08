@@ -32,7 +32,9 @@ ActiveRecord::Schema.define(version: 2018_05_08_180955) do
     t.string "title"
     t.text "content"
     t.string "instruction"
-    t.integer "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "book_id"
     t.index ["book_id"], name: "index_chapters_on_book_id"
   end
 
@@ -45,4 +47,5 @@ ActiveRecord::Schema.define(version: 2018_05_08_180955) do
     t.index ["pseudo"], name: "index_users_on_pseudo"
   end
 
+  add_foreign_key "chapters", "books"
 end

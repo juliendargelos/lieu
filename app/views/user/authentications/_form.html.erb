@@ -1,6 +1,6 @@
 <%= simple_form_for authentication do |f| %>
-  <%= f.input :pseudo %>
-  <%= f.input :password %>
+  <%= f.input :pseudo, label_html: { class: 'form__label--without-required-mark' } %>
+  <%= f.input :password, label_html: { class: 'form__label--without-required-mark' } %>
 
   <div class="form__actions form__actions--fill">
     <%= button_link_to 'Inscription', new_user_path, class: :form__action %>

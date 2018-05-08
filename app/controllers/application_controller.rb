@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user=(v)
-    User::Authentication.current.user = v
+    User::Authentication.current = User::Authentication.new user: v
   end
 
   def notifications(keep: false)

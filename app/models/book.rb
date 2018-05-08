@@ -1,4 +1,6 @@
 class Book < ActiveRecord::Base
+
+  has_many :chapters
   has_attached_file :icon
 
   validates :title, presence: true

@@ -8,7 +8,7 @@ export default new VueRouter({
   mode: 'history',
   routes: [
     {
-      path: '/books',
+      path: '/library',
       name: 'Books',
       component: Books
     }

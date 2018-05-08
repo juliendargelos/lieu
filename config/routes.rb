@@ -2,9 +2,7 @@ Rails.application.routes.draw do
   # get 'books/index'
   root to: 'dashboard#index'
 
-  resources :books, only: [:index, :update]
-
-  get 'library' => 'library#index', as: :library
+  resources :books
 
   scope :account do
     get '/' => 'users#show', as: :user

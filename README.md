@@ -50,7 +50,7 @@ rails db:create db:migrate db:seed
 Using [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli):
 
 ```shell
-heroku git:remote -a lilu
+heroku git:remote -a lilu-gobelins
 ```
 
 ## Serve

@@ -5,7 +5,7 @@ $breakpoint-small: 600px
 $breakpoints: (large: $breakpoint-large, medium: $breakpoint-medium, small: $breakpoint-small)
 
 @function breakpoint($name)
-  @return map-get($breakpoints, $breakpoint)
+  @return map-get($breakpoints, $name)
 
 =breakpoint($name)
   @media screen and (min-width: breakpoint($name))
@@ -16,9 +16,9 @@ $breakpoints: (large: $breakpoint-large, medium: $breakpoint-medium, small: $bre
     @content
 
 =medium
-  +breakpoint(large)
+  +breakpoint(medium)
     @content
 
 =small
-  +breakpoint(large)
+  +breakpoint(small)
     @content

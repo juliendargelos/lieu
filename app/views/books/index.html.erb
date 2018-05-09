@@ -1,52 +1,48 @@
-<main class="wrapper wrapper--padding--both">
-  <div class="books-index__top">
-    <h1 class="books-index__title">Choisis ton livre</h1>
-  </div>
-  <div class="books-index__content">
-    <ul class="books-index__list">
-      <% @books.each do |book| %>
-      <li class="books-index__item">
-        <div class="book__symbol">
-          <%= image_tag book.icon.url, class: :book__icon if book.icon.exists? %>
-        </div>
-        <div class="book__header">
+<main class="container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
+  <h1 class="books-index__title">Choisis ton livre</h1>
+  <ul class="books books-index__books">
+    <% @books.each do |book| %>
+      <li class="books__item book book--number-of-chapters--<%= book.number_of_chapters %>">
+        <%= image_tag book.icon.url, class: :book__icon if book.icon.exists? %>
+        <div class="book__content book__content--developed">
           <h2 class="book__title"><%= book.title %></h2>
-          <p class="book__author"><%= book.author %></p>
+          <p class="book__summary"><%= book.summary %></p>
         </div>
-        <p class="book__summary"><%= book.summary %> chap.</p>
-        <div class="book__chapters">
-          <p>
-            <span class="book__chapters__nb"><%= book.number_of_chapters %></span>
-            <br>chap.
-          </p>
+        <div class="book__content book__content--summarized">
+          <h2 class="book__title book__title--vertical"><%= book.title %></h2>
         </div>
-        <div class="book__cta">
-          <a href="<%= book_path(book.id)%>">Commencer</a>
-          <!-- <%= link_to 'Commencer', new_user_path(), :class => "button" %> -->
+        <div class="book__footer">
+          <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
+          <div class="book__actions">
+            <%= button_link_to 'Commencer', '#' %>
+          </div>
         </div>
       </li>
-      <% end %>
-    </ul>
-  </div>
+    <% end %>
+  </ul>
 </main>
 
 <script>
   (function() {
-    var books = document.querySelectorAll('.books-index__item');
-    var book;
+    var books = document.querySelectorAll('.book');
 
-    var open = function() {
-      for(var j = 0; j < books.length; j++) {
-        book = books[j];
-        book.classList.remove('book--active');
-      }
-
-      this.classList.toggle('book--active');
+    var close = function(book) {
+      if(!book.classList.contains('book--opened')) return;
+      book.classList.remove('book--opened');
+      book.classList.add('book--closed');
     };
 
-    for(var i = 0; i < books.length; i++) {
-      book = books[i];
-      book.addEventListener('click', open);
-    }
+    var open = function(book) {
+      for(var i = 0; i < books.length; i++) close(books[i]);
+      book.classList.remove('book--closed');
+      book.classList.add('book--opened');
+    };
+
+    var toggle = function() {
+      if(this.classList.contains('book--opened')) close(this);
+      else open(this);
+    };
+
+    for(var i = 0; i < books.length; i++) books[i].addEventListener('click', toggle);
   })();
 </script>

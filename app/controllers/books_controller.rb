@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-
+  authenticates! :user
   # before_action :set_book, only: [:index, :show]
 
   def index

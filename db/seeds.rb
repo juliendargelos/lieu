@@ -16,7 +16,7 @@ Book.create [
   {
     title: "Journal d'un chat assassin",
     number_of_chapters: 10,
-    summary: "Tuffy est un chat consciencieux. Il tient un journal où il consigne la liste des oiseaux maladroits venus se jeter dans ses pattes et des souris déjà mortes quand il les a trouvées... Tuffy doit en effet se justifier sans cesse : ses maîtres n'apprécient pas son boulot de chat. Le jour où il rentre avec le lapin des voisins, ça ne s'arrange pas...Un régal de mauvaise foi, doublé d'un excellent exercice pour les zygomatiques : dix éclats de rire par page garantis. Indispensable en cas de coup de cafard.",
+    summary: "Tuffy est un chat consciencieux. Il tient un journal où il consigne la liste des oiseaux maladroits venus se jeter dans ses pattes et des souris déjà mortes quand il les a trouvées... Tuffy doit en effet se justifier sans cesse : ses maîtres n'apprécient pas son boulot de chat. Le jour où il rentre avec le lapin des voisins, ça ne s'arrange pas...Un régal de mauvaise foi, doublé d'un excellent exercice pour les zygomatiques : dix éclats de rire par page garantis. Indispensable en cas de coup de cafard.",
     author: 'Anne Fine',
     icon: File.new(__dir__ + '/seeds/journal-chat-assassin.svg')
   },
@@ -44,7 +44,7 @@ Book.create [
   {
     title: 'Les chevaliers',
     number_of_chapters: 5,
-    summary: "Qui n’a jamais rêvé de devenir chevalier ? Vous saurez tout sur ces courageux combattants qui ont juré fidélité à un seigneur : leur formation, leur équipement, la cérémonie d’adoubement, les batailles... Plongez au cœur du Moyen Âge, l’âge d’or de la chevalerie, grâce à Quelle Histoire, qui propose une initiation ludique à l'histoire de ces guerriers.",
+    summary: "Qui n’a jamais rêvé de devenir chevalier ? Vous saurez tout sur ces courageux combattants qui ont juré fidélité à un seigneur : leur formation, leur équipement, la cérémonie d’adoubement, les batailles... Plongez au cœur du Moyen Âge, l’âge d’or de la chevalerie, grâce à Quelle Histoire, qui propose une initiation ludique à l'histoire de ces guerriers.",
     author: '',
     icon: File.new(__dir__ + '/seeds/les-chevaliers.svg')
   }

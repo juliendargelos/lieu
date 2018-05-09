@@ -1,11 +1,44 @@
 $wrapper-padding: 30px
-$wrapper-paddings: (default: 0 $wrapper-padding, vertical: $wrapper-padding 0, both: $wrapper-padding)
-$wrapper-widths: (default: 1000px, small: 450px, medium: 600px, large: 1200px)
+$wrapper-padding-large: 50px
+$wrapper-padding-small: 10px
+$wrapper-paddings: (default: $wrapper-padding, large: $wrapper-padding-large, small: $wrapper-padding-small)
+$wrapper-max-widths: (default: 100%, small: 450px, medium: 600px, large: 1000px)
 
 .wrapper
   width: 100%
   margin: 0 auto
   nox-sizing: border-box
 
-  +modifiers(max-width, $wrapper-widths)
-  +modifiers(padding, $wrapper-paddings, padding)
+  +modifiers(max-width, $wrapper-max-widths)
+
+  padding: 0 map-get($wrapper-paddings, default)
+
+  &--padding
+    &--vertical
+      padding: map-get($wrapper-paddings, default) 0
+
+    &--both
+      padding: map-get($wrapper-paddings, default)
+
+  &--large-padding
+    padding: 0 map-get($wrapper-paddings, large)
+
+  &--large-padding#{&}--padding
+    &--vertical
+      padding: map-get($wrapper-paddings, large) 0
+
+    &--both
+      padding: map-get($wrapper-paddings, large)
+
+  &--small-padding
+    padding: 0 map-get($wrapper-paddings, small)
+
+  &--small-padding#{&}--padding
+    &--vertical
+      padding: map-get($wrapper-paddings, small) 0
+
+    &--both
+      padding: map-get($wrapper-paddings, small)
+
+  &--fill-height
+    height: 100%

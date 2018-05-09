@@ -94,4 +94,10 @@
       document.querySelector('.dreamy-sketch__button').classList.add('dreamy-sketch__button--visible');
     }, 1000);
   });
+
+  Application.DreamySketch.singleton.canvas.element.addEventListener('touchstart', function() {
+    setTimeout(function() {
+      document.querySelector('.dreamy-sketch__button').classList.add('dreamy-sketch__button--visible');
+    }, 1000);
+  });
 </script>

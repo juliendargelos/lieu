@@ -17,6 +17,7 @@ gem 'simple_form'
 gem 'paperclip'
 gem 'webpacker'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'sprockets-es6'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :production do

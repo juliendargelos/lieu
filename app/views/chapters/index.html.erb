@@ -1,39 +1,97 @@
-<main class="chapters-index__wrapper">
-  <section class="chapters-index__section dreamy-sketch">
-    <canvas class="dreamy-sketch__canvas"></canvas>
-    <div class="dreamy-sketch__done">Terminé</div>
-    <div class="order">
-      <div class="order__page">
-        <div class="order__content">
-          <div class="order__container">
-            <div class="order__instructions">
-              <div class="order__wrapper">
-                <div class="order__text" >
-                  <h2 class="order__subtitle"><span>01</span><br>défis</h2>
-                  <h3 class="order__title">Représente le nabot ventripotent</h3>
-                </div>
-              </div>
-            </div>
-            <div class="order__button">Prêt</div>
-          </div>
-        </div>
-      </div>
+<main class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both chapters-index__container">
+  <section class="chapters-index__section">
+    <div class="dreamy-sketch">
+      <canvas class="dreamy-sketch__canvas"></canvas>
+      <span class="button button--orange dreamy-sketch__button">Fini</span>
     </div>
-    <div class="dreamy-sketch__strip">
-      <div class="dreamy-sketch__strip-1">
-        <div class="dreamy-sketch__strip-2"></div>
-      </div>
+
+    <div class="chapters-index__challenge chapters-index__challenge--current">
+      <span class="chapters-index__challenge-number">01</span>
+      <h3 class="chapters-index__instruction">Comment imagines-tu Boggis ?</h3>
+      <span class="button button--orange chapters-index__challenge-button">Prêt</span>
+    </div>
+
+    <div class="chapters-index__challenge">
+      <span class="chapters-index__challenge-number">02</span>
+      <h3 class="chapters-index__instruction">Dessine le nabot ventripotent.</h3>
+      <span class="button button--orange chapters-index__challenge-button">Prêt</span>
+    </div>
+
+    <div class="chapters-index__challenge">
+      <span class="chapters-index__challenge-number">03</span>
+      <h3 class="chapters-index__instruction">Représente Bean le fermier.</h3>
+      <span class="button button--orange chapters-index__challenge-button">Prêt</span>
     </div>
   </section>
-
-  <section class="chapters-index__section book">
-    <div class="book__wrapper">
-      <article class="book__page with-title">
-        <h1 class="book__title">Chapitre 1 : Les trois fermiers</h1>
-        <p class="book__paragraph">Dans la vallée, il y avait trois fermes. Les propriétaires de ces fermes avaient bien réussi. Ils étaient riches. Il étaient aussi méchants. Mais tous trois n’étaient ni plus méchant ni plus mesquins que d’autres. Ils s’appelaient Boggis, Bunce et Bean. Boggis élevait des poulets. Il avait des milliers de poulets. Il était horriblement gros. Cela, parce qu’il mangeait tous les jours au petit déjeuner, au déjeuner et au dîner, trois poulets cuits à la cocotte avec des croquettes. Bunce élevait des oies et des canards. Il avait des milliers d’oies et de canard. C’était une espèce de nabot ventripotent. Il était si petit que, dans le petit bain d’une piscine, il aurait eu de l’eau jusqu’au menton. Il se nourrissait de beignets et de foies d’oies. ll écrasait les foies et fourrait les beignets de cette bouillie infâme. Ce régime lui donnait mal à l’estomac et un caractère épouvantable. </p>
-      </article>
+  <section class="chapters-index__section chapters-index__section--corner">
+    <div class="chapters-index__chapter chapters-index__chapter--current">
+      Dans la vallée, il y avait trois fermes. Les propriétaires de ces fermes avaient bien réussi. Ils étaient riches. Ils étaient aussi méchants. Mais tous trois n’étaient ni plus méchants ni plus mesquins que d’autres. Ils s’appelaient Boggis, Bunce et Bean. Boggis élevait des poulets. Il avait des milliers de poulets. Il était horriblement gros. Cela, parce qu’il mangeait tous les jours au petit déjeuner, au déjeuner et au dîner, trois poulets cuits à la cocotte avec des croquettes.
     </div>
-    <div class="book__next-chapter"></div>
-  </section>
 
+    <div class="chapters-index__chapter">
+      Bunce élevait des oies et des canards. Il avait des milliers d’oies et de canards. C’était une espèce de nabot ventripotent. Il était si petit que, dans le petit bain d’une piscine, il aurait eu de l’eau jusqu’au menton. Il se nourrissait de beignets et de foies d’oies. Il écrasait les foies et fourrait les beignets de cette bouillie infâme. Ce régime lui donnait mal à l’estomac et un caractère. épouvantable.
+    </div>
+
+    <div class="chapters-index__chapter">
+      Bean avait des dindes et des pommes. Il élevait des milliers de dindes dans un verger plein de pommiers. Il ne mangeait jamais. Par contre, il buvait des litres d’un cidre très fort, qu’il tirait des pommes de son verger. Il était maigre comme un clou et c’était le plus intelligent des trois.
+    </div>
+  </section>
 </main>
+
+<script>
+  Application.init();
+
+  var n = 0;
+  var brushes = [
+    new Application.DreamySketch.Brush.Pen(),
+    new Application.DreamySketch.Brush.Circle(),
+    new Application.DreamySketch.Brush.Polygon()
+  ];
+
+  var watch = function(selector, event, callback) {
+    var elements = document.querySelectorAll(selector);
+    for(var i = 0; i < elements.length; i++) elements[i].addEventListener(event, callback);
+  };
+
+  watch('.chapters-index__challenge-button', 'click', function() {
+    document.querySelector('.dreamy-sketch__button').classList.remove('dreamy-sketch__button--visible');
+    Application.DreamySketch.singleton.brush = brushes[n],
+    Application.DreamySketch.singleton.canvas.clear();
+    document.querySelector('.dreamy-sketch').classList.add('dreamy-sketch--opened')
+    n++;
+  });
+
+  watch('.dreamy-sketch__button', 'click', function() {
+    var challenge = document.querySelector('.chapters-index__challenge--current');
+    challenge.classList.remove('chapters-index__challenge--current');
+
+    var chapter = document.querySelector('.chapters-index__chapter--current');
+    chapter.classList.remove('chapters-index__chapter--current');
+
+    document.querySelector('.dreamy-sketch').classList.remove('dreamy-sketch--opened');
+
+    var nextChallenge = challenge.nextElementSibling;
+
+    if(nextChallenge) {
+      setTimeout(function() {
+        nextChallenge.classList.add('chapters-index__challenge--current');
+      }, 400)
+    }
+
+    var nextChapter = chapter.nextElementSibling;
+    if(nextChapter) {
+      nextChapter.classList.add('chapters-index__chapter--current');
+    }
+    else {
+      setTimeout(function() {
+        window.location.href = '/books';
+      }, 200);
+    }
+  });
+
+  Application.DreamySketch.singleton.canvas.element.addEventListener('mousedown', function() {
+    setTimeout(function() {
+      document.querySelector('.dreamy-sketch__button').classList.add('dreamy-sketch__button--visible');
+    }, 1000);
+  });
+</script>

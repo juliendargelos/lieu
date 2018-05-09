@@ -14,4 +14,4 @@
 //= require activestorage
 //= require turbolinks
 //= require vue
-//= require_tree .
+//= require_tree

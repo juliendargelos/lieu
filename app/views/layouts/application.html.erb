@@ -7,13 +7,12 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag :application, media: :all, 'data-turbolinks-track': :reload %>
-    <%= javascript_include_tag :application, 'data-turbolinks-track': :reload %>
-    <%#= javascript_pack_tag 'application' %>
-  </head>
+    <%= javascript_pack_tag 'application' %>
 
   <body class="view <%= view_class %>">
     <%= render 'application/notifications', notifications: notifications %>
 
     <%= yield %>
+
   </body>
 </html>

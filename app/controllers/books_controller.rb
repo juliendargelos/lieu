@@ -1,12 +1,13 @@
 class BooksController < ApplicationController
   authenticates! :user
-  # before_action :set_book, only: [:index, :show]
+  before_action :set_book, only: :show
 
   def index
     @books = Book.all
   end
 
   def show
+
   end
 
   protected

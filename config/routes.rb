@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+
   resources :books
+  resources :chapters
 
   scope :account do
     get '/' => 'users#show', as: :user

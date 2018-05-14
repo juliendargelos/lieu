@@ -69,6 +69,12 @@
     justify-content: end
     align-items: center
 
+  &__actions--simple-fill
+    display: block
+    .form__action
+      width: calc(100% - 20px)
+
+
   &__action
     margin:
       left: 10px
@@ -76,6 +82,12 @@
       bottom: 10px
     flex-grow: 0
     flex-shrink: 0
+
+  &__action--simple
+    background: none
+    color: $white
+    display: block
+    text-align: right
 
   &__actions--fill &__action
     flex-basis: 0

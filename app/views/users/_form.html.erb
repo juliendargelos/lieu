@@ -4,8 +4,8 @@
   <%= f.input :password %>
   <%= f.input :password_confirmation %>
 
-  <div class="form__actions form__actions--fill">
-    <%= button_link_to 'Connexion', new_user_authentication_path, class: :form__action unless user.persisted? %>
-    <%= f.button :submit, 'Inscription', class: :form__action %>
+  <div class="form__actions form__actions--simple-fill">
+    <%= f.button :submit, 'Je valide mon inscription', class: :form__action %>
+    <%= button_link_to 'Déjà inscrit ? Connecte-toi', new_user_authentication_path, class: 'form__action--simple' unless user.persisted? %>
   </div>
 <% end %>

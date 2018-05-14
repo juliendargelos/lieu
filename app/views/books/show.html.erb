@@ -1,5 +1,6 @@
 <main class="books-show__wrapper">
   <div class="books-show__content">
+    <%= image_tag @book.icon.url, class: 'books-show__icon' if @book.icon.exists? %>
     <h1 class="books-show__title"><%= @book.title %></h1>
     <h2 class="books-show__author"><%= @book.author %></h2>
     <div class="books-show__separator"></div>

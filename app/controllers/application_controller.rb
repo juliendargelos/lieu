@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   authenticates(:user) { redirect_to new_user_authentication_path }
-  unauthenticates(:user) { redirect_to books_path }
+  unauthenticates(:user) { redirect_to explanations_path }
 
   protected
 

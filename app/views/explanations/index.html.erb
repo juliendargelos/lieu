@@ -1,0 +1,55 @@
+<main class="container explanations-index__container">
+  <div class="popup">
+    <div class="popup__explanations">
+      <div class="popup__content popup__content--current">
+        Bienvenue jeune lecteur!
+        <br>Je suis Lilu. Tu viens de pénétrer dans ma bibliothèque magique! Pourquoi magique me diras-tu?
+      </div>
+      <div class="popup__content">
+        Patience, patience, ne soit-pas si pressé.
+      </div>
+      <div class="popup__content">
+        Tout d'abord, ravi de faire ta connaissance <%= @user.pseudo %>. Je vais désormais répondre à ta question.
+      </div>
+      <div class="popup__content">
+        Cette bibliothèque est magique car elle te permet de lire des livres avec d’autres enfants comme toi, curieux de récits et d’aventures.
+      </div>
+      <div class="popup__content">
+        En lisant un livre à deux, tu pourras partager avec ton camarade de lecture tes avis, mais aussi ton ressenti sur l’histoire. Vice versa, tu verras ce que ton partenaire pense et ressent du livre que vous lisez ensemble. Tu comprendras mieux quand tu seras pleinement lancé!
+      </div>
+      <div class="popup__content">
+        Bien, tes futurs amis de lecture auront besoin d’un visage à mettre sur ton prénom. Commençons par construire ton Avatar.
+      </div>
+    </div>
+    <div class="popup__button">
+      NEXT
+    </div>
+  </div>
+</main>
+
+<script type="text/javascript">
+  (function() {
+
+    var next = document.querySelector('.popup__button')
+
+    var toggle = function() {
+      var content = document.querySelector('.popup__content--current')
+      content.classList.remove('popup__content--current')
+
+      var nextContent = content.nextElementSibling;
+
+      var popup = document.querySelector('.popup')
+
+      if(nextContent) {
+        nextContent.classList.add('popup__content--current');
+      }
+      else {
+        popup.classList.add('popup--close');
+        window.location.href = '/books';
+      }
+    };
+
+    next.addEventListener('click',toggle);
+
+  })();
+</script>

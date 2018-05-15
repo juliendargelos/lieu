@@ -45,6 +45,12 @@ See [config/application.yml.sample](https://github.com/juliendargelos/lilu/blob/
 rails db:create db:migrate db:seed
 ```
 
+To reset the database when it already exists:
+
+```shell
+rails db:migrate:reset db:seed
+```
+
 ### Add heroku remotes
 
 Using [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli):

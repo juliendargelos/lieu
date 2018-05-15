@@ -6,6 +6,7 @@ class CreateBooks < ActiveRecord::Migration[5.2]
       t.text :summary
       t.attachment :icon
       t.string :author
+      t.integer :status, default: 0
 
       t.timestamps
     end

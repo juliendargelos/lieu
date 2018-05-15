@@ -34,7 +34,7 @@ class UsersController < ApplicationController
       error "Impossible d'enregistrer les modifications"
     end
 
-    render :edit
+    redirect_to edit_user_path(@user)
   end
 
   def destroy
@@ -51,6 +51,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit :pseudo, :email, :password, :password_confirmation
+    params.require(:user).permit :pseudo, :email, :password, :password_confirmation, :tutorial_done
   end
 end

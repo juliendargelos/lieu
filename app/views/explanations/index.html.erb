@@ -24,6 +24,14 @@
     <div class="popup__button">
       NEXT
     </div>
+
+    <%=  simple_form_for current_user do |f| %>
+      <%= f.hidden_field :tutorial_done, value: true %>
+
+      <div class="form__actions form__actions--fill">
+        <%= f.button :submit, 'Terminé' %>
+      </div>
+    <% end %>
   </div>
 </main>
 
@@ -37,7 +45,6 @@
       content.classList.remove('popup__content--current')
 
       var nextContent = content.nextElementSibling;
-
       var popup = document.querySelector('.popup')
 
       if(nextContent) {

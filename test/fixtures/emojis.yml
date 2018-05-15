@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reading: one
+  subject: one
+  position: 
+  kind: 1
+
+two:
+  reading: two
+  subject: two
+  position: 
+  kind: 1

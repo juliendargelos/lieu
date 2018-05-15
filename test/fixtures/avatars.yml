@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hair: 1
+  eyes: 1
+  face: 1
+  clothes: 1
+  mouth: 1
+  skin: 1
+  accessory: 1
+  user: one
+
+two:
+  hair: 1
+  eyes: 1
+  face: 1
+  clothes: 1
+  mouth: 1
+  skin: 1
+  accessory: 1
+  user: two

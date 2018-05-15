@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: books
+#
+#  id                 :bigint(8)        not null, primary key
+#  title              :string
+#  number_of_chapters :integer
+#  summary            :text
+#  icon_file_name     :string
+#  icon_content_type  :string
+#  icon_file_size     :integer
+#  icon_updated_at    :datetime
+#  color              :integer
+#  author             :string
+#  status             :integer          default("draft")
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
 class Book < ActiveRecord::Base
   has_many :chapters
   has_attached_file :icon

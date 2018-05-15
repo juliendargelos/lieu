@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2018_05_15_091442) do
     t.string "pseudo", null: false
     t.string "email"
     t.string "password_digest"
+    t.boolean "tutorial_done", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["pseudo"], name: "index_users_on_pseudo"

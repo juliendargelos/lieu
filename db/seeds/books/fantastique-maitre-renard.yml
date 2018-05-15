@@ -12,6 +12,7 @@ chapters:
   - position: 1
     title: Les trois fermiers
     instruction: Représente le nabot ventripotent
+    brush: pen
     content: |
       Dans la vallée, il y avait trois fermes. Les propriétaires de ces fermes avaient bien réussi. Ils étaient riches. Il étaient aussi méchants. Mais tous trois n'étaient ni plus méchant ni plus mesquins que d'autres.
       Ils s'appelaient Boggis, Bunce et Bean. Boggis élevait des poulets. Il avait des milliers de poulets. Il était horriblement gros. Cela, parce qu'il mangeait tous les jours au petit déjeuner, au déjeuner et au dîner, trois poulets cuits à la cocotte avec des croquettes.
@@ -21,6 +22,7 @@ chapters:
   - position: 2
     title: Maitre Renard
     instruction: Représente l'odeur emporté par le vent
+    brush: polygon
     content: |
       Au-dessus de la vallée, sur une colline, il y avait un bois. Dans le bois, il y avait un gros arbre. Sous l'arbre, il y avait un trou. Dans le trou vivaient Maitre Renard, Dame Renard et leurs quatre renardeaux. Tous les soirs, dès que la nuit tombait, Maitre Renard disait à son épouse :
       « Alors, mon amie, que veux-tu pour dîner ? Un poulet dodu de chez Boggis ? Un canard ou une oie de chez Bunce ? Ou une belle dinde de chez Bean ? »
@@ -42,6 +44,7 @@ chapters:
   - position: 3
     title: La fusillade
     instruction: ~
+    brush: ~
     content: |
       « Alors, mon amis, demanda Maitre Renard, que voudras-tu pour dîner ? »
       Eh bien, ce soir, ce sera du canard, répondit Dame Renard. Veux-tu bien nous rapporter deux canards dodus, un pour toi et moi, un pour les enfants ?

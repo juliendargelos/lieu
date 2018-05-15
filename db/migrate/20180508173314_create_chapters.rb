@@ -5,6 +5,7 @@ class CreateChapters < ActiveRecord::Migration[5.2]
       t.text :content
       t.string :instruction
       t.integer :position
+      t.integer :brush
       t.references :book, foreign_key: true
 
       t.timestamps

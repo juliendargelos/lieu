@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2018_05_15_091442) do
     t.text "content"
     t.string "instruction"
     t.integer "position"
+    t.integer "brush"
     t.bigint "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

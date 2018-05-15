@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   unauthenticates! :user, only: [:new, :create]
   before_action :set_user, except: [:new, :create]
 
+  def show
+
+  end
+
   def new
     @user = User.new
   end
@@ -25,12 +29,12 @@ class UsersController < ApplicationController
 
   def update
     if @user.update user_params
-      success 'Les modifications ont bien été enregistrées'
+      success 'Les modifications ont bien été enregistrées' unless params.key? :explanations
     else
       error "Impossible d'enregistrer les modifications"
     end
 
-    render :edit
+    redirect_to params.key?(:explanations) ? books_path : edit_user_path
   end
 
   def destroy
@@ -47,6 +51,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit :pseudo, :email, :password, :password_confirmation
+    params.require(:user).permit :pseudo, :email, :password, :password_confirmation, :tutorial_done
   end
 end

@@ -1,35 +1,49 @@
 .books-show
-  height: 100vh
-  &__wrapper
-    width: calc(100% - 20px)
-    height: calc(100% - 20px)
-    background-color: $orange
-    margin: 10px
-    color: $white
+  &__content
+    height: 100%
+    padding: 30px
+    text-align: center
     display: flex
+    flex-direction: column
     justify-content: center
     align-items: center
-  &__content
-    text-align: center
+
+    +modifiers(background-color, $book-background-colors)
+    +modifiers(color, $book-text-colors)
+
+  &__icon
+    width: 100px
+    height: 100px
+    margin-bottom: 60px
+
   &__title
     font-weight: 500
     font-size: 40px
     margin-bottom: 30px
     letter-spacing: 1px
+
   &__author
     font-weight: 300
     margin-bottom: 50px
+
   &__separator
     width: 100px
     height: 10px
     background: $white
     margin: 0 auto
-    margin-bottom: 80px
-  &__chapters
+    margin-bottom: 60px
+
+  &__number-of-chapters
+    font-size: 50px
+    font-weight: $font-light
     text-align: center
-    line-height: 20px
-    &__number
-      font-size: 50px
+
+    &::after
+      content: 'chapitres'
+      display: block
+      font-size: 14px
+      font-weight: $font-semi-bold
+
   .next-step
     position: absolute
     bottom: 0

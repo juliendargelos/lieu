@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-  resources :books
-  resources :chapters
   resources :explanations
+  resources :books, only: [:index, :show] do
+    resources :chapters, only: :index
+  end
 
   scope :account do
     get '/' => 'users#show', as: :user

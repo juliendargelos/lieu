@@ -1,10 +1,10 @@
-<main class="books-show__wrapper">
-  <div class="books-show__content">
+<main class="container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
+  <div class="books-show__content books-show__content--<%= @book.color %>">
     <%= image_tag @book.icon.url, class: 'books-show__icon' if @book.icon.exists? %>
     <h1 class="books-show__title"><%= @book.title %></h1>
     <h2 class="books-show__author"><%= @book.author %></h2>
     <div class="books-show__separator"></div>
-    <div class="books-show__chapters"><span class="books-show__chapters__number"><%= @book.number_of_chapters %></span><br>chapitres</div>
+    <div class="books-show__number-of-chapters"><%= @book.number_of_chapters %></div>
   </div>
-  <%= link_to '', chapters_path, class: 'next-step' %>
+  <%= link_to '', book_chapters_path(@book), class: 'next-step' %>
 </main>

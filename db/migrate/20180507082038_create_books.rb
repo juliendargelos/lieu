@@ -5,6 +5,7 @@ class CreateBooks < ActiveRecord::Migration[5.2]
       t.integer :number_of_chapters
       t.text :summary
       t.attachment :icon
+      t.integer :color
       t.string :author
       t.integer :status, default: 0
 

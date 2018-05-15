@@ -2,7 +2,7 @@
   <h1 class="books-index__title">Choisis ton livre</h1>
   <ul class="books books-index__books">
     <% @books.each do |book| %>
-      <li class="books__item book book--number-of-chapters--<%= book.number_of_chapters %>">
+      <li class="books__item book book--number-of-chapters--<%= book.number_of_chapters %> book--<%= book.color %>">
         <%= image_tag book.icon.url, class: :book__icon if book.icon.exists? %>
         <div class="book__content book__content--developed">
           <h2 class="book__title"><%= book.title %></h2>
@@ -13,9 +13,11 @@
         </div>
         <div class="book__footer">
           <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
-          <div class="book__actions">
-            <%= button_link_to 'Commencer', book_path(book.id) %>
-          </div>
+          <% if book.published? %>
+            <div class="book__actions">
+              <%= button_link_to 'Commencer', book_path(book.id) %>
+            </div>
+          <% end %>
         </div>
       </li>
     <% end %>

@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2018_05_15_091442) do
     t.string "icon_content_type"
     t.integer "icon_file_size"
     t.datetime "icon_updated_at"
+    t.integer "color"
     t.string "author"
     t.integer "status", default: 0
     t.datetime "created_at", null: false

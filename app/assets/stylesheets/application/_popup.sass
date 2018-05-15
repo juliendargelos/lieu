@@ -1,5 +1,6 @@
 .popup
   width: 80%
+  height: 200px
   border: 5px solid $orange
   border-radius: 10px
   background: $white
@@ -8,6 +9,9 @@
   line-height: 25px
   font-weight: 600
   font-size: 18px
+  position: relative
+  display: flex
+  align-items: center
   &--close
     display: none
   &__content
@@ -17,3 +21,6 @@
   &__button
     text-align: right
     color: $orange
+    position: absolute
+    bottom: 40px
+    right: 40px

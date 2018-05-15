@@ -20,10 +20,12 @@
   </div>
   <div class="book__footer">
     <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
-    <% if book.published? %>
-      <div class="book__actions">
-        <%= button_link_to 'Commencer', book_path(book.id) %>
-      </div>
-    <% end %>
+    <div class="book__actions">
+      <% if book.published? %>
+        <%= button_link_to 'Commencer', book_path(book.id), class: "button--#{book.white? ? :blue : :white} button--text--#{book.color}" %>
+      <% else %>
+        <span class="button button--<%= book.white? ? :blue : :white %>  button--text--<%= book.color %> button--disabled">Actuellement indisponible...</span>
+      <% end %>
+    </div>
   </div>
 <% end %>

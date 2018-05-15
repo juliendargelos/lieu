@@ -1,5 +1,5 @@
 $book-background-colors: (orange: $orange, white: $white, blue: $dark-blue)
-$book-text-colors: (orange: $white, white: $dark-blue, blue: $white)
+$book-colors: (orange: $white, white: $dark-blue, blue: $white)
 
 .book
   padding: 30px 0
@@ -102,7 +102,7 @@ $book-text-colors: (orange: $white, white: $dark-blue, blue: $white)
     flex-shrink: 0
 
   +modifiers(background-color, $book-background-colors)
-  +modifiers(color, $book-text-colors)
+  +modifiers(color, $book-colors)
 
   &--number-of-chapters
     @for $number-of-chapters from 1 through 24

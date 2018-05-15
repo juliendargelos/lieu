@@ -1,22 +1,15 @@
 Rails.application.routes.draw do
 
+  resource :user, path: :account, except: [:index, :show]
   resources :explanations
+
   resources :books, only: [:index, :show] do
     resources :chapters, only: :index
   end
 
-  scope :account do
-    get '/' => 'users#show', as: :user
-    get 'edit' => 'users#edit', as: :edit_user
-    patch 'edit' => 'users#update'
-    get 'destroy' => 'users#destroy', as: :destroy_user
+  resource :authentication, only: [:new, :create], path: '/', path_names: { new: '/' }, module: :user, as: :user_authentication do
+    get 'logout' => 'authentications#destroy', as: :destroy
   end
 
-  get 'signup' => 'users#new', as: :new_user
-  post 'signup' => 'users#create', as: :users
-
   root to: 'user/authentications#new'
-  get '/' => 'user/authentications#new', as: :new_user_authentication
-  post '/' => 'user/authentications#create', as: :user_authentications
-  get 'logout' => 'user/authentications#destroy', as: :destroy_user_authentication
 end

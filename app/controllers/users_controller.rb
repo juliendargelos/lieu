@@ -3,10 +3,6 @@ class UsersController < ApplicationController
   unauthenticates! :user, only: [:new, :create]
   before_action :set_user, except: [:new, :create]
 
-  def show
-
-  end
-
   def new
     @user = User.new
   end

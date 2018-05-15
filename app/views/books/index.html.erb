@@ -1,26 +1,7 @@
 <main class="container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
   <h1 class="books-index__title">Choisis ton livre</h1>
   <ul class="books books-index__books">
-    <% @books.each do |book| %>
-      <li class="books__item book book--number-of-chapters--<%= book.number_of_chapters %> book--<%= book.color %>">
-        <%= image_tag book.icon.url, class: :book__icon if book.icon.exists? %>
-        <div class="book__content book__content--developed">
-          <h2 class="book__title"><%= book.title %></h2>
-          <p class="book__summary"><%= book.summary %></p>
-        </div>
-        <div class="book__content book__content--summarized">
-          <h2 class="book__title book__title--vertical"><%= book.title %></h2>
-        </div>
-        <div class="book__footer">
-          <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
-          <% if book.published? %>
-            <div class="book__actions">
-              <%= button_link_to 'Commencer', book_path(book.id) %>
-            </div>
-          <% end %>
-        </div>
-      </li>
-    <% end %>
+    <%= render @books, tag: :li, class_name: :books__item %>
   </ul>
 </main>
 

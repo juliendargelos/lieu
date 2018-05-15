@@ -1,0 +1,31 @@
+<%
+  tag ||= :div
+  class_name ||= nil
+  class_name = [
+    :book,
+    "book--number-of-chapters--#{book.number_of_chapters}",
+    "book--#{book.color}",
+    class_name.presence
+  ].compact.join(' ')
+%>
+
+<%= content_tag tag, class: class_name do %>
+  <%= image_tag book.icon.url, class: :book__icon if book.icon.exists? %>
+  <div class="book__content book__content--developed">
+    <h2 class="book__title"><%= book.title %></h2>
+    <p class="book__summary"><%= book.summary %></p>
+  </div>
+  <div class="book__content book__content--summarized">
+    <h2 class="book__title book__title--vertical"><%= book.title %></h2>
+  </div>
+  <div class="book__footer">
+    <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
+    <div class="book__actions">
+      <% if book.published? %>
+        <%= button_link_to 'Commencer', book_path(book.id), class: "button--#{book.white? ? :blue : :white} button--text--#{book.color}" %>
+      <% else %>
+        <span class="button button--<%= book.white? ? :blue : :white %>  button--text--<%= book.color %> button--disabled">Actuellement indisponible...</span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

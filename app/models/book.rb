@@ -25,6 +25,8 @@ class Book < ActiveRecord::Base
   validates :number_of_chapters, presence: true, numericality: { integer: true, minimum: 0 }
   validates_attachment_content_type :icon, content_type: /\Aimage\/svg(?:\+xml)?\z/
 
+  default_scope { order "status = #{statuses[:published]} desc, status = #{statuses[:draft]} desc" }
+
   enum color: {
     orange: 0,
     white: 1,

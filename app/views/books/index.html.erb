@@ -13,9 +13,11 @@
         </div>
         <div class="book__footer">
           <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
-          <div class="book__actions">
-            <%= button_link_to 'Commencer', book_path(book.id) %>
-          </div>
+          <% if book.published? %>
+            <div class="book__actions">
+              <%= button_link_to 'Commencer', book_path(book.id) %>
+            </div>
+          <% end %>
         </div>
       </li>
     <% end %>

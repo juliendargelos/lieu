@@ -13,11 +13,6 @@ class BooksController < ApplicationController
   protected
 
   def set_book
-    @book = Book.find params[:id]
+    @book = Book.published.find params[:id]
   end
-
-  def book_params
-    params.require(:book).permit(:title, :author, :summary, :number_of_chapters)
-  end
-
 end

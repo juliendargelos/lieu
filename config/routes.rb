@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resource :user, path: :account, except: [:index, :show]
   resources :explanations
 

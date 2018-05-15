@@ -21,9 +21,9 @@ class User < ApplicationRecord
   validates :email, uniqueness: { message: 'Cette adresse mail est déjà utilisée' }, if: -> { email.present? }
   validates :email, email: { message: 'Cette adresse mail est invalide' }, if: -> { email.present? }
 
-  validates :password, presence: { message: 'Il te faut un mot de passe' }
-  validates :password, length: { minimum: 6, message: 'Ton mot de passe doit contenir au moins 6 caractères' }, if: -> { password.present? }
-  validates :password, confirmation: { message: 'La confirmation ne correspond pas' }, if: -> { password.present? }
+  validates :password, presence: { message: 'Il te faut un mot de passe' }, allow_nil: true
+  validates :password, length: { minimum: 6, message: 'Ton mot de passe doit contenir au moins 6 caractères' }, if: -> { password.present? }, allow_nil: true
+  validates :password, confirmation: { message: 'La confirmation ne correspond pas' }, if: -> { password.present? }, allow_nil: true
 
   has_secure_password validations: false
 

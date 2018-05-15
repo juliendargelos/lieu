@@ -9,7 +9,7 @@
         Patience, patience, ne soit-pas si pressé.
       </div>
       <div class="popup__content">
-        Tout d'abord, ravi de faire ta connaissance <%= @user.pseudo %>. Je vais désormais répondre à ta question.
+        Tout d'abord, ravi de faire ta connaissance <%= current_user.pseudo %>. Je vais désormais répondre à ta question.
       </div>
       <div class="popup__content">
         Cette bibliothèque est magique car elle te permet de lire des livres avec d’autres enfants comme toi, curieux de récits et d’aventures.
@@ -25,8 +25,8 @@
       NEXT
     </div>
 
-    <%=  simple_form_for current_user do |f| %>
-      <%= f.hidden_field :tutorial_done, value: true %>
+    <%=  simple_form_for current_user, url: user_path(explanations: true) do |f| %>
+      <%= f.hidden_field :tutorial_done, value: :on %>
 
       <div class="form__actions form__actions--fill">
         <%= f.button :submit, 'Terminé' %>

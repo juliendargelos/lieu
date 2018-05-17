@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="347" height="347" viewBox="0 0 347 347">
+  <defs>
+    <polygon id="bouche_08-a" points=".858 1.346 21.277 1.346 21.277 4.286 .858 4.286"/>
+    <polygon id="bouche_08-c" points="0 .641 43.562 .641 43.562 6.101 0 6.101"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(151 189)">
+    <g transform="translate(10.714 10.073)">
+      <mask id="bouche_08-b" fill="#fff">
+        <use xlink:href="#bouche_08-a"/>
+      </mask>
+      <path fill="#2C00B9" d="M21.2775,1.34614286 C21.2775,2.97042857 16.7046429,4.28614286 11.0667857,4.28614286 C5.42892857,4.28614286 0.858214286,2.97042857 0.858214286,1.34614286" mask="url(#bouche_08-b)"/>
+    </g>
+    <g transform="translate(0 1.501)">
+      <mask id="bouche_08-d" fill="#fff">
+        <use xlink:href="#bouche_08-c"/>
+      </mask>
+      <path fill="#2C00B9" d="M-0.000428571429,6.10071429 C-0.000428571429,3.08571429 9.75171429,0.640714286 21.7817143,0.640714286 C33.8095714,0.640714286 43.5617143,3.08571429 43.5617143,6.10071429" mask="url(#bouche_08-d)"/>
+    </g>
+  </g>
+</svg>

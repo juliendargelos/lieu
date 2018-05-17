@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="347" height="347" viewBox="0 0 347 347">
+  <defs>
+    <polygon id="oeil_06-a" points="1.042 .714 25.219 .714 25.219 12.857 1.042 12.857"/>
+    <polygon id="oeil_06-c" points="0 .714 24.177 .714 24.177 12.857 0 12.857"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(125 128)">
+    <g transform="translate(70.4 1.429)">
+      <mask id="oeil_06-b" fill="#fff">
+        <use xlink:href="#oeil_06-a"/>
+      </mask>
+      <path fill="#2C00B9" d="M1.04213333,12.8569286 C1.04213333,6.14978571 6.4544,0.713357143 13.1317333,0.713357143 C19.8069333,0.713357143 25.2192,6.14978571 25.2192,12.8569286" mask="url(#oeil_06-b)"/>
+    </g>
+    <g transform="translate(0 1.429)">
+      <mask id="oeil_06-d" fill="#fff">
+        <use xlink:href="#oeil_06-c"/>
+      </mask>
+      <path fill="#2C00B9" d="M0.000426666667,12.8569286 C0.000426666667,6.14978571 5.41269333,0.713357143 12.0878933,0.713357143 C18.7652267,0.713357143 24.1774933,6.14978571 24.1774933,12.8569286" mask="url(#oeil_06-d)"/>
+    </g>
+  </g>
+</svg>

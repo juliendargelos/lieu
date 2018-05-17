@@ -5,48 +5,25 @@
       <span class="button button--orange dreamy-sketch__button">Fini</span>
     </div>
 
-    <div class="chapters-index__challenge chapters-index__challenge--current">
-      <span class="chapters-index__challenge-number">01</span>
-      <h3 class="chapters-index__instruction">Comment imagines-tu Boggis ?</h3>
-      <span class="button button--orange chapters-index__challenge-button">Prêt</span>
-    </div>
-
-    <div class="chapters-index__challenge">
-      <span class="chapters-index__challenge-number">02</span>
-      <h3 class="chapters-index__instruction">Dessine le nabot ventripotent.</h3>
-      <span class="button button--orange chapters-index__challenge-button">Prêt</span>
-    </div>
-
-    <div class="chapters-index__challenge">
-      <span class="chapters-index__challenge-number">03</span>
-      <h3 class="chapters-index__instruction">Représente Bean le fermier.</h3>
-      <span class="button button--orange chapters-index__challenge-button">Prêt</span>
-    </div>
+    <% @chapters.with_instruction.each.with_index do |chapter, n| %>
+      <div class="chapters-index__challenge<%= ' chapters-index__challenge--current' if n.zero? %>" data-id="<%= chapter.id %>" data-brush-class="<%= chapter.brush_class %>">
+        <span class="chapters-index__challenge-number"><%= chapter.number %></span>
+        <h3 class="chapters-index__instruction"><%= chapter.instruction %></h3>
+        <span class="button button--orange chapters-index__challenge-button">Prêt</span>
+      </div>
+    <% end %>
   </section>
   <section class="chapters-index__section chapters-index__section--corner">
-    <div class="chapters-index__chapter chapters-index__chapter--current">
-      Dans la vallée, il y avait trois fermes. Les propriétaires de ces fermes avaient bien réussi. Ils étaient riches. Ils étaient aussi méchants. Mais tous trois n’étaient ni plus méchants ni plus mesquins que d’autres. Ils s’appelaient Boggis, Bunce et Bean. Boggis élevait des poulets. Il avait des milliers de poulets. Il était horriblement gros. Cela, parce qu’il mangeait tous les jours au petit déjeuner, au déjeuner et au dîner, trois poulets cuits à la cocotte avec des croquettes.
-    </div>
-
-    <div class="chapters-index__chapter">
-      Bunce élevait des oies et des canards. Il avait des milliers d’oies et de canards. C’était une espèce de nabot ventripotent. Il était si petit que, dans le petit bain d’une piscine, il aurait eu de l’eau jusqu’au menton. Il se nourrissait de beignets et de foies d’oies. Il écrasait les foies et fourrait les beignets de cette bouillie infâme. Ce régime lui donnait mal à l’estomac et un caractère. épouvantable.
-    </div>
-
-    <div class="chapters-index__chapter">
-      Bean avait des dindes et des pommes. Il élevait des milliers de dindes dans un verger plein de pommiers. Il ne mangeait jamais. Par contre, il buvait des litres d’un cidre très fort, qu’il tirait des pommes de son verger. Il était maigre comme un clou et c’était le plus intelligent des trois.
-    </div>
+    <% @chapters.with_instruction.each.with_index do |chapter, n| %>
+      <div class="chapters-index__chapter<%= ' chapters-index__chapter--current' if n.zero? %>" data-id="<%= chapter.id %>">
+        <%= simple_format chapter.content %>
+      </div>
+    <% end %>
   </section>
 </main>
 
 <script>
   Application.init();
-
-  var n = 0;
-  var brushes = [
-    new Application.DreamySketch.Brush.Pen(),
-    new Application.DreamySketch.Brush.Circle(),
-    new Application.DreamySketch.Brush.Polygon()
-  ];
 
   var watch = function(selector, event, callback) {
     var elements = document.querySelectorAll(selector);
@@ -54,11 +31,12 @@
   };
 
   watch('.chapters-index__challenge-button', 'click', function() {
+    var chapterInstruction = this.parentNode;
+
     document.querySelector('.dreamy-sketch__button').classList.remove('dreamy-sketch__button--visible');
-    Application.DreamySketch.singleton.brush = brushes[n],
+    Application.DreamySketch.singleton.brush = new Application.DreamySketch.Brush[chapterInstruction.getAttribute('data-brush-class')]();
     Application.DreamySketch.singleton.canvas.clear();
-    document.querySelector('.dreamy-sketch').classList.add('dreamy-sketch--opened')
-    n++;
+    document.querySelector('.dreamy-sketch').classList.add('dreamy-sketch--opened');
   });
 
   watch('.dreamy-sketch__button', 'click', function() {
@@ -70,7 +48,7 @@
 
     document.querySelector('.dreamy-sketch').classList.remove('dreamy-sketch--opened');
 
-    var nextChallenge = challenge.nextElementSibling;
+    var nextChallenge = document.querySelector('.chapters-index__challenge[data-id="' + chapter.getAttribute('data-id') + '"]')
 
     if(nextChallenge) {
       setTimeout(function() {

@@ -1,4 +1,4 @@
-<%= simple_form_for authentication do |f| %>
+<%= simple_form_for authentication, url: user_authentication_path  do |f| %>
   <%= f.input :pseudo, label_html: { class: 'form__label--without-required-mark' } %>
   <%= f.input :password, label_html: { class: 'form__label--without-required-mark' } %>
 

@@ -1,10 +1,10 @@
 class CreateAvatars < ActiveRecord::Migration[5.2]
   def change
     create_table :avatars do |t|
-      t.integer :hair
+      t.integer :haircut
       t.integer :eyes
       t.integer :face
-      t.integer :clothes
+      t.integer :sweater
       t.integer :mouth
       t.integer :skin
       t.integer :accessory

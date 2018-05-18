@@ -16,13 +16,20 @@
 class Chapter < ActiveRecord::Base
   belongs_to :book
 
+  scope :with_instruction, -> { where.not instruction: nil }
+  default_scope { order position: :asc }
+
   enum brush: {
     pen: 1,
     polygon: 2,
     circle: 3
   }
 
+  def number
+    position.to_s.rjust [2, book.chapters.pluck(:position).last.to_s.length].max, '0'
+  end
+
   def brush_class
-    "Application.DreamySketch.Brush.#{brush.to_s.classify}"
+    brush.to_s.classify
   end
 end

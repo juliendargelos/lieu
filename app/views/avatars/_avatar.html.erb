@@ -1,0 +1,8 @@
+<div class="avatar">
+  <div class="avatar__haircut avatar__haircut--<%= avatar.haircut %>"></div>
+  <div class="avatar__face"><%= render "avatars/faces/#{avatar.face}" if avatar.face.present? %></div>
+  <div class="avatar__eyes avatar__eyes--<%= avatar.eyes %>"></div>
+  <div class="avatar__mouth avatar__mouth--<%= avatar.mouth %>"></div>
+  <div class="avatar__accessory avatar__accessory--<%= avatar.accessory %>"></div>
+  <div class="avatar__bangs avatar__bangs--<%= avatar.bangs %>"></div>
+</div>

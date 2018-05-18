@@ -17,18 +17,23 @@
       <div class="popup__content">
         En lisant un livre à deux, tu pourras partager avec ton camarade de lecture tes avis, mais aussi ton ressenti sur l’histoire. Vice versa, tu verras ce que ton partenaire pense et ressent du livre que vous lisez ensemble. Tu comprendras mieux quand tu seras pleinement lancé!
       </div>
-      <div class="popup__content">
+      <div class="popup__content popup__final-content">
         Bien, tes futurs amis de lecture auront besoin d’un visage à mettre sur ton prénom. Commençons par construire ton Avatar.
+      </div>
+    </div>
+    <div class="popup__action">
+      <div class="popup__arrow">
+        <%= image_tag("arrow.svg", :class => "popup__arrow") %>
+      </div>
+      <div class="popup__done popup__hidden">
         <%=  simple_form_for current_user, url: user_path(explanations: true) do |f| %>
           <%= f.hidden_field :tutorial_done, value: :on %>
-
           <div class="form__actions form__actions--fill">
-            <%= f.button :submit, 'Terminé' %>
+            <%= f.button :submit, 'J\'ai compris', class: 'button--orange' %>
           </div>
         <% end %>
       </div>
     </div>
-    <%= image_tag("arrow.svg", :class => "popup__arrow") %>
   </div>
 </main>
 
@@ -36,23 +41,27 @@
   (function() {
 
     var next = document.querySelector('.popup__arrow')
+    var finish = document.querySelector('.popup__done')
 
     var parent = document.querySelector('.popup__explanations')
-    var lastChild = parent.lastChild
+    var lastChild = document.querySelector('.popup__final-content')
+
+    console.log(lastChild);
 
     var toggle = function() {
+
       var content = document.querySelector('.popup__content--current')
       content.classList.remove('popup__content--current')
 
       var nextContent = content.nextElementSibling;
       var popup = document.querySelector('.popup')
 
-      if(lastChild.classList.contains('popup__content--current')) {
-        console.log('test last child');
-      }
-
       if(nextContent) {
         nextContent.classList.add('popup__content--current');
+        if(lastChild.classList.contains('popup__content--current')) {
+          finish.classList.remove('popup__hidden')
+          next.classList.add('popup__hidden')
+        }
       }
       else {
         popup.classList.add('popup--close');

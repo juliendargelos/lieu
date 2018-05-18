@@ -19,26 +19,26 @@
       </div>
       <div class="popup__content">
         Bien, tes futurs amis de lecture auront besoin d’un visage à mettre sur ton prénom. Commençons par construire ton Avatar.
+        <%=  simple_form_for current_user, url: user_path(explanations: true) do |f| %>
+          <%= f.hidden_field :tutorial_done, value: :on %>
+
+          <div class="form__actions form__actions--fill">
+            <%= f.button :submit, 'Terminé' %>
+          </div>
+        <% end %>
       </div>
     </div>
-    <div class="popup__button">
-      NEXT
-    </div>
-
-    <%=  simple_form_for current_user, url: user_path(explanations: true) do |f| %>
-      <%= f.hidden_field :tutorial_done, value: :on %>
-
-      <div class="form__actions form__actions--fill">
-        <%= f.button :submit, 'Terminé' %>
-      </div>
-    <% end %>
+    <%= image_tag("arrow.svg", :class => "popup__arrow") %>
   </div>
 </main>
 
 <script type="text/javascript">
   (function() {
 
-    var next = document.querySelector('.popup__button')
+    var next = document.querySelector('.popup__arrow')
+
+    var parent = document.querySelector('.popup__explanations')
+    var lastChild = parent.lastChild
 
     var toggle = function() {
       var content = document.querySelector('.popup__content--current')
@@ -46,6 +46,10 @@
 
       var nextContent = content.nextElementSibling;
       var popup = document.querySelector('.popup')
+
+      if(lastChild.classList.contains('popup__content--current')) {
+        console.log('test last child');
+      }
 
       if(nextContent) {
         nextContent.classList.add('popup__content--current');

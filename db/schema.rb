@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(version: 2018_05_15_091442) do
   enable_extension "plpgsql"
 
   create_table "avatars", force: :cascade do |t|
-    t.integer "hair"
+    t.integer "haircut"
     t.integer "eyes"
     t.integer "face"
-    t.integer "clothes"
+    t.integer "sweater"
     t.integer "mouth"
     t.integer "skin"
     t.integer "accessory"

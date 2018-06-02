@@ -1,0 +1,64 @@
+$avatar-haircuts: ball, big-bun, big-buns, bob, braid, braids, cowlick, curls, long-curls, long-straight, long-straight-pushed-back, ponytail, quiff, rectangular, round, small-bun, small-buns, straight, straight-pushed-back, strand, strands, triangle
+$avatar-skins: (pale: #ffeedc, fair: #f4d3d0, black: #77584d, dull: #d3a98c, red: #e0957c, beige: #f4c4a4)
+$avatar-sweaters: (turquoise: #a6fff8, yellow: #ffe36c, pink: #ff6cbd, purple: #b86eff, green: #8ee54a, grey: #dbdbdb)
+$avatar-eyes: almond-shapes, circles-with-eyelashes, falling-circles, ovals, semicircles, slanting-shapes, straight-circles, surrounded-circles
+$avatar-mouths: big-smile, cat, crescent, double-lips, long-lips, long-semicircle, neutral, semicircle, small-lips, small-smile
+$avatar-accessories: earings, freckles, hair-tie, hairclip, mole, plaster, rectangular-glasses, round-glasses
+$avatar-haircut-bangs: big-bun, bob, cowlick, long-straight, quiff, straight, strand
+
+=avatar-background-image-modifiers($directory, $values, $suffix: null)
+  @if $suffix != null
+    $suffix: -#{$suffix}
+
+  @each $value in $values
+    &--#{$value}
+      background:
+        image: image-url('avatars/#{$directory}/#{$value}#{$suffix}.svg')
+        repeat: no-repeat
+        position: center center
+        size: contain
+
+.avatar
+  width: 100%
+  height: 100%
+  position: relative
+
+  &--small
+    width: 100px
+    height: 100px
+
+  &--big
+    width: 400px
+    height: 400px
+
+  &__haircut, &__face, &__eyes, &__mouth, &__accessory, &__haircut-bangs
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    position: absolute
+
+  &__haircut, &__eyes, &__mouth, &__accessory, &__haircut-bangs
+    background-size: 100% 100%
+
+  &__haircut
+    +avatar-background-image-modifiers(haircuts, $avatar-haircuts)
+
+  &__skin
+    +modifiers(fill, $avatar-skins)
+
+  &__sweater
+    +modifiers(fill, $avatar-sweaters)
+
+  &__eyes
+    +avatar-background-image-modifiers(eyes, $avatar-eyes)
+
+  &__mouth
+    +avatar-background-image-modifiers(mouths, $avatar-mouths)
+
+  &__haircut-bangs
+    +avatar-background-image-modifiers(haircuts, $avatar-haircut-bangs, $suffix: bangs)
+
+  &__accessory
+    +avatar-background-image-modifiers(accessories, $avatar-accessories)
+

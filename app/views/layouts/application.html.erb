@@ -7,14 +7,13 @@
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <%= stylesheet_link_tag :application, media: :all, 'data-turbolinks-track': :reload %>
+    <%= stylesheet_link_tag 'application', media: :all, 'data-turbolinks-track': :reload %>
     <%= javascript_include_tag 'application' %>
-    <%= javascript_pack_tag 'application' %>
+    <%= javascript_pack_tag 'application' if vue? %>
+  </head>
 
   <body class="view <%= view_class %>">
     <%= render 'application/notifications', notifications: notifications %>
-
     <%= yield %>
-
   </body>
 </html>

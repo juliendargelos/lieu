@@ -1,0 +1,21 @@
+<template>
+  <input type="hidden" name="avatar[face]" v-model="value">
+
+  <% Avatar.face_names.each do |face, name| %>
+    <%= content_tag :div, class: :avatar, '@click': "value = #{face.to_json.html_safe}" do %>
+      <%= render "avatars/faces/#{face}.svg" %>
+    <% end %>
+  <% end %>
+</template>
+
+<script>
+export default {
+  props: ['value'],
+
+  watch: {
+    value: function(value) {
+      this.$emit('change', value)
+    }
+  }
+}
+</script>

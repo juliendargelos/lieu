@@ -16,24 +16,26 @@
 #
 
 class Avatar < ApplicationRecord
+  PLURAL_PROPERTIES = [:eyes]
+
   belongs_to :user
 
   enum face: {
     circle: 0,
     oval: 1,
     rounded_square: 2,
-    square: 3,
-    trapezium: 4,
-    triangle: 5
+    sharp: 3,
+    square: 4,
+    trapezium: 5
   }
 
-  enum skin: { # TODO: write the corresponding BEM modifiers
-    yellow: 0, # ffeedc
-    fair: 1,   # f4d3d0
-    black: 3,  # 77584d
-    dull: 4,   # d3a98c
-    red: 5,    # e0957c
-    beige: 6   # f4c4a4
+  enum skin: {
+    pale: 0,
+    fair: 1,
+    black: 3,
+    dull: 4,
+    red: 5,
+    beige: 6
   }
 
   enum eyes: {
@@ -47,31 +49,31 @@ class Avatar < ApplicationRecord
     surrounded_circles: 7
   }
 
-  enum mouths: {
+  enum mouth: {
     big_smile: 0,
     cat: 1,
     crescent: 2,
     double_lips: 3,
     long_lips: 4,
-    long_semicirle: 5,
+    long_semicircle: 5,
     neutral: 6,
-    semicirle: 7,
+    semicircle: 7,
     small_lips: 8,
     small_smile: 9
   }
 
   enum haircut: {
-    big_bun: 0,
-    big_buns: 1,
-    bob: 2,
-    braid: 3,
-    braids: 4,
-    cowlick: 5,
-    curls: 6,
-    long_curls: 7,
-    long_straight: 8,
-    long_straight_pushed_back: 9,
-    oval: 10,
+    ball: 0,
+    big_bun: 1,
+    big_buns: 2,
+    bob: 3,
+    braid: 4,
+    braids: 5,
+    cowlick: 6,
+    curls: 7,
+    long_curls: 8,
+    long_straight: 9,
+    long_straight_pushed_back: 10,
     ponytail: 11,
     quiff: 12,
     rectangular: 13,
@@ -96,12 +98,26 @@ class Avatar < ApplicationRecord
     round_glasses: 7
   }
 
-  enum sweater: { # TODO: write the corresponding BEM modifiers
-    turquoise: 0, # a6fff8
-    yellow: 1,    # ffe36c
-    pink: 2,      # ff6cbd
-    purple: 3,    # b86eff
-    green: 4,     # 8ee54a
-    grey: 5       # dbdbdb
+  enum sweater: {
+    turquoise: 0,
+    yellow: 1,
+    pink: 2,
+    purple: 3,
+    green: 4,
+    grey: 5
   }
+
+  class << self
+    def properties
+      defined_enums.map{ |name, hash| [name.in?(PLURAL_PROPERTIES.map(&:to_s)) ? name : name.singularize, hash.values] }.to_h
+    end
+  end
+
+  properties.each do |property, values|
+    validates property, presence: true
+
+    names = values.map{ |value| [value, send(property).to_s.gsub('_', '-')] }.to_h
+    define_singleton_method("#{property}_names") { names }
+    define_method("#{property}_name") { names[send(property)] }
+  end
 end

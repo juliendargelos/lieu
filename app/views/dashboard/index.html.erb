@@ -1,1 +1,37 @@
-Dashboard
+<main class="container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both">
+  <div class="dashboard-index__container">
+    <div class="dashboard-index__book" style="background:orange;width:200px;margin-right:10px"></div>
+    <div class="dashboard-index__users">
+      <div class=" dashboard-index__user user-profil">
+        <h1 class="user-profil__pseudo"><%= current_user.pseudo %></h1>
+        <%= image_tag("avatar-placeholder.png", :class => "user-profil__avatar") %>
+        <div class="user-profil__content">
+          <%= image_tag("library.svg", :class => "user-profil__library") %>
+          <div class="user-profil__separate"></div>
+          <div class="user-profil__details">
+            <div class="user-profil__detail"><span>01</span> dessins</div>
+            <div class="user-profil__detail"><span>15</span> minutes</div>
+            <div class="user-profil__detail"><span>08</span> emojis</div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-index__user user-profil">
+        <h1 class="user-profil__pseudo"><%= current_user.pseudo %></h1>
+        <%= image_tag("avatar-placeholder.png", :class => "user-profil__avatar") %>
+        <div class="user-profil__content">
+          <%= image_tag("library.svg", :class => "user-profil__library") %>
+          <div class="user-profil__separate"></div>
+          <div class="user-profil__details">
+            <div class="user-profil__detail"><span>04</span> dessins</div>
+            <div class="user-profil__detail"><span>30</span> minutes</div>
+            <div class="user-profil__detail"><span>12</span> emojis</div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-index__sound">
+        <%= image_tag("sound_on.svg", :class => "dashboard-index__sound-on") %>
+      </div>
+    </div>
+
+  </div>
+</main>

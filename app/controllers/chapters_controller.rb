@@ -4,6 +4,7 @@ class ChaptersController < ApplicationController
 
   def index
     @chapters = @book.chapters
+    @books = Book.all
   end
 
   private

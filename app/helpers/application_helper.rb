@@ -8,4 +8,13 @@ module ApplicationHelper
   def view_class
     "#{controller_name.gsub /[\/_]/, '-'}-#{action_name}"
   end
+
+  def vue(application)
+    @vue = true
+    content_tag(:div, nil, data: { vue: application.to_s.classify })
+  end
+
+  def vue?
+    !!@vue
+  end
 end

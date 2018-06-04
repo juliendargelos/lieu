@@ -1,22 +1,24 @@
-/* eslint no-console:0 */
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
-//
-// To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
-// layout file, like app/views/layouts/application.html.erb
-
 import Vue from 'vue/dist/vue.esm'
-import App from '../app.vue'
-import router from './router'
+
+import AvatarView from './views/Avatar.vue'
+import ReadingView from './views/Reading.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.appendChild(document.createElement('app'))
-  const app = new Vue({
-    el: 'app',
-    template: '<App/>',
-    components: { App }
+  [
+    AvatarView,
+    ReadingView
+  ].find(view => {
+    var name = view.toString().slice(0, -4)
+    var application = document.querySelector(`[data-vue="${name}"]`)
+
+    if(application) {
+      return new Vue({
+        el: application,
+        template: `<${name}/>`,
+        components: {
+          [name]: view
+        }
+      })
+    }
   })
-  console.log('Coucou VueJS')
 })

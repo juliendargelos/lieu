@@ -30,7 +30,9 @@
           <h2 class="chapters-index__title"><%= chapter.title %></h2>
         </div>
         <% end %>
-        <%= simple_format chapter.content %>
+        <div class="chapters-index__content">
+          <%= simple_format chapter.content %>
+        </div>
       </div>
     <% end %>
     <div class="chapters-index__next-chapter"></div>
@@ -45,40 +47,46 @@
     var drawSection = document.querySelector('.chapters-index__draw');
     var readSection = document.querySelector('.chapters-index__section--corner')
     var currentChallenge = document.querySelector('.chapters-index__challenge--current');
-    console.log(currentChallenge);
-    // if (currentChallenge.classList.contains("chapters-index_no-challenge") == true ) {
-    //   drawSection.classList.add('chapters-index__section--hidden')
-    //   readSection.classList.add('chapters-index__section--full')
-    // } else {
-    //   drawSection.classList.remove('chapters-index__section--hidden')
-    //   readSection.classList.remove('chapters-index__section--full')
-    // }
+    if (currentChallenge.classList.contains("chapters-index_no-challenge") == true ) {
+      drawSection.classList.add('chapters-index__section--hidden')
+      readSection.classList.add('chapters-index__section--full')
+    } else {
+      drawSection.classList.remove('chapters-index__section--hidden')
+      readSection.classList.remove('chapters-index__section--full')
+    }
   }
 
   var nextChapter = function() {
+
     var challenge = document.querySelector('.chapters-index__challenge--current');
     challenge.classList.remove('chapters-index__challenge--current');
 
     var chapter = document.querySelector('.chapters-index__chapter--current');
     chapter.classList.remove('chapters-index__chapter--current');
 
-    var nextChallenge = document.querySelector('.chapters-index__challenge[data-id="' + chapter.getAttribute('data-id') + '"]')
-
+    //var nextChallenge = document.querySelector('.chapters-index__challenge[data-id="' + chapter.getAttribute('data-id') + '"]')
+    var nextChallenge = challenge.nextElementSibling;
     if(nextChallenge) {
-      setTimeout(function() {
-        nextChallenge.classList.add('chapters-index__challenge--current');
-      }, 400)
+      nextChallenge.classList.add('chapters-index__challenge--current');
+      // setTimeout(function() {
+      //   nextChallenge.classList.add('chapters-index__challenge--current');
+      // }, 400)
     }
 
     var nextChapter = chapter.nextElementSibling;
     if(nextChapter) {
       nextChapter.classList.add('chapters-index__chapter--current');
+
+      checkChallengePresence()
     }
     else {
       setTimeout(function() {
         window.location.href = '/books';
       }, 200);
     }
+
+
+
   }
 
   checkChallengePresence()
@@ -90,7 +98,6 @@
 
   watch('.chapters-index__next-chapter', 'click', function() {
     nextChapter()
-    checkChallengePresence()
   });
 
   watch('.chapters-index__challenge-button', 'click', function() {
@@ -103,22 +110,8 @@
   });
 
   watch('.dreamy-sketch__button', 'click', function() {
-    var challenge = document.querySelector('.chapters-index__challenge--current');
-    challenge.classList.remove('chapters-index__challenge--current');
-
-    var chapter = document.querySelector('.chapters-index__chapter--current');
-    chapter.classList.remove('chapters-index__chapter--current');
-
     document.querySelector('.dreamy-sketch').classList.remove('dreamy-sketch--opened');
-
-    var nextChallenge = document.querySelector('.chapters-index__challenge[data-id="' + chapter.getAttribute('data-id') + '"]')
-
-    if(nextChallenge) {
-      setTimeout(function() {
-        nextChallenge.classList.add('chapters-index__challenge--current');
-      }, 400)
-    }
-
+    nextChapter()
   });
 
   Application.DreamySketch.singleton.canvas.element.addEventListener('mousedown', function() {

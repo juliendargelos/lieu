@@ -24,17 +24,15 @@ chapters:
     instruction: À ton avis, à quoi ressemble la vallée de Maître Renard?
     brush: pen
     content: |
-      Au-dessus de la vallée, sur une colline, il y avait un bois. Dans le bois, il y avait un gros arbre. Sous l'arbre, il y avait un trou. Dans le trou vivaient Maitre Renard, Dame Renard et leurs quatre renardeaux.
+      Tous les soirs, dès que la nuit tombait, Maître Renard disait à son épouse : "Alors, mon amie, que veux-tu pour dîner ? Un poulet dodu de chez Boggis ? Un canard ou une oie de chez Bunce ? Ou une belle dinde de chez Bean ? "
+      Et lorsque Dame Renard lui avait dit ce qu'elle voulait, Maître Renard se faufilait vers la vallée, dans la nuit noire, et se servait.
+      Boggis, Bunce et Bean savaient très bien ce qui se passait et cela les rendait fous de rage. Ils n'étaient pas hommes à faire des cadeaux. Ils aimaient encore moins être volés. C'est pourquoi toutes les nuits chacun prenait son fusil de chasse et se cachait dans un recoin sombre de sa ferme avec l'espoir d'attraper le voleur.
 
   - position: 3
-    title: Maitre Renard
+    title:
     instruction:
     brush:
     content: |
-      Tous les soirs, dès que la nuit tombait, Maitre Renard disait à son épouse :
-      « Alors, mon amie, que veux-tu pour dîner ? Un poulet dodu de chez Boggis ? Un canard ou une oie de chez Bunce ? Ou une belle dinde de chez Bean ? »
-      Et lorsque Dame Renard lui avait dit ce qu'elle voulait, Maitre Renard se faufilait vers la vallée, dans la nuit noire, et se servait.
-      Boggis, Bunce et Bean savaient très bien ce qui se passait et cela les rendait fous de rage. Ils n'étaient pas hommes à faire des cadeaux. Ils aimaient encore moins être volés. C'est pourquoi toutes les nuits chacun prenait son fusil de chasse et se cachait dans un recoin sombre de sa ferme avec l'espoir d'attraper le voleur.
       Mais Maitre Renard était trop malin pour eux. Il s'approchait toujours d'une ferme face au vent. Si quelqu'un était tapi dans l'ombre, il sentait de très loin son odeur, apportée par le vent.
       Par exemple, si M.Boggis se cachait derrière son poulailler numéro 1, Maitre Renard le flairait à une cinquantaine de mètres et, vite, il changeait de direction, filant droit vers le poulailler numéro 4, à l'autre bout de la ferme.
       La peste soit de cette sale bête ! criait Bunce.
@@ -47,3 +45,106 @@ chapters:
       Tais-toi et écoute, dit Bean. Demain soir, nous nous cacherons tous devant le trou où vit le renard. Nous attendrons qu'il sorte. Et alors... pan ! pan ! pan !
       Très intelligent, dit Bunce, mais d'abord nous devons trouver le trou.
       Mon cher Bunce, je l'ai déjà trouvé, dit ce futé de Bean. Il est dans le bois, sur la colline. Sous un gros arbre...
+
+  - position: 4
+    title: La fusillade
+    instruction:
+    brush:
+    content: |
+      " Alors, mon amie, demanda Maître Renard, que voudras-tu pour dîner ?
+      - Eh bien, ce soir, ce sera du canard, répondit Dame Renard. Veux-tu bien nous rapporter deux canards dodus, un pour toi et moi, un pour les enfants ?
+      - Va pour des canards ! dit Maître Renard. Chez Bunce, c'est le mieux !
+      - Fais bien attention, dit Dame Renard.
+      - Mon amie, je peux sentir ces crétins à un kilomètre, dit Maître Renard. J'arrive même à les reconnaître chacun à leur odeur. Boggis dégage une odeur répugnante de poulet avarié. Bunce empeste les foies d'oies. Quant à Bean, des relents de cidre flottent dans son sillage comme des gaz toxiques.
+      - Oui, mais sois prudent, dit Dame Renard. Tu sais qu'ils t'attendent, tous les trois.
+      - Ne t'inquiète pas pour moi, dit Maître Renard. À bientôt ! "
+      Maître Renard n'aurait pas été si sûr de lui s'il avait su exactement où l'attendaient les trois fermiers, à l'instant même. Ils se trouvaient juste devant l'entrée du terrier, chacun tapi derrière un arbre, le fusil chargé. Et, de plus, ils avaient très soigneusement choisi leur place, après s'être assuré que le vent ne soufflait pas vers le terrier, mais en sens contraire. Ils ne risquaient pas d'être trahis par leur odeur.
+
+  - position: 5
+    title:
+    instruction:
+    brush:
+    content: |
+      Maître Renard grimpa le tunnel obscur jusqu'à l'entrée de son terrier. Son beau museau pointu surgit dans la nuit sombre et il se mit à flairer.
+      Il avança d'un centimètre ou deux et s'arrêta.
+      Il flaira une autre fois. Il était toujours particulièrement prudent en sortant de son trou.
+      Il avança d'un autre centimètre. Il était à moitié sorti, maintenant.
+      Sa truffe frémissait de tous côtés, humant, flairant le danger.
+      Sans résultat. Au moment même où il allait filer dans le bois, il entendit ou crut entendre un petit bruit, comme si quelqu'un avait bougé le pied, très, très doucement sur un tapis de feuilles mortes.
+      Maître Renard s'aplatit par terre et s'immobilisa, oreilles dressées. Il attendit un long moment, mais on n'entendait plus rien.
+      " Ce devait être un rat des champs, se dit-il, ou une autre petite bête. "
+      Il se glissa un peu plus hors du trou… puis encore un peu plus. Il était presque tout à fait dehors, maintenant. Il regarda attentivement autour de lui, une dernière fois. Le bois était sombre et silencieux. Là-haut, dans le ciel, la lune brillait.
+      Alors, ses yeux perçants, habitués à la nuit, virent luire quelque chose derrière un arbre, non loin de là. C'était un petit rayon de lune argenté qui scintillait sur une surface polie. Maître Renard l'observa, immobile. Que diable était-ce donc ? Maintenant, cela bougeait. Cela se dressait…
+      Grands dieux ! Le canon d'un fusil !
+      Vif comme l'éclair. Maître Renard rentra d'un bond dans son trou et, au même instant, on eût dit que la forêt entière explosait autour de lui. Pan-pan-pan ! Pan-pan-pan ! Pan-pan-pan !
+
+  - position: 6
+    title:
+    instruction:
+    brush:
+    content: |
+      La fumée des trois fusils s'éleva dans la nuit. Boggis, Bunce et Bean sortirent de derrière leurs arbres et s'approchèrent du trou.
+      " On l'a eu ? " demanda Bean.
+      L'un d'eux éclaira le terrier de sa torche électrique. Et là, sur le sol, dans le rond de lumière, dépassant à moitié du trou, gisaient les pauvres restes déchiquetés et ensanglantés… d'une queue de renard !
+      Bean la ramassa.
+      " On a la queue, mais pas le renard ! dit-il en la jetant au loin.
+      - Zut et flûte ! s'écria Boggis. On a tiré trop tard. On aurait dû tirer quand il a sorti la tête.
+      - Maintenant, il réfléchira à deux fois avant de la sortir ", dit Bunce.
+      Bean tira un flacon de cidre et but à la bouteille. Puis il dit :
+      " La faim le fera sortir dans trois jours au moins. Je ne vais pas attendre, assis à ne rien faire. Creusons et débusquons-le !
+      - Ah, dit Boggis. Voilà qui est bien parler ! On peut le débusquer en deux heures. On sait qu'il est là.
+      - Il y a sans doute toute la famille au fond de ce trou, dit Bunce.
+      - Eh bien, nous les aurons tous ! dit Bean. À nos pelles ! "
+
+  - position: 7
+    title: Les terribles pelles
+    instruction:
+    brush:
+    content: |
+      Au fond du trou, Dame Renard léchait tendrement le moignon de queue de son mari pour l'empêcher de saigner.
+      " C'était la plus belle queue à des kilomètres à la ronde, dit-elle entre deux coups de langue.
+      - J'ai mal, dit Maître Renard.
+      - Je sais, mon ami. Mais bientôt, cela ira mieux.
+      - Et ta queue repoussera, papa, dit l'un des renardeaux.
+
+      - Non, jamais plus, dit Maître Renard. Je serai sans queue le restant de mes jours. "
+      Il avait l'air très sombre. Ce soir-là, les renards n'avaient pas de quoi manger et bientôt les enfants s'assoupirent. Puis Dame Renard fit de même. Mais Maître Renard ne pouvait pas dormir parce que son moignon de queue lui faisait mal.
+
+      " Eh bien, après tout, songea-t-il, je dois m'estimer heureux d'être encore en vie. Seulement, maintenant qu'ils ont trouvé notre trou, nous allons devoir déménager le plus tôt possible. Nous ne serons pas tranquilles tant que… Que se passe-t-il ? "
+
+  - position: 8
+    title:
+    instruction: Montre à ton ami de lecture comment tu représentes le rac-rac-raclement des pelleteuses !
+    brush: polygon
+    content: |
+      Il tourna vivement la tête et tendit l'oreille. Ce qu'il entendait à présent était le bruit le plus effrayant qui soit pour un renard, le rac-rac-raclement de pelles creusant le sol.
+      " Réveillez-vous ! hurla-t-il, ils creusent ! Ils nous délogent ! "
+      Dame Renard se réveilla en un clin d'œil. Elle se redressa, toute tremblante.
+      " Tu en es sûr ? murmura-t-elle.
+      - Sûr et certain ! Écoute !
+      - Ils vont tuer mes enfants ! s'écria Dame Renard.
+      - Jamais ! dit Maître Renard.
+      - Mais si ! sanglotait Dame Renard. Tu le sais ! "
+      Scrunch, scrunch, scrunch ! faisaient les pelles au-dessus de leurs têtes. De la terre et des petits cailloux se mirent à tomber du plafond.
+      " Ils vont nous tuer ? Comment ça, maman ? demanda l'un des renardeaux, ses grands yeux noirs écarquillés de terreur. Avec des chiens ? "
+      Dame Renard fondit en larmes. Elle prit ses quatre enfants dans ses bras et les serra contre elle.
+
+  - position: 9
+    title:
+    instruction:
+    brush:
+    content: |
+      Soudain, au-dessus d'eux, on entendit un crissement épouvantable et le tranchant d'une pelle traversa le plafond. Cet horrible spectacle sembla électriser Maître Renard. Il fit un bond et s'écria :
+      " Ça y est ! Allons-y ! Il n'y a pas un moment à perdre ! Comment ne pas y avoir pensé plus tôt !
+      - Pensé à quoi, papa ?
+      - Un renard creuse plus vite qu'un homme ! hurla Maître Renard en commençant à creuser. Personne au monde ne creuse aussi vite qu'un renard. "
+      Maître Renard s'était mis à creuser à toute vitesse avec ses pattes avant et, derrière lui, la terre voltigeait follement.
+      Dame Renard et les quatre enfants accoururent pour l'aider.
+      " Vers le bas ! ordonna Maître Renard, nous devons creuser profond ! Le plus profond possible ! "
+      Long, de plus en plus long, le tunnel avançait. Il descendait à pic, profond, de plus en plus profond, loin de la surface du sol. La mère, le père et les quatre enfants creusaient de concert. Leurs pattes de devant remuaient si vite qu'on ne les voyait plus. Et peu à peu, les bruits de raclement se firent de plus en plus lointains.
+      Une heure après. Maître Renard s'arrêta de creuser. " Stop ! " dit-il.
+      Tous s'arrêtèrent. Ils se retournèrent et levèrent les yeux sur la longue galerie qu'ils venaient de creuser. Tout était tranquille.
+      " Ouf ! dit Maître Renard, on y est arrivé ! Ils ne descendront jamais jusqu'ici. Bravo à tous ! "
+      Ils s'assirent, à bout de souffle. Et Dame Renard dit à ses enfants :
+      " Il faudrait que vous sachiez que, sans votre père, nous serions tous morts à l'heure qu'il est. Votre père est fantastique. "
+      Maître Renard regarda son épouse qui lui sourit. Lorsqu'elle lui parlait ainsi, il l'aimait plus que jamais.

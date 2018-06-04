@@ -13,6 +13,8 @@
     width: 50%
     overflow: hidden
     position: relative
+    display: flex
+    justify-content: center
 
     &:not(:last-of-type)
       margin-right: 10px
@@ -30,10 +32,14 @@
       transform: rotate(135deg)
 
     &--hidden
-      display: none
+      opacity: 0
 
     &--full
-      width: 100%
+      position: absolute
+      left: 10px
+      top: 10px
+      width: calc(100% - 20px)
+      height: calc(100% - 20px)
 
   &__challenge
     width: 100%
@@ -115,6 +121,10 @@
     &--current
       opacity: 1
 
+  &__content
+    font-size: 20px
+    max-width: 700px
+
   &__next-chapter
     &::after
       content: ""
@@ -128,7 +138,7 @@
       border-width: 100px
       border-style: solid
       border-image: initial
-      border-color: red
+      border-color: transparent
 
 .dreamy-sketch
   background: $white

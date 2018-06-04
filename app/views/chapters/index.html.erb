@@ -4,38 +4,50 @@
     <%= image_tag("home_blue.svg", :class => "chapters-index__icon-home") %>
   </div>
 
-  <section class="chapters-index__section chapters-index__draw">
-    <div class="dreamy-sketch">
-      <canvas class="dreamy-sketch__canvas"></canvas>
-      <span class="button button--orange dreamy-sketch__button">Fini</span>
-    </div>
-    <% @chapters.each.with_index do |chapter, n| %>
-      <div class="chapters-index__challenge<%= ' chapters-index__challenge--current' if n.zero? %><%= ' chapters-index_no-challenge' if !chapter.instruction %>" data-id="<%= chapter.id %>" data-brush-class="<%= chapter.brush_class %>">
-        <span class="chapters-index__challenge-number"><%= chapter.number %></span>
-        <h3 class="chapters-index__instruction"><%= chapter.instruction %></h3>
-        <span class="button button--orange chapters-index__challenge-button">Prêt</span>
+  <div class="chapters-index__sections">
+    <section class="chapters-index__section chapters-index__draw">
+      <div class="dreamy-sketch">
+        <canvas class="dreamy-sketch__canvas"></canvas>
+        <span class="button button--orange dreamy-sketch__button">Fini</span>
       </div>
-    <% end %>
-  </section>
+      <% @chapters.each.with_index do |chapter, n| %>
+        <div class="chapters-index__challenge<%= ' chapters-index__challenge--current' if n.zero? %><%= ' chapters-index_no-challenge' if !chapter.instruction %>" data-id="<%= chapter.id %>" data-brush-class="<%= chapter.brush_class %>">
+          <span class="chapters-index__challenge-number"><%= chapter.number %></span>
+          <h3 class="chapters-index__instruction"><%= chapter.instruction %></h3>
+          <span class="button button--orange chapters-index__challenge-button">Je suis prêt</span>
+        </div>
+      <% end %>
+    </section>
 
-  <section class="chapters-index__section chapters-index__section--corner">
-    <% @chapters.each.with_index do |chapter, n| %>
-      <div class="chapters-index__chapter<%= ' chapters-index__chapter--current' if n.zero? %>" data-id="<%= chapter.id %>">
-        <% if chapter.title %>
-        <div class="chapters-index__head">
-          <div class="chapters-index__book-icon">
-            <%= image_tag @book.icon.url, class: 'chapters-index__icon' if @book.icon.exists? %>
+    <section class="chapters-index__section chapters-index__section--corner">
+      <% @chapters.each.with_index do |chapter, n| %>
+        <div class="chapters-index__chapter<%= ' chapters-index__chapter--current' if n.zero? %>" data-id="<%= chapter.id %>">
+          <% if chapter.title %>
+          <div class="chapters-index__head">
+            <div class="chapters-index__book-icon">
+              <%= image_tag @book.icon.url, class: 'chapters-index__icon' if @book.icon.exists? %>
+            </div>
+            <div class="chapters-index__number"><%= chapter.number %></div>
+            <h2 class="chapters-index__title"><%= chapter.title %></h2>
           </div>
-          <div class="chapters-index__number"><%= chapter.number %></div>
-          <h2 class="chapters-index__title"><%= chapter.title %></h2>
+          <% end %>
+          <div class="chapters-index__content">
+            <%= simple_format chapter.content %>
+          </div>
         </div>
+      <% end %>
+      <div class="chapters-index__next-chapter"></div>
+    </section>
+  </div>
+
+  <section class="chapters-index__timeline">
+    <div class="timeline">
+      <div class="timeline__chapters">
+        <% (1..@book.number_of_chapters).each do |i| %>
+          <div class="timeline__chapter"></div>
         <% end %>
-        <div class="chapters-index__content">
-          <%= simple_format chapter.content %>
-        </div>
       </div>
-    <% end %>
-    <div class="chapters-index__next-chapter"></div>
+    </div>
   </section>
 
 </main>

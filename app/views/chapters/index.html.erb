@@ -7,6 +7,13 @@
   <div class="chapters-index__sections">
     <section class="chapters-index__section chapters-index__draw">
       <div class="dreamy-sketch">
+        <div class="emojis">
+          <ul class="emojis__list">
+            <% Emoji.kinds.keys.each do |kind| %>
+              <li class="emojis__item"><%= image_tag("emojis/#{kind}.svg", :class => "emojis__item-icon") %><li>
+            <% end %>
+          </ul>
+        </div>
         <% @chapters.each.with_index do |chapter, n| %>
           <div class="dreamy-sketch__challenge <%= ' dreamy-sketch__challenge--current' if n.zero? %>">
             <span class="dreamy-sketch__challenge-number"><%= chapter.number %></span>

@@ -15,4 +15,14 @@
 class Emoji < ApplicationRecord
   belongs_to :reading
   belongs_to :subject
+
+  enum kind: {
+    admire: 0,
+    cute: 1,
+    dubious: 2,
+    lack_understanding: 3,
+    laugh: 4,
+    love: 5
+  }
+
 end

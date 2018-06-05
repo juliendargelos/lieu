@@ -1,7 +1,7 @@
 .readings-show
   &__first
     position: relative
-    z-index: 2
+    z-index: 10
 
   &__book-content
     height: 100%
@@ -61,7 +61,7 @@
     position: absolute
     top: 30px
     left: 30px
-    z-index: 999
+    z-index: 5
 
   &__draw
     border-bottom: 10px solid
@@ -107,6 +107,7 @@
       display: block
       position: absolute
       transform: rotate(135deg)
+      z-index: 4
 
     &--hidden
       opacity: 0
@@ -176,6 +177,21 @@
   &__icon
     height: 40px
 
+  &__head-book-icon
+    margin-bottom: 20px
+    background: $blue
+    padding: 10px
+    border-radius: 50%
+    width: 50px
+    height: 50px
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-bottom: 80px
+
+  &__head-icon
+    height: 30px
+
   &__number
     font-weight: 800
     font-size: 50px
@@ -198,17 +214,31 @@
     position: absolute
     transition: 1s
     font-family: 'Ysra'
-    max-height: 600px
-    overflow: scroll
     z-index: 0
+    height: calc(100% - 10px)
 
     &--current
       opacity: 1
       z-index: 1
 
   &__content
+    max-height: 100%
+    overflow: scroll
+    &::-webkit-scrollbar
+        width: 0px
+        background: transparent
+
+  &__text
     font-size: 20px
     max-width: 700px
+    margin-bottom: 100px
+
+  &__opacity
+    width: 100%
+    height: 160px
+    background: linear-gradient(transparent 0%, white 60%)
+    position: absolute
+    bottom: 0
 
   &__next-chapter
     &::after
@@ -224,6 +254,7 @@
       border-style: solid
       border-image: initial
       border-color: transparent
+      z-index: 6
 
 .dreamy-sketch
   background: $white

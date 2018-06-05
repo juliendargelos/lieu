@@ -1,0 +1,177 @@
+<main>
+  <% unless @reading.beggined? %>
+    <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
+      <div class="readings-show__book-content readings-show__book-content--<%= @book.color %>">
+        <%= image_tag @book.icon.url, class: 'readings-show__book-icon' if @book.icon.exists? %>
+        <h1 class="readings-show__book-title"><%= @book.title %></h1>
+        <h2 class="readings-show__book-author"><%= @book.author %></h2>
+        <div class="readings-show__book-separator"></div>
+        <div class="readings-show__book-number-of-chapters"><%= @book.number_of_chapters %></div>
+      </div>
+      <span class="next-step" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></span>
+    </div>
+  <% end %>
+
+  <div class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__container">
+    <div class="readings-show__home">
+      <%= image_tag("home_blue.svg", :class => "readings-show__icon-home") %>
+    </div>
+
+    <div class="readings-show__sections">
+      <section class="readings-show__section readings-show__draw">
+        <div class="dreamy-sketch">
+          <div class="emojis">
+            <ul class="emojis__list">
+              <% Emoji.kinds.keys.each do |kind| %>
+                <li class="emojis__item"><%= image_tag("emojis/#{kind}.svg", :class => "emojis__item-icon") %><li>
+              <% end %>
+            </ul>
+          </div>
+          <% @chapters.each.with_index do |chapter, n| %>
+            <div class="dreamy-sketch__challenge <%= ' dreamy-sketch__challenge--current' if chapter.id == @reading.chapter.id %>">
+              <span class="dreamy-sketch__challenge-number"><%= chapter.number %></span>
+              <h3 class="dreamy-sketch__instruction"><%= chapter.instruction %></h3>
+            </div>
+          <% end %>
+          <div class="dreamy-sketch__strip">
+            <%= image_tag("strip.svg", :class => "dreamy-sketch__strip-icon") %>
+          </div>
+          <canvas class="dreamy-sketch__canvas"></canvas>
+          <span class="button button--orange dreamy-sketch__button">Tadaaaa!</span>
+        </div>
+        <% @chapters.each.with_index do |chapter, n| %>
+          <div class="readings-show__challenge<%= ' readings-show__challenge--current' if chapter.id == @reading.chapter.id %><%= ' readings-show_no-challenge' if !chapter.instruction %>" data-id="<%= chapter.id %>" data-brush-class="<%= chapter.brush_class %>">
+            <span class="readings-show__challenge-number"><%= chapter.number %></span>
+            <h3 class="readings-show__instruction"><%= chapter.instruction %></h3>
+            <span class="button button--orange readings-show__challenge-button">Je suis prêt</span>
+          </div>
+        <% end %>
+      </section>
+
+      <section class="readings-show__section readings-show__section--corner">
+        <% @chapters.each.with_index do |chapter, n| %>
+          <div class="readings-show__chapter<%= ' readings-show__chapter--current' if chapter.id == @reading.chapter.id %>" data-id="<%= chapter.id %>">
+            <% if chapter.title %>
+            <div class="readings-show__head">
+              <div class="readings-show__book-icon">
+                <%= image_tag @book.icon.url, class: 'readings-show__icon' if @book.icon.exists? %>
+              </div>
+              <div class="readings-show__number"><%= chapter.number %></div>
+              <h2 class="readings-show__title"><%= chapter.title %></h2>
+            </div>
+            <% end %>
+            <div class="readings-show__content">
+              <%= simple_format chapter.content %>
+            </div>
+          </div>
+        <% end %>
+        <div class="readings-show__next-chapter"></div>
+      </section>
+    </div>
+
+    <section class="readings-show__timeline">
+      <div class="timeline">
+        <div class="timeline__chapters">
+          <% (1..@book.number_of_chapters).each do |i| %>
+            <div class="timeline__chapter"></div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  Application.init();
+
+  var checkChallengePresence = function() {
+    var drawSection = document.querySelector('.readings-show__draw');
+    var readSection = document.querySelector('.readings-show__section--corner')
+    var currentChallenge = document.querySelector('.readings-show__challenge--current');
+    if (currentChallenge.classList.contains("readings-show_no-challenge") == true ) {
+      drawSection.classList.add('readings-show__section--hidden')
+      readSection.classList.add('readings-show__section--full')
+    } else {
+      drawSection.classList.remove('readings-show__section--hidden')
+      readSection.classList.remove('readings-show__section--full')
+    }
+  }
+
+  var nextChapter = function() {
+
+    var challenge = document.querySelector('.readings-show__challenge--current');
+    challenge.classList.remove('readings-show__challenge--current');
+
+    var instruction = document.querySelector('.dreamy-sketch__challenge--current');
+    instruction.classList.remove('dreamy-sketch__challenge--current');
+
+    var chapter = document.querySelector('.readings-show__chapter--current');
+    chapter.classList.remove('readings-show__chapter--current');
+
+    //var nextChallenge = document.querySelector('.readings-show__challenge[data-id="' + chapter.getAttribute('data-id') + '"]')
+    var nextChallenge = challenge.nextElementSibling;
+    if(nextChallenge) {
+      nextChallenge.classList.add('readings-show__challenge--current');
+    }
+
+    var nextInstruction = instruction.nextElementSibling;
+    if(nextInstruction) {
+      nextInstruction.classList.add('dreamy-sketch__challenge--current');
+    }
+
+    var nextChapter = chapter.nextElementSibling;
+    if(nextChapter) {
+      nextChapter.classList.add('readings-show__chapter--current');
+      checkChallengePresence()
+      Request.patch(<%= reading_path(@reading).to_json.html_safe %>, {
+        authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+        reading: {
+          chapter_id: nextChapter.getAttribute('data-id')
+        }
+      })
+    }
+    else {
+      setTimeout(function() {
+        window.location.href = '/books';
+      }, 200);
+    }
+  }
+
+  checkChallengePresence()
+
+  var watch = function(selector, event, callback) {
+    var elements = document.querySelectorAll(selector);
+    for(var i = 0; i < elements.length; i++) elements[i].addEventListener(event, callback);
+  };
+
+  watch('.readings-show__next-chapter', 'click', function() {
+    nextChapter()
+  });
+
+  watch('.readings-show__challenge-button', 'click', function() {
+    var chapterInstruction = this.parentNode;
+
+    document.querySelector('.dreamy-sketch__button').classList.remove('dreamy-sketch__button--visible');
+    Application.DreamySketch.singleton.brush = new Application.DreamySketch.Brush[chapterInstruction.getAttribute('data-brush-class')]();
+    Application.DreamySketch.singleton.canvas.clear();
+    document.querySelector('.dreamy-sketch').classList.add('dreamy-sketch--opened');
+  });
+
+  watch('.dreamy-sketch__button', 'click', function() {
+    document.querySelector('.dreamy-sketch').classList.remove('dreamy-sketch--opened');
+    nextChapter()
+  });
+
+  Application.DreamySketch.singleton.canvas.element.addEventListener('mousedown', function() {
+    setTimeout(function() {
+      document.querySelector('.dreamy-sketch__button').classList.add('dreamy-sketch__button--visible');
+    }, 1000);
+  });
+
+  Application.DreamySketch.singleton.canvas.element.addEventListener('touchstart', function() {
+    setTimeout(function() {
+      document.querySelector('.dreamy-sketch__button').classList.add('dreamy-sketch__button--visible');
+    }, 1000);
+  });
+</script>

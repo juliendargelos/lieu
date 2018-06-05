@@ -3,10 +3,9 @@ Rails.application.routes.draw do
   resource :avatar, path_names: { edit: '/' }, only: [:edit, :udpate]
   resources :explanations
   resources :dashboard
+  resources :readings, only: [:show, :create, :update]
 
-  resources :books, only: [:index, :show] do
-    resources :chapters, only: :index
-  end
+  resources :books, only: :index
 
   resource :authentication, only: [:new, :create], path: '/', path_names: { new: '/' }, module: :user, as: :user_authentication do
     get 'logout' => 'authentications#destroy', as: :destroy

@@ -26,6 +26,7 @@ class User < ApplicationRecord
   validates :password, confirmation: { message: 'La confirmation ne correspond pas' }, if: -> { password.present? }, allow_nil: true
 
   has_secure_password validations: false
+  has_many :readings
 
   def to_s
     pseudo

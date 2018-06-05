@@ -27,10 +27,10 @@ rbenv install 2.5.0
 
 ### Install dependencies
 
-Using [Bundler](https://github.com/bundler/bundler):
+Using [Bundler](https://github.com/bundler/bundler) and [Yarn](https://github.com/yarnpkg/yarn):
 
 ```shell
-bundle
+bundle && yarn install
 ```
 
 ### Set environment variables

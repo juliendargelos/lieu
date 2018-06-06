@@ -97,11 +97,11 @@
     </div>
     <div class="avatars-index__result">
       <div class="avatar avatar--blank">
-        <div class="avatar__haircut avatar__haircut--ball"></div>
-        <%= render "avatars/faces/circle.svg", avatar: avatar %>
-        <div class="avatar__eyes avatar__eyes--circles-with-eyelashes"></div>
-        <div class="avatar__mouth avatar__mouth--big-smile"></div>
-        <div class="avatar__accessory avatar__accessory--earings>"></div>
+        <div class="characteristic avatar__haircut avatar__haircut--ball"></div>
+        <%= render "avatars/faces/circle.svg", avatar: avatar, class: 'characteristic--active' %>
+        <div class="characteristic avatar__eyes avatar__eyes--circles-with-eyelashes"></div>
+        <div class="characteristic avatar__mouth avatar__mouth--big-smile"></div>
+        <div class="characteristic avatar__accessory avatar__accessory--earings>"></div>
       </div>
 
     </div>
@@ -156,8 +156,3 @@
 
 
 </script>
-
-
-<!-- <% Avatar.eyes.keys.each do |eye| %>
-  <div class=" avatar__eyes--<%= eye %>" data-type-eyes="<%= eye %>"></div>
-<% end %> -->

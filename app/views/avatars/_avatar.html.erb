@@ -20,5 +20,6 @@
     <div class="avatar__accessory avatar__accessory--<%= avatar.accessory_name %>"></div>
   <% else %>
     Pas d'avatar
+    <%= render "avatars/faces/circle.svg", avatar: avatar %>
   <% end %>
 </div>

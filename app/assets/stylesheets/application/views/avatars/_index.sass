@@ -64,6 +64,9 @@
     display: none
     &--active
       display: block
+    &::-webkit-scrollbar
+        width: 0px
+        background: transparent
 
   &__item
     background: $white
@@ -77,21 +80,32 @@
     overflow: hidden
     float: left
     margin: 25px
-    .avatar__eyes
-      background-size: 200%
-      background-position: 50% 25%
-    .avatar__mouth
-      background-size: 250%
-      background-position: 49% 55%
-    .avatar__skin, .avatar__sweater
-      width: 100px
-      height: 100px
-    .avatar__accessory
-      background-size: 150%
-      background-position: 50% 25%
+
     &--choice
       border: 5px solid $orange
 
+  &__eye, &__mouth, &__skin, &__sweater, &__accessory, &__face, &__haircut
+    width: 100%
+    height: 100%
+    top: 0px
+    left: 0px
+    position: absolute
+
+  &__eye
+    background-size: 200%
+    background-position: 50% 25%
+
+  &__mouth
+    background-size: 250%
+    background-position: 49% 55%
+
+  &__skin, &__sweater
+    width: 100px
+    height: 100px
+    
+  &__accessory
+    background-size: 150%
+    background-position: 50% 25%
 
   &__result
     width: 50%

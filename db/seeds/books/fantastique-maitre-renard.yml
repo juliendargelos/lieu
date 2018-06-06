@@ -9,7 +9,7 @@ summary: |
   Un classique international, à la fois cocasse et tendre. S'il ne fallait lire qu'une seule histoire de renard et de poules, incontestablement, ce serait celle-là.
 
 chapters:
-  - position: 1
+  - position: 0
     title: Les trois fermiers
     instruction:
     brush:
@@ -19,16 +19,18 @@ chapters:
       Bunce élevait des oies et des canards. Il avait des milliers d'oies et de canard. C'était une espèce de nabot ventripotent. Il était si petit que, dans le petit bain d'une piscine, il aurait eu de l'eau jusqu'au menton. Il se nourrissait de beignets et de foies d'oies. ll écrasait les foies et fourrait les beignets de cette bouillie infâme.
       Ce régime lui donnait mal à l'estomac et un caractère épouvantable.
 
-  - position: 2
+  - position: 1
     title: Maitre Renard
     instruction: À ton avis, à quoi ressemble la vallée de Maître Renard?
     brush: pen
     content: |
+      Au-dessus de la vallée, sur une colline, il y avait un bois.
+      Dans le bois, il y avait un gros arbre. Sous l'arbre, il y avait un trou. Dans le trou vivaient Maître Renard, Dame Renard et leurs quatre renardeaux.
       Tous les soirs, dès que la nuit tombait, Maître Renard disait à son épouse : "Alors, mon amie, que veux-tu pour dîner ? Un poulet dodu de chez Boggis ? Un canard ou une oie de chez Bunce ? Ou une belle dinde de chez Bean ? "
       Et lorsque Dame Renard lui avait dit ce qu'elle voulait, Maître Renard se faufilait vers la vallée, dans la nuit noire, et se servait.
       Boggis, Bunce et Bean savaient très bien ce qui se passait et cela les rendait fous de rage. Ils n'étaient pas hommes à faire des cadeaux. Ils aimaient encore moins être volés. C'est pourquoi toutes les nuits chacun prenait son fusil de chasse et se cachait dans un recoin sombre de sa ferme avec l'espoir d'attraper le voleur.
 
-  - position: 3
+  - position: 2
     title:
     instruction:
     brush:
@@ -46,7 +48,7 @@ chapters:
       Très intelligent, dit Bunce, mais d'abord nous devons trouver le trou.
       Mon cher Bunce, je l'ai déjà trouvé, dit ce futé de Bean. Il est dans le bois, sur la colline. Sous un gros arbre...
 
-  - position: 4
+  - position: 3
     title: La fusillade
     instruction:
     brush:
@@ -60,7 +62,7 @@ chapters:
       - Ne t'inquiète pas pour moi, dit Maître Renard. À bientôt ! "
       Maître Renard n'aurait pas été si sûr de lui s'il avait su exactement où l'attendaient les trois fermiers, à l'instant même. Ils se trouvaient juste devant l'entrée du terrier, chacun tapi derrière un arbre, le fusil chargé. Et, de plus, ils avaient très soigneusement choisi leur place, après s'être assuré que le vent ne soufflait pas vers le terrier, mais en sens contraire. Ils ne risquaient pas d'être trahis par leur odeur.
 
-  - position: 5
+  - position: 4
     title:
     instruction:
     brush:
@@ -78,7 +80,7 @@ chapters:
       Grands dieux ! Le canon d'un fusil !
       Vif comme l'éclair. Maître Renard rentra d'un bond dans son trou et, au même instant, on eût dit que la forêt entière explosait autour de lui. Pan-pan-pan ! Pan-pan-pan ! Pan-pan-pan !
 
-  - position: 6
+  - position: 5
     title:
     instruction:
     brush:
@@ -96,7 +98,7 @@ chapters:
       - Il y a sans doute toute la famille au fond de ce trou, dit Bunce.
       - Eh bien, nous les aurons tous ! dit Bean. À nos pelles ! "
 
-  - position: 7
+  - position: 6
     title: Les terribles pelles
     instruction:
     brush:
@@ -112,7 +114,7 @@ chapters:
 
       " Eh bien, après tout, songea-t-il, je dois m'estimer heureux d'être encore en vie. Seulement, maintenant qu'ils ont trouvé notre trou, nous allons devoir déménager le plus tôt possible. Nous ne serons pas tranquilles tant que… Que se passe-t-il ? "
 
-  - position: 8
+  - position: 7
     title:
     instruction: Montre à ton ami de lecture comment tu représentes le rac-rac-raclement des pelleteuses !
     brush: polygon
@@ -129,7 +131,7 @@ chapters:
       " Ils vont nous tuer ? Comment ça, maman ? demanda l'un des renardeaux, ses grands yeux noirs écarquillés de terreur. Avec des chiens ? "
       Dame Renard fondit en larmes. Elle prit ses quatre enfants dans ses bras et les serra contre elle.
 
-  - position: 9
+  - position: 8
     title:
     instruction:
     brush:

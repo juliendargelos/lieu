@@ -13,4 +13,11 @@
 class Reading < ApplicationRecord
   belongs_to :user
   belongs_to :chapter
+  has_one :book, through: :chapter
+
+  scope :current, -> { find_by finished: false }
+
+  def beggined?
+    !chapter.position.zero?
+  end
 end

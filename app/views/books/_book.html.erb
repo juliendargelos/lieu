@@ -9,7 +9,7 @@
   ].compact.join(' ')
 %>
 
-<%= content_tag tag, class: class_name do %>
+<%= content_tag tag, class: class_name, :data => {:id => book.id} do %>
   <%= image_tag book.icon.url, class: :book__icon if book.icon.exists? %>
   <div class="book__content book__content--developed">
     <h2 class="book__title"><%= book.title %></h2>
@@ -22,7 +22,10 @@
     <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
     <div class="book__actions">
       <% if book.published? %>
-        <%= button_link_to 'Commencer', book_path(book.id), class: "button--#{book.white? ? :blue : :white} button--text--#{book.color}" %>
+        <%= form_for :reading, url: readings_path do |f| %>
+          <%= f.hidden_field :chapter_id, value: book.chapters.first.id %>
+          <%= f.submit 'Commencer', class: "button button--#{book.white? ? :blue : :white} button--text--#{book.color}" %>
+        <% end %>
       <% else %>
         <span class="button button--<%= book.white? ? :blue : :white %>  button--text--<%= book.color %> button--disabled">Actuellement indisponible...</span>
       <% end %>

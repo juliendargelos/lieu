@@ -7,8 +7,24 @@
   <div class="chapters-index__sections">
     <section class="chapters-index__section chapters-index__draw">
       <div class="dreamy-sketch">
+        <div class="emojis">
+          <ul class="emojis__list">
+            <% Emoji.kinds.keys.each do |kind| %>
+              <li class="emojis__item"><%= image_tag("emojis/#{kind}.svg", :class => "emojis__item-icon") %><li>
+            <% end %>
+          </ul>
+        </div>
+        <% @chapters.each.with_index do |chapter, n| %>
+          <div class="dreamy-sketch__challenge <%= ' dreamy-sketch__challenge--current' if n.zero? %>">
+            <span class="dreamy-sketch__challenge-number"><%= chapter.number %></span>
+            <h3 class="dreamy-sketch__instruction"><%= chapter.instruction %></h3>
+          </div>
+        <% end %>
+        <div class="dreamy-sketch__strip">
+          <%= image_tag("strip.svg", :class => "dreamy-sketch__strip-icon") %>
+        </div>
         <canvas class="dreamy-sketch__canvas"></canvas>
-        <span class="button button--orange dreamy-sketch__button">Fini</span>
+        <span class="button button--orange dreamy-sketch__button">Tadaaaa!</span>
       </div>
       <% @chapters.each.with_index do |chapter, n| %>
         <div class="chapters-index__challenge<%= ' chapters-index__challenge--current' if n.zero? %><%= ' chapters-index_no-challenge' if !chapter.instruction %>" data-id="<%= chapter.id %>" data-brush-class="<%= chapter.brush_class %>">
@@ -73,6 +89,9 @@
     var challenge = document.querySelector('.chapters-index__challenge--current');
     challenge.classList.remove('chapters-index__challenge--current');
 
+    var instruction = document.querySelector('.dreamy-sketch__challenge--current');
+    instruction.classList.remove('dreamy-sketch__challenge--current');
+
     var chapter = document.querySelector('.chapters-index__chapter--current');
     chapter.classList.remove('chapters-index__chapter--current');
 
@@ -80,15 +99,16 @@
     var nextChallenge = challenge.nextElementSibling;
     if(nextChallenge) {
       nextChallenge.classList.add('chapters-index__challenge--current');
-      // setTimeout(function() {
-      //   nextChallenge.classList.add('chapters-index__challenge--current');
-      // }, 400)
+    }
+
+    var nextInstruction = instruction.nextElementSibling;
+    if(nextInstruction) {
+      nextInstruction.classList.add('dreamy-sketch__challenge--current');
     }
 
     var nextChapter = chapter.nextElementSibling;
     if(nextChapter) {
       nextChapter.classList.add('chapters-index__chapter--current');
-
       checkChallengePresence()
     }
     else {

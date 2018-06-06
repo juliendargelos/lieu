@@ -59,7 +59,7 @@
   <section class="chapters-index__timeline">
     <div class="timeline">
       <div class="timeline__chapters">
-        <% (1..@book.number_of_chapters).each do |i| %>
+        <% @book.number_of_chapters.times do %>
           <div class="timeline__chapter"></div>
         <% end %>
       </div>
@@ -137,6 +137,13 @@
 
     document.querySelector('.dreamy-sketch__button').classList.remove('dreamy-sketch__button--visible');
     Application.DreamySketch.singleton.brush = new Application.DreamySketch.Brush[chapterInstruction.getAttribute('data-brush-class')]();
+    Request.post(<%= new_draw_path.to_json.html_safe %>, {
+      draw: {
+        image: Application.DreamySketch.singleton.canvas.url,
+        reading_id: <%= @reading.id.to_json.html_safe %>,
+        chapter_id: document.querySelector('.chapters-index__challenge--current').getAttribute('data-id'),
+      }
+    })
     Application.DreamySketch.singleton.canvas.clear();
     document.querySelector('.dreamy-sketch').classList.add('dreamy-sketch--opened');
   });

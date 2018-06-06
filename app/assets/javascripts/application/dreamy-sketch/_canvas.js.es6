@@ -47,6 +47,10 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
     }
   }
 
+  get url() {
+    return this.element.toDataURL();
+  }
+
   clear() {
     this.context.clearRect(0, 0, this.width, this.height);
   }

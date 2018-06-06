@@ -28,6 +28,9 @@ class User < ApplicationRecord
   has_secure_password validations: false
   has_many :readings
 
+  has_many :readings
+  has_many :draws, through: :readings
+
   def to_s
     pseudo
   end

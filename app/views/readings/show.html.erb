@@ -17,7 +17,7 @@
       <%= image_tag("home_blue.svg", :class => "readings-show__icon-home") %>
     </div> -->
     <div class="readings-show__home">
-      <%= link_to image_tag("home_blue.svg", :border => 0, :alt => '', :class => "readings-show__icon-home"), dashboard_path %>
+      <%= link_to image_tag("home_blue.svg", :border => 0, :alt => '', :class => "readings-show__icon-home"), dashboard_index_path %>
     </div>
 
     <div class="readings-show__sections">
@@ -68,6 +68,7 @@
                 <div class="readings-show__head-book-icon">
                   <%= image_tag @book.icon.url, class: 'readings-show__head-icon readings-show__help' if @book.icon.exists? %>
                 </div>
+                <div class="readings-show__head-title">Chapitre <span class="readings-show__head-chapter-number"><% if chapter.position < 10 %>0<% end %><%= chapter.position %></span></div>
               </div>
               <% end %>
               <div class="readings-show__text">

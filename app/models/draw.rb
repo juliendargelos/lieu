@@ -16,4 +16,11 @@
 class Draw < ApplicationRecord
   belongs_to :chapter
   belongs_to :reading
+
+  validates :chapter, presence: true
+  validates :reading, presence: true
+  validates :chapter_id, inclusion: { in: -> { |user| user.reading&.book&.chapter_ids || [] } }
+
+  has_attached_file :image
+  validates_attachment_content_type :image, content_type: 'image/png'
 end

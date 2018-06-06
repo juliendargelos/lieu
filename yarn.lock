@@ -4683,6 +4683,21 @@ onetime@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz#a1f7838f8314c516f05ecefcbc4ccfe04b4ed789"
 
+open-request-js@^1.0.35:
+  version "1.0.35"
+  resolved "https://registry.yarnpkg.com/open-request-js/-/open-request-js-1.0.35.tgz#3c288c7e6b281d0064cba790dd93571dfc1d9f8f"
+  dependencies:
+    open-url-js "^1.0.30"
+    parameters-js "^1.0.30"
+    xmlhttprequest "^1.8.0"
+
+open-url-js@^1.0.30:
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/open-url-js/-/open-url-js-1.0.30.tgz#2a7a3bab2bb328f17fd4b0be4d4926124e4f1b9c"
+  dependencies:
+    parameters-js "^1.0.30"
+    pathname-js "^1.0.12"
+
 opn@^5.1.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/opn/-/opn-5.3.0.tgz#64871565c863875f052cfdf53d3e3cb5adb53b1c"
@@ -4794,6 +4809,10 @@ parallel-transform@^1.1.0:
     inherits "^2.0.3"
     readable-stream "^2.1.5"
 
+parameters-js@^1.0.30:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/parameters-js/-/parameters-js-1.0.33.tgz#5dfdbd8c1c7be504403b4cfe9982b1462d37198f"
+
 parse-asn1@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/parse-asn1/-/parse-asn1-5.1.1.tgz#f6bf293818332bd0dab54efb16087724745e6ca8"
@@ -4886,6 +4905,10 @@ path-type@^2.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-2.0.0.tgz#f012ccb8415b7096fc2daa1054c3d72389594c73"
   dependencies:
     pify "^2.0.0"
+
+pathname-js@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/pathname-js/-/pathname-js-1.0.12.tgz#8539a3ed762c34bb4f9af9d7fad45bbdc71be80e"
 
 pbkdf2@^3.0.3:
   version "3.0.16"
@@ -7294,6 +7317,10 @@ write@^0.2.1:
 xml-escape@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/xml-escape/-/xml-escape-1.0.0.tgz#00963d697b2adf0c185c4e04e73174ba9b288eb2"
+
+xmlhttprequest@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.1"

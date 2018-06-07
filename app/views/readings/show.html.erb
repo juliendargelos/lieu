@@ -45,6 +45,7 @@
 
     <div class="readings-show__sections">
       <section class="readings-show__section readings-show__draw">
+
         <div class="dreamy-sketch">
           <div class="emojis" style="display:none">
             <ul class="emojis__list">
@@ -196,6 +197,14 @@
 
   watch('.dreamy-sketch__button', 'click', function() {
     document.querySelector('.dreamy-sketch').classList.remove('dreamy-sketch--opened');
+    Request.post(<%= draws_path.to_json.html_safe %>, {
+      authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+      draw: {
+        image: Application.DreamySketch.singleton.canvas.url,
+        reading_id: <%= @reading.id.to_json.html_safe %>,
+        chapter_id: document.querySelector('.readings-show__challenge--current').getAttribute('data-id'),
+      }
+    })
     nextChapter()
   });
 

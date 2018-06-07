@@ -16,8 +16,8 @@ class Connection < ApplicationRecord
 
   scope :pending, -> { where other_reading: nil }
 
-  def other_reading_for(reading)
-    [reading, other_reading].find &reading.method(:!=)
+  def other_reading_for(a_reading)
+    [reading, other_reading].find &a_reading.method(:!=)
   end
 
   def reading_for(user)

@@ -13,6 +13,7 @@
 class Reading < ApplicationRecord
   belongs_to :user
   belongs_to :chapter
+  has_many :draws
   has_one :book, through: :chapter
   has_one :connection, -> (reading) { unscope(:where).where 'reading_id = :id or other_reading_id = :id', id: reading.id }
 

@@ -20,7 +20,7 @@ module Lilu
     config.sass.preferred_syntax = :sass
     config.generators { |g| g.javascript_engine :js }
 
-    I18n.available_locales = [:fr]
+    I18n.available_locales = [:fr, :en]
     I18n.default_locale = :fr
   end
 end

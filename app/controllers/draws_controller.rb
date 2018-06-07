@@ -8,7 +8,7 @@ class DrawsController < ApplicationController
   end
 
   def create
-    render nothing: true, status: Draw.create(draw_params) ? :ok : :unprocessable_entity
+    head Draw.create(draw_params) ? :ok : :unprocessable_entity
   end
 
   protected
@@ -18,8 +18,8 @@ class DrawsController < ApplicationController
   end
 
   def draw_params
-    params.require(:draw).permit(:image).tap do |params|
-      params[:draw].merge! reading: @reading, chapter: @chapter
+    params.require(:draw).permit(:image).tap do |draw_params|
+      draw_params.merge! reading: @reading, chapter: @chapter
     end
   end
 

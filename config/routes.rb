@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :explanations
   resource :dashboard, only: :show
   resources :readings, only: [:show, :create, :update]
+  resources :draws, only: [:show, :create]
 
   resources :books, only: :index
 

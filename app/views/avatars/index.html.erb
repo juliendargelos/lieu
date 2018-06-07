@@ -111,18 +111,30 @@
     </div>
     <div class="avatars-index__result">
       <div class="avatar avatar--blank" id="avatar">
-        <div class="characteristic avatar__haircut avatar__haircut--ball"></div>
-        <div class="characteristic--active">
-          <%= render "avatars/faces/circle.svg", avatar: avatar, class: 'characteristic__face characteristic__face--active' %>
-          <%= render "avatars/faces/oval.svg", avatar: avatar, class: 'characteristic__face' %>
-          <%= render "avatars/faces/rounded_square.svg", avatar: avatar, class: 'characteristic__face' %>
-          <%= render "avatars/faces/sharp.svg", avatar: avatar, class: 'characteristic__face' %>
-          <%= render "avatars/faces/square.svg", avatar: avatar, class: 'characteristic__face' %>
-          <%= render "avatars/faces/trapezium.svg", avatar: avatar, class: 'characteristic__face' %>
+        <div class="characteristic avatar__haircut avatar__haircut--ball" data-avatar-part="5"></div>
+        <div class="characteristic characteristic--active" data-avatar-part="1">
+            <div class="characteristic__face characteristic__face--active" data-face="circle">
+              <%= render "avatars/faces/circle.svg", avatar: avatar %>
+            </div>
+            <div class="characteristic__face" data-face="oval">
+              <%= render "avatars/faces/oval.svg", avatar: avatar %>
+            </div>
+            <div class="characteristic__face" data-face="rounded_square">
+              <%= render "avatars/faces/rounded_square.svg", avatar: avatar %>
+            </div>
+            <div class="characteristic__face" data-face="sharp">
+              <%= render "avatars/faces/sharp.svg", avatar: avatar %>
+            </div>
+            <div class="characteristic__face" data-face="square">
+              <%= render "avatars/faces/square.svg", avatar: avatar %>
+            </div>
+            <div class="characteristic__face" data-face="trapezium">
+              <%= render "avatars/faces/trapezium.svg", avatar: avatar %>
+            </div>
         </div>
-        <div class="characteristic avatar__eyes avatar__eyes--circles-with-eyelashes"></div>
-        <div class="characteristic avatar__mouth avatar__mouth--big-smile"></div>
-        <div class="characteristic avatar__accessory avatar__accessory--earings>"></div>
+        <div class="characteristic avatar__eyes avatar__eyes--circles-with-eyelashes" data-avatar-part="3"></div>
+        <div class="characteristic avatar__mouth avatar__mouth--big-smile" data-avatar-part="4"></div>
+        <div class="characteristic avatar__accessory avatar__accessory--earings" data-avatar-part="6"></div>
       </div>
 
     </div>
@@ -160,25 +172,45 @@
           properties[k].classList.add('avatars-index__list--active')
         }
       }
+      
+      var characteristics = document.querySelectorAll('.characteristic')
+      for (var y = 0; y < characteristics.length; y++) {
+        var charactAttr = characteristics[y].getAttribute('data-avatar-part')
+        if (charactAttr === stepAttr) {
+          characteristics[y].classList.add('characteristic--active')
+        }
+      }
+
     };
 
     var select = function () {
 
       if (this.checked) {
+
         var items = document.querySelectorAll('.avatars-index__item')
         for (var z = 0; z < items.length; z++) {
           items[z].classList.remove('avatars-index__item--choice')
         }
+
         var parents = this.parentNode
         parents.classList.add('avatars-index__item--choice')
-        var propertyElementClassName = 'avatar__' + this.getAttribute('data-property')
 
-        avatar.querySelector('.' + propertyElementClassName).className = [
-          propertyElementClassName,
-          propertyElementClassName + '--' + this.value.replace(/_/g, '-')
-        ].join(' ')
-
-        console.log(this.value)
+        var faceSection = document.querySelector('.avatars-index__faces')
+        if(faceSection.classList.contains('avatars-index__list--active')) {
+          var faces = document.querySelectorAll('.characteristic__face')
+          for (var y = 0; y < faces.length; y++) {
+            faces[y].classList.remove('characteristic__face--active')
+            if (this.value === faces[y].getAttribute('data-face')) {
+              faces[y].classList.add('characteristic__face--active')
+            }
+          }
+        } else {
+          var propertyElementClassName = 'avatar__' + this.getAttribute('data-property')
+          avatar.querySelector('.' + propertyElementClassName).className = [
+            propertyElementClassName,
+            propertyElementClassName + '--' + this.value.replace(/_/g, '-')
+          ].join(' ')
+        }
 
         loopThroughCharacteristics()
       }

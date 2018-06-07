@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resource :user, path: :account, except: [:index, :show]
-  resource :avatar, path_names: { edit: '/' }, only: [:edit, :udpate]
+  # resource :avatar, path_names: { edit: '/' }, only: [:edit, :udpate]
+  resources :avatars, only: [:index]
   resources :explanations
   resources :dashboard, only: [:index]
   resources :readings, only: [:show, :create, :update]

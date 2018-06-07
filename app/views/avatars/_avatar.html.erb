@@ -18,5 +18,8 @@
     <div class="avatar__mouth avatar__mouth--<%= avatar.mouth_name %>"></div>
     <div class="avatar__haircut-bangs avatar__haircut-bangs--<%= avatar.haircut_name %>"></div>
     <div class="avatar__accessory avatar__accessory--<%= avatar.accessory_name %>"></div>
+  <% else %>
+    Pas d'avatar
+    <%= render "avatars/faces/circle.svg", avatar: avatar %>
   <% end %>
 </div>

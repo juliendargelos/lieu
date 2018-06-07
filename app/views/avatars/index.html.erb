@@ -1,0 +1,158 @@
+<%
+  avatar ||= nil
+%>
+
+<main class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both avatars-index__container">
+  <div class="avatars-index__head">
+    <h1 class="avatars-index__title avatars-index__title--active" data-title-id="1">Bien, à quoi ressemble la forme de ton visage ?</h1>
+    <h1 class="avatars-index__title" data-title-id="2">Je vois! Et ta couleur de peau ?</h1>
+    <h1 class="avatars-index__title" data-title-id="3">Et tes yeux ?</h1>
+    <h1 class="avatars-index__title" data-title-id="4">Pour sourire, il te faut une bouche</h1>
+    <h1 class="avatars-index__title" data-title-id="5">Comment sont tes cheveux ?</h1>
+    <h1 class="avatars-index__title" data-title-id="6">Un petit accessoire ?</h1>
+    <h1 class="avatars-index__title" data-title-id="7">Et enfin, choisi la couleur qui te représentera</h1>
+  </div>
+  <div class="avatars-index__process">
+    <ul class="avatars-index__steps">
+      <li class="avatars-index__step avatars-index__step--active" data-id="1">1. ton visage</li>
+      <li class="avatars-index__step" data-id="2">2. ta peau</li>
+      <li class="avatars-index__step" data-id="3">3. tes yeux</li>
+      <li class="avatars-index__step" data-id="4">4. ta bouche</li>
+      <li class="avatars-index__step" data-id="5">5. tes cheveux</li>
+      <li class="avatars-index__step" data-id="6">6. ton accessoire</li>
+      <li class="avatars-index__step" data-id="7">7. ta couleur</li>
+    </ul>
+  </div>
+  <div class="avatars-index__content">
+    <div class="avatars-index__properties">
+      <ul class="avatars-index__list avatars-index__faces avatars-index__list--active" data-property-id="1">
+        <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__face avatar__face--circle avatar avatar--blank"><%= render "avatars/faces/circle.svg", avatar: avatar %></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__face avatar__face--oval avatar avatar--blank"><%= render "avatars/faces/oval.svg", avatar: avatar %></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__face avatar__face--rounded-square avatar avatar--blank"><%= render "avatars/faces/rounded_square.svg", avatar: avatar %></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__face avatar__face--sharp avatar avatar--blank"><%= render "avatars/faces/sharp.svg", avatar: avatar %></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__face avatar__face--square avatar avatar--blank"><%= render "avatars/faces/square.svg", avatar: avatar %></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__face avatar__face--trapezium avatar avatar--blank"><%= render "avatars/faces/trapezium.svg", avatar: avatar %></div></li>
+      </ul>
+      <ul class="avatars-index__list avatars-index__skins" data-property-id="2">
+        <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__skin avatar__skin--pale" style="background:#ffeedc" data-type-eyes="pale"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__skin avatar__skin--fair" style="background:#f4d3d0" data-type-eyes="fair"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__skin avatar__skin--black" style="background:#77584d" data-type-eyes="black"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__skin avatar__skin--dull" style="background:#d3a98c" data-type-eyes="dull"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__skin avatar__skin--red" style="background:#e0957c" data-type-eyes="red"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__skin avatar__skin--beige" style="background:#f4c4a4" data-type-eyes="beige"></div></li>
+      </ul>
+      <ul class="avatars-index__list avatars-index__eyes" data-property-id="3">
+        <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__eye avatar__eyes--almond-shapes" data-type-eyes="almond-shapes"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__eye avatar__eyes--circles-with-eyelashes" data-type-eyes="circles-with-eyelashes"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__eye avatar__eyes--falling-circles" data-type-eyes="falling-circles"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__eye avatar__eyes--ovals" data-type-eyes="ovals"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__eye avatar__eyes--semicircles" data-type-eyes="semicircles"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__eye avatar__eyes--slanting-shapes" data-type-eyes="slanting-shapes"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__eye avatar__eyes--straight-circles" data-type-eyes="straight-circles"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__eye avatar__eyes--surrounded-circles" data-type-eyes="surrounded-circles"></div></li>
+      </ul>
+      <ul class="avatars-index__list avatars-index__mouths" data-property-id="4">
+        <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__mouth avatar__mouth--big-smile" data-type-eyes="big-smile"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--cat" data-type-eyes="cat"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--crescent" data-type-eyes="crescent"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--double-lips" data-type-eyes="double-lips"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--long-lips" data-type-eyes="long-lips"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--long-semicircle" data-type-eyes="long-semicircle"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--neutral" data-type-eyes="neutral"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--semicircle" data-type-eyes="semicircle"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--small-lips" data-type-eyes="small-lips"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__mouth avatar__mouth--small-smile" data-type-eyes="small-smile"></div></li>
+      </ul>
+      <ul class="avatars-index__list avatars-index__haircuts" data-property-id="5">
+        <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__haircut avatar__haircut--ball" data-type-eyes="ball"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--big-bun" data-type-eyes="big-bun"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--big-buns" data-type-eyes="big-buns"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--bob" data-type-eyes="bob"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--braid" data-type-eyes="braid"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--braids" data-type-eyes="braids"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--cowlick" data-type-eyes="cowlick"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--curls" data-type-eyes="curls"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--long-curls" data-type-eyes="long-curls"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--long-straight" data-type-eyes="long-straight"></div></li>
+      </ul>
+      <ul class="avatars-index__list avatars-index__accessories" data-property-id="6">
+        <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__accessory avatar__accessory--blank" data-type-eyes="blank"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--earings" data-type-eyes="earings"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--freckles" data-type-eyes="freckles"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--hair-tie" data-type-eyes="hair-tie"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--hairclip" data-type-eyes="hairclip"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--mole" data-type-eyes="mole"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--plaster" data-type-eyes="plaster"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--rectangular-glasses" data-type-eyes="rectangular-glasses"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__accessory avatar__accessory--round-glasses" data-type-eyes="round-glasses"></div></li>
+      </ul>
+      <ul class="avatars-index__list avatars-index__sweaters" data-property-id="7">
+        <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__sweater avatar__sweater--turquoise" style="background:#a6fff8" data-type-eyes="turquoise"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__sweater avatar__sweater--yellow" style="background:#ffe36c" data-type-eyes="yellow"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__sweater avatar__sweater--pink" style="background:#ff6cbd" data-type-eyes="pink"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__sweater avatar__sweater--purple" style="background:#b86eff" data-type-eyes="purple"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__sweater avatar__sweater--green" style="background:#8ee54a" data-type-eyes="green"></div></li>
+        <li class="avatars-index__item"><div class="avatars-index__sweater avatar__sweater--grey" style="background:#dbdbdb" data-type-eyes="grey"></div></li>
+      </ul>
+    </div>
+    <div class="avatars-index__result">
+      <div class="avatar avatar--blank">
+        <div class="characteristic avatar__haircut avatar__haircut--ball"></div>
+        <%= render "avatars/faces/circle.svg", avatar: avatar, class: 'characteristic--active' %>
+        <div class="characteristic avatar__eyes avatar__eyes--circles-with-eyelashes"></div>
+        <div class="characteristic avatar__mouth avatar__mouth--big-smile"></div>
+        <div class="characteristic avatar__accessory avatar__accessory--earings>"></div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script type="text/javascript">
+
+  (function() {
+
+    var steps = document.querySelectorAll('.avatars-index__step')
+    var particularities = document.querySelectorAll('.avatars-index__item')
+
+    var toggle = function() {
+      var step = document.querySelector('.avatars-index__step--active')
+      step.classList.remove('avatars-index__step--active')
+      this.classList.add('avatars-index__step--active')
+      var stepAttr = this.getAttribute('data-id')
+
+      var titles = document.querySelectorAll('.avatars-index__title')
+      for (var j = 0; j < titles.length; j++) {
+        var titleAttr = titles[j].getAttribute('data-title-id')
+        titles[j].classList.remove('avatars-index__title--active')
+        if (titleAttr === stepAttr) {
+          titles[j].classList.add('avatars-index__title--active')
+        }
+      }
+
+      var properties = document.querySelectorAll('.avatars-index__list')
+      for (var k = 0; k < properties.length; k++) {
+        var propertyAttr = properties[k].getAttribute('data-property-id')
+        properties[k].classList.remove('avatars-index__list--active')
+        if (propertyAttr === stepAttr) {
+          properties[k].classList.add('avatars-index__list--active')
+        }
+      }
+
+
+
+    };
+
+    var select = function (property) {
+    }
+
+    for(var i = 0; i < steps.length; i++) steps[i].addEventListener('click', toggle)
+
+    for(var a = 0; a < particularities.length; a++) particularities[a].addEventListener('click', select)
+
+
+  })();
+
+
+
+</script>

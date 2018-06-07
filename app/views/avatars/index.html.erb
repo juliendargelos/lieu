@@ -25,7 +25,7 @@
   </div>
   <div class="avatars-index__content">
     <div class="avatars-index__properties">
-      <%= form_for :avatar, url: books_path do |f| %>
+      <%= form_for :avatar, url: avatars_path do |f| %>
         <ul class="avatars-index__list avatars-index__faces avatars-index__list--active" data-property-id="1">
           <% Avatar.faces.keys.each.with_index do |face, n| %>
             <li class="avatars-index__item">
@@ -49,8 +49,8 @@
         <ul class="avatars-index__list avatars-index__eyes" data-property-id="3">
           <% Avatar.eyes_names.each.with_index do |(eye, eye_name), n| %>
             <li class="avatars-index__item">
-              <%= f.radio_button(:eye, eye, checked: n.zero?, class: "avatars-index__radio-button", data: { property: :eyes }) %>
-              <%= f.label :eye do %>
+              <%= f.radio_button(:eyes, eye, checked: n.zero?, class: "avatars-index__radio-button", data: { property: :eyes }) %>
+              <%= f.label :eyes do %>
                 <div class="avatars-index__eye avatar__eyes--<%= eye_name %>"></div>
               <% end %>
             </li>

@@ -14,10 +14,24 @@ class Reading < ApplicationRecord
   belongs_to :user
   belongs_to :chapter
   has_one :book, through: :chapter
+  has_one :connection, -> (reading) { unscope(:where).where 'reading_id = :id or other_reading_id = :id', id: reading.id }
 
   scope :current, -> { find_by finished: false }
 
   def beggined?
     !chapter.position.zero?
+  end
+
+  def connect!
+    (book.connections.pending.first || Connection.new).add(self).save
+    self
+  end
+
+  def connected?
+    connected_reading.present?
+  end
+
+  def connected_reading
+    connection.other_reading_for self
   end
 end

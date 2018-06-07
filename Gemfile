@@ -19,6 +19,7 @@ gem 'webpacker'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'sprockets-es6'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'autoprefixer-rails'
 
 group :production do
   gem 'paperclip-cloudinary'

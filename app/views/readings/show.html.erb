@@ -10,6 +10,29 @@
       </div>
       <span class="next-step" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></span>
     </div>
+
+    <% if @connecting %>
+      <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container" id="reading-connection-<%= @reading.connection.id %>">
+        <div class="readings-show__connection container container--full-screen">
+          <%= render @reading.connection %>
+        </div>
+      </div>
+
+      <script>
+        setTimeout(function() {
+          var connection = document.getElementById(<%= "reading-connection-#{@reading.connection.id}".to_json.html_safe %>)
+
+          connection.style.transition = '1s'
+          setTimeout(function() {
+            connection.style.opacity = 0
+          }, 1)
+
+          setTimeout(function() {
+            connection.parentNode.removeChild(connection)
+          }, 1001)
+        }, 7000)
+      </script>
+    <% end %>
   <% end %>
 
   <div class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__container">

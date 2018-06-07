@@ -13,7 +13,7 @@
 <div class="<%= class_name %>">
   <% if avatar.present? %>
     <div class="avatar__haircut avatar__haircut--<%= avatar.haircut_name %>"></div>
-    <%= render "avatars/faces/#{avatar.face}.svg", avatar: avatar %>
+    <%= render "avatars/faces/#{avatar.face || Avatar.faces.keys.first}.svg", avatar: avatar %>
     <div class="avatar__eyes avatar__eyes--<%= avatar.eyes_name %>"></div>
     <div class="avatar__mouth avatar__mouth--<%= avatar.mouth_name %>"></div>
     <div class="avatar__haircut-bangs avatar__haircut-bangs--<%= avatar.haircut_name %>"></div>

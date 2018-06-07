@@ -1,0 +1,40 @@
+<%
+  reading = connection.reading_for current_user
+%>
+
+<div class="connection">
+  <p class="connection__message connection__message--processing">
+    Laisse moi te trouver un compagnon de lecture...
+  </p>
+
+  <% if reading.connected? %>
+    <p class="connection__message connection__message--teasing">
+      Et ton ami de lecture eeeeest...
+    </p>
+    <p class="connection__message connection__message--result">
+      <%= reading.connected_reading.user.pseudo %>&nbsp;!
+    </p>
+  <% else %>
+    <p class="connection__message connection__message--pending">
+      Un ami de lecture te rejoindra bientôt
+    </p>
+  <% end %>
+
+  <div class="connection__animation">
+    <%= image_tag connection.book.icon.url, class: 'connection__book-icon' if connection.book.icon.exists? %>
+
+    <div class="connection__line connection__line--primary"></div>
+    <div class="connection__line connection__line--secondary"></div>
+    <div class="connection__line connection__line--tertiary"></div>
+
+    <div class="connection__user-avatars">
+      <div class="connection__user-avatar connection__user-avatar--primary">
+        <%= render reading.user.avatar %>
+      </div>
+
+      <div class="connection__user-avatar connection__user-avatar--secondary">
+        <%= render reading.connected_reading.user.avatar if reading.connected? %>
+      </div>
+    </div>
+  </div>
+</div>

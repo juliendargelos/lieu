@@ -116,7 +116,7 @@ class Avatar < ApplicationRecord
   properties.each do |property, values|
     validates property, presence: true
 
-    names = values.map{ |value| [value, send(property).to_s.gsub('_', '-')] }.to_h
+    names = values.map{ |value| [value, send(property.pluralize).to_s.gsub('_', '-')] }.to_h
     define_singleton_method("#{property}_names") { names }
     define_method("#{property}_name") { names[send(property)] }
   end

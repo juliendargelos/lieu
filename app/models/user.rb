@@ -15,7 +15,7 @@ class User < ApplicationRecord
   validates :pseudo, presence: { message: 'Il te faut un pseudo' }
   validates :pseudo, uniqueness: { message: 'Ce pseudo est déjà pris' }
   validates :pseudo, length: { minimum: 3, message: 'Ton pseudo doit contenir au moins 3 caractères' }, if: -> { pseudo.present? }
-  validates :pseudo, format: { with: /\A[a-z0-9-_]+\z/i, message: 'Ton pseudo ne peut contenir que des chiffres, des lettres et les caractères "-" et "_"' }, if: -> { pseudo.present? }
+  validates :pseudo, format: { with: /\A[a-z0-9\-_]+\z/i, message: 'Ton pseudo ne peut contenir que des chiffres, des lettres et les caractères "-" et "_"' }, if: -> { pseudo.present? }
 
   validates :email, presence: { message: 'Nous avons besoin de ton adresse mail' }
   validates :email, uniqueness: { message: 'Cette adresse mail est déjà utilisée' }, if: -> { email.present? }
@@ -26,12 +26,29 @@ class User < ApplicationRecord
   validates :password, confirmation: { message: 'La confirmation ne correspond pas' }, if: -> { password.present? }, allow_nil: true
 
   has_secure_password validations: false
-  has_many :readings
 
   has_many :readings
   has_many :draws, through: :readings
+  has_one :avatar
+
+  before_save :set_avatar, unless: :has_avatar?
+
+  alias_method :avatar_base, :avatar
+  def avatar
+    avatar_base || (@avatar ||= Avatar.new)
+  end
 
   def to_s
     pseudo
+  end
+
+  def has_avatar?
+    avatar.user_id == id
+  end
+
+  protected
+
+  def set_avatar
+    self.avatar = avatar if avatar.valid?
   end
 end

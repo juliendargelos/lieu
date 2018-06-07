@@ -19,6 +19,8 @@
 
 class Book < ActiveRecord::Base
   has_many :chapters
+  has_many :readings, through: :chapters
+  has_many :connections, -> (book) { unscope(:where).where('reading_id in (:ids) or other_reading_id in (:ids)', ids: book.readings.pluck(:id)).distinct }
   has_attached_file :icon
 
   validates :title, presence: true

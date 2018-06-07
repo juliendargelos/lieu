@@ -1,0 +1,299 @@
+$connection-animation-rotation: 3turn
+$connection-animation-duration: 5s
+
+.connection
+  position: relative
+
+  &__animation
+    width: 70vh
+    height: 70vh
+    margin: 0 auto
+    max-width: 500px
+    max-height: 500px
+    position: relative
+
+    @media screen and (orientation: portrait)
+      width: 70vw
+      height: 70vw
+
+    &::before
+      content: ''
+      width: 100%
+      height: 100%
+      top: 0
+      left: 0
+      box-sizing: border-box
+      border: 8px solid $orange
+        radius: 100%
+      position: absolute
+      display: block
+
+  &__book-icon
+    width: 20%
+    height: 20%
+    top: 50%
+    left: 50%
+    position: absolute
+    transform: translate(-50%, -50%)
+
+  &__user-avatars
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    z-index: 2
+    position: absolute
+    display: flex
+    align-items: center
+    justify-content: space-between
+    animation: connection__user-avatars #{$connection-animation-duration}
+
+  &__user-avatar
+    background: $white
+    width: 20vh
+    height: 20vh
+    max-width: 143px
+    max-height: 143px
+    box-sizing: border-box
+    border: 4px solid $orange
+      radius: 100%
+    position: relative
+
+    &--primary
+      transform: translateX(calc(-50% + 10px))
+      animation: connection__user-avatar--primary #{$connection-animation-duration}
+
+    &--secondary
+      transform: translateX(calc(50% - 10px)) scale(.7)
+      animation: connection__user-avatar--secondary #{$connection-animation-duration}, connection__user-avatar--secondary-scale .4s #{$connection-animation-duration - .1s} forwards
+
+      > *
+        opacity: 0
+        animation: connection__user-avatar--secondary-content .4s #{$connection-animation-duration - .1s} forwards
+
+      &::before
+        content: '?'
+        width: 100%
+        height: 100%
+        top: 0
+        left: 0
+        display: flex
+        font:
+          size: 80px
+          weight: bold
+        color: $blue
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        position: absolute
+        animation: connection__user-avatar--secondary-content .4s #{$connection-animation-duration - .1s} reverse forwards
+
+    @media screen and (orientation: portrait)
+      width: 10vw
+      height: 10vw
+
+  &__line
+    animation: connection__line #{$connection-animation-duration}
+
+    &, &::before, &::after
+      width: 100%
+      height: 100%
+      top: 50%
+      left: 50%
+      box-sizing: content-box
+      position: absolute
+      transform: translate(-50%, -50%)
+
+    &::before
+      border: 3px solid
+
+    &::after
+      border: 5px solid
+
+    &::before, &::after
+      content: ''
+      border-radius: 100%
+      display: block
+      clip-path: polygon(50% 50%, 50% 0, 50% 0)
+
+    &--primary
+      padding: 15px
+
+      &::before
+        border-color: $white
+        animation: connection__line--primary-before #{$connection-animation-duration}
+
+      &::after
+        border-color: $orange
+        animation: connection__line--primary-after #{$connection-animation-duration}
+
+    &--secondary
+      padding: 8px
+
+      &::before
+        border-color: $orange
+        animation: connection__line--secondary-before #{$connection-animation-duration}
+
+      &::after
+        border-color: $dark-blue
+        animation: connection__line--secondary-after #{$connection-animation-duration}
+
+    &--tertiary
+      padding: 22px
+
+      &::before
+        border-color: $dark-blue
+        animation: connection__line--tertiary-before #{$connection-animation-duration}
+
+      &::after
+        border-color: $orange
+        animation: connection__line--tertiary-after #{$connection-animation-duration}
+
+  &__message
+    width: 100%
+    color: $white
+    font:
+      size: 30px
+      weight: bold
+    text-align: center
+    text-transform: uppercase
+    margin-bottom: 80px
+
+    &:not(:first-of-type)
+      top: 0
+      left: 0
+      opacity: 0
+      position: absolute
+
+    &--processing
+      animation: connection__message--processing #{$connection-animation-duration} forwards
+
+    &--teasing
+      animation: connection__message--teasing #{$connection-animation-duration} forwards
+
+    &--result
+      animation: connection__message--result #{$connection-animation-duration} forwards
+
+    &--pending
+      animation: connection__message--pending #{$connection-animation-duration} forwards
+
+
+@keyframes connection__user-avatars
+  from
+    transform: rotate(0)
+
+  to
+    transform: rotate(#{$connection-animation-rotation})
+
+@keyframes connection__user-avatar--primary
+  from
+    transform: translateX(calc(-50% + 10px)) rotate(0)
+
+  to
+    transform: translateX(calc(-50% + 10px)) rotate(#{-$connection-animation-rotation})
+
+@keyframes connection__user-avatar--secondary
+  from
+    transform: translateX(calc(50% - 10px)) rotate(0) scale(.7)
+
+  to
+    transform: translateX(calc(50% - 10px)) rotate(#{-$connection-animation-rotation}) scale(.7)
+
+@keyframes connection__user-avatar--secondary-scale
+  0%
+    transform: translateX(calc(50% - 10px)) scale(.7)
+
+  35%
+    transform: translateX(calc(50% - 10px)) scale(1.2)
+
+  60%
+    transform: translateX(calc(50% - 10px)) scale(1.2)
+
+  100%
+    transform: translateX(calc(50% - 10px)) scale(1)
+
+@keyframes connection__line
+  from
+    transform: translate(-50%, -50%) rotate(0)
+
+  to
+    transform: translate(-50%, -50%) rotate(-#{$connection-animation-rotation})
+
+@keyframes connection__line--primary-before
+  0%, 40%, 100%
+    clip-path: polygon(50% 50%, 50% 0, 50% 0)
+
+  70%
+    clip-path: polygon(50% 50%, 0 0, 100% 0)
+
+@keyframes connection__line--primary-after
+  0%, 40%, 100%
+    clip-path: polygon(50% 50%, 50% 0, 50% 0)
+
+  70%
+    clip-path: polygon(50% 50%, 20% 0, 40% 0)
+
+@keyframes connection__line--secondary-before
+  0%, 10%, 90%, 100%
+    clip-path: polygon(50% 50%, 0 50%, 0 50%)
+
+  50%
+    clip-path: polygon(50% 50%, 0 0, 0 100%)
+
+@keyframes connection__line--secondary-after
+  0%, 10%, 90%, 100%
+    clip-path: polygon(50% 50%, 0 50%, 0 50%)
+
+  50%
+    clip-path: polygon(50% 50%, 0 20%, 0 30%)
+
+@keyframes connection__line--tertiary-before
+  0%, 20%, 100%
+    clip-path: polygon(50% 50%, 50% 100%, 50% 100%)
+
+  70%
+    clip-path: polygon(50% 50%, 20% 100%, 80% 100%)
+
+@keyframes connection__line--tertiary-after
+  0%, 20%, 100%
+    clip-path: polygon(50% 50%, 50% 100%, 50% 100%)
+
+  70%
+    clip-path: polygon(50% 50%, 10% 100%, 30% 100%)
+
+@keyframes connection__user-avatar--secondary-content
+  from
+    opacity: 0
+
+  to
+    opacity: 1
+
+@keyframes connection__message--processing
+  0%, 49%
+    opacity: 1
+
+  51%, 100%
+    opacity: 0
+
+@keyframes connection__message--teasing
+  0%, 49%, 97%, 100%
+    opacity: 0
+
+  51%, 95%
+    opacity: 1
+
+@keyframes connection__message--result
+  0%, 95%
+    opacity: 0
+
+  97%, 100%
+    opacity: 1
+
+
+@keyframes connection__message--pending
+  0%, 49%
+    opacity: 0
+
+  51%, 100%
+    opacity: 1
+

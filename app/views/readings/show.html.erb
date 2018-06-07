@@ -46,7 +46,7 @@
     <div class="readings-show__sections">
       <section class="readings-show__section readings-show__draw">
         <div class="dreamy-sketch">
-          <div class="emojis">
+          <div class="emojis" style="display:none">
             <ul class="emojis__list">
               <% Emoji.kinds.keys.each do |kind| %>
                 <li class="emojis__item"><%= image_tag("emojis/#{kind}.svg", :class => "emojis__item-icon") %><li>

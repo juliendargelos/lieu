@@ -46,8 +46,8 @@ class User < ApplicationRecord
     avatar.user_id == id
   end
 
-  def reading?(book)
-    readings.for(book).present?
+  def reading?(book = nil)
+    book.present? ? readings.for(book).present? : readings.current.present?
   end
 
   protected

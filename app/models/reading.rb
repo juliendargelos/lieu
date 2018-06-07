@@ -17,6 +17,7 @@ class Reading < ApplicationRecord
   has_one :connection, -> (reading) { unscope(:where).where 'reading_id = :id or other_reading_id = :id', id: reading.id }
 
   scope :current, -> { find_by finished: false }
+  scope :for, -> (book) { find_by chapter_id: book.chapter_ids }
 
   def beggined?
     !chapter.position.zero?

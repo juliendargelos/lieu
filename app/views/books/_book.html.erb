@@ -22,9 +22,14 @@
     <span class="book__number-of-chapters"><%= book.number_of_chapters %></span>
     <div class="book__actions">
       <% if book.published? %>
-        <%= form_for :reading, url: readings_path do |f| %>
-          <%= f.hidden_field :chapter_id, value: book.chapters.first.id %>
-          <%= f.submit 'Commencer', class: "button button--#{book.white? ? :blue : :white} button--text--#{book.color}" %>
+        <% book_button_class_name = "button button--#{book.white? ? :blue : :white} button--text--#{book.color}" %>
+        <% if current_user.reading? book %>
+          <%= link_to 'Continuer à lire', current_user.readings.for(book), class: book_button_class_name %>
+        <% else %>
+          <%= form_for :reading, url: readings_path do |f| %>
+            <%= f.hidden_field :chapter_id, value: book.chapters.first.id %>
+            <%= f.submit 'Commencer', class: book_button_class_name %>
+          <% end %>
         <% end %>
       <% else %>
         <span class="button button--<%= book.white? ? :blue : :white %>  button--text--<%= book.color %> button--disabled">Actuellement indisponible...</span>

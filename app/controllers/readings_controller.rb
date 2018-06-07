@@ -11,6 +11,10 @@ class ReadingsController < ApplicationController
 
   def create
     @reading = Reading.new reading_params.merge!(user: current_user)
+
+    @existing_reading = current_user.readings.for @reading.book
+    redirect_to @existing_reading and return if @existing_reading.present?
+
     @reading.connect!
 
     if @reading.save

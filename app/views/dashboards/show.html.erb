@@ -32,6 +32,6 @@
         <%= image_tag("sound_on.svg", :class => "dashboard-index__sound-on") %>
       </div>
     </div>
-
   </div>
+  <%= link_to 'Continuer à lire', current_user.readings.current, class: :button %>
 </main>

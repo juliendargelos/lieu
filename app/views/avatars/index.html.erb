@@ -25,7 +25,7 @@
   </div>
   <div class="avatars-index__content">
     <div class="avatars-index__properties">
-      <%= form_for :avatar do |f| %>
+      <%= form_for :avatar, url: books_path do |f| %>
         <ul class="avatars-index__list avatars-index__faces avatars-index__list--active" data-property-id="1">
           <% Avatar.faces.keys.each.with_index do |face, n| %>
             <li class="avatars-index__item">
@@ -73,19 +73,10 @@
               <%= f.label :haircut do %>
                 <div class="avatars-index__haircut avatar__haircut--<%= haircut_name %>"></div>
                 <div class="avatars-index__face avatar__face--circle"><%= render "avatars/faces/circle.svg" %></div>
+                <div class="avatars-index__haircut avatar__haircut-bangs avatar__haircut-bangs--<%= haircut_name %>"></div>
               <% end %>
             </li>
           <% end %>
-          <li class="avatars-index__item avatars-index__item--choice"><div class="avatars-index__haircut avatar__haircut--ball" data-type-eyes="ball"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--big-bun" data-type-eyes="big-bun"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--big-buns" data-type-eyes="big-buns"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--bob" data-type-eyes="bob"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--braid" data-type-eyes="braid"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--braids" data-type-eyes="braids"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--cowlick" data-type-eyes="cowlick"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--curls" data-type-eyes="curls"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--long-curls" data-type-eyes="long-curls"></div></li>
-          <li class="avatars-index__item"><div class="avatars-index__haircut avatar__haircut--long-straight" data-type-eyes="long-straight"></div></li>
         </ul>
         <ul class="avatars-index__list avatars-index__accessories" data-property-id="6">
           <% Avatar.accessory_names.each.with_index do |(accessory, accessory_name), n| %>
@@ -106,6 +97,9 @@
               <% end %>
             </li>
           <% end %>
+          <div class="avatars-index__submit">
+            <%= f.submit 'J\'ai terminé mon avatar !', class: 'button button--orange button--text--white' %>
+          </div>
         </ul>
       <% end %>
     </div>
@@ -134,6 +128,7 @@
         </div>
         <div class="characteristic avatar__eyes avatar__eyes--circles-with-eyelashes" data-avatar-part="3"></div>
         <div class="characteristic avatar__mouth avatar__mouth--big-smile" data-avatar-part="4"></div>
+        <div class="characteristic avatar__haircut-bangs avatar__haircut-bangs--" data-avatar-part="5"></div>
         <div class="characteristic avatar__accessory avatar__accessory--earings" data-avatar-part="6"></div>
       </div>
 
@@ -172,7 +167,7 @@
           properties[k].classList.add('avatars-index__list--active')
         }
       }
-      
+
       var characteristics = document.querySelectorAll('.characteristic')
       for (var y = 0; y < characteristics.length; y++) {
         var charactAttr = characteristics[y].getAttribute('data-avatar-part')
@@ -186,6 +181,8 @@
     var select = function () {
 
       if (this.checked) {
+
+        console.log(this.value);
 
         var items = document.querySelectorAll('.avatars-index__item')
         for (var z = 0; z < items.length; z++) {
@@ -206,10 +203,12 @@
           }
         } else {
           var propertyElementClassName = 'avatar__' + this.getAttribute('data-property')
-          avatar.querySelector('.' + propertyElementClassName).className = [
-            propertyElementClassName,
-            propertyElementClassName + '--' + this.value.replace(/_/g, '-')
-          ].join(' ')
+          Array.prototype.slice.call(avatar.querySelectorAll('.' + propertyElementClassName)).forEach(element => {
+            element.setAttribute('class', [
+              propertyElementClassName,
+              propertyElementClassName + '--' + this.value.replace(/_/g, '-')
+            ].join(' '))
+          })
         }
 
         loopThroughCharacteristics()

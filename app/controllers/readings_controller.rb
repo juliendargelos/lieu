@@ -10,7 +10,6 @@ class ReadingsController < ApplicationController
   end
 
   def create
-    byebug
     @reading = Reading.new reading_params.merge!(user: current_user)
 
     @existing_reading = current_user.readings.for @reading.book

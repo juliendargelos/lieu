@@ -1,10 +1,23 @@
 <main class="container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both">
   <div class="dashboard-index__container">
-    <div class="dashboard-index__book" style="background:orange;width:200px;margin-right:10px"></div>
+    <div class="dashboard-index__book">
+      <div class="book book--number-of-chapters--<%= current_user.readings.current.book.number_of_chapters %> books__item book--orange dashboard-index__book-item" data-id="<%= current_user.readings.current.book.id %>">
+        <%= image_tag current_user.readings.current.book.icon.url, class: :book__icon if current_user.readings.current.book.icon.exists? %>
+        <div class="book__content book__content--summarized">
+          <h2 class="book__title book__title--vertical dashboard-index__book-title"><%= current_user.readings.current.book.title %></h2>
+        </div>
+        <div class="book__footer">
+          <span class="book__number-of-chapters"><%= current_user.readings.current.book.number_of_chapters %></span>
+        </div>
+      </div>
+      <%= link_to '', current_user.readings.current, class: 'dashboard-index__book-action' %>
+    </div>
     <div class="dashboard-index__users">
       <div class=" dashboard-index__user user-profil">
         <h1 class="user-profil__pseudo"><%= current_user.pseudo %></h1>
-        <%= image_tag("avatar-placeholder.png", :class => "user-profil__avatar") %>
+        <div class="user-profil__avatar">
+          <%= render current_user.avatar %>
+        </div>
         <div class="user-profil__content">
           <%= image_tag("library.svg", :class => "user-profil__library") %>
           <div class="user-profil__separate"></div>
@@ -16,8 +29,10 @@
         </div>
       </div>
       <div class="dashboard-index__user user-profil">
-        <h1 class="user-profil__pseudo"><%= current_user.pseudo %></h1>
-        <%= image_tag("avatar-placeholder.png", :class => "user-profil__avatar") %>
+        <h1 class="user-profil__pseudo"><%= current_user.readings.current.connected_reading.user %></h1>
+        <div class="user-profil__avatar">
+          <%= render current_user.readings.current.connected_reading.user.avatar %>
+        </div>
         <div class="user-profil__content">
           <%= image_tag("library.svg", :class => "user-profil__library") %>
           <div class="user-profil__separate"></div>
@@ -33,5 +48,4 @@
       </div>
     </div>
   </div>
-  <%= link_to 'Continuer à lire', current_user.readings.current, class: :button %>
 </main>

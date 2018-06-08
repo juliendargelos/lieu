@@ -1,7 +1,3 @@
-
-
-
-
 <main>
   <% unless @reading.beggined? %>
     <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
@@ -111,13 +107,7 @@
     </div>
 
     <section class="readings-show__timeline">
-      <div class="timeline">
-        <div class="timeline__chapters">
-          <% (1..@book.number_of_chapters).each do |i| %>
-            <div class="timeline__chapter"></div>
-          <% end %>
-        </div>
-      </div>
+      <%= render partial: "timeline" %>
     </section>
 
   </div>

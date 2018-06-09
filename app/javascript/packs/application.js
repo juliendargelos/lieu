@@ -1,4 +1,7 @@
 import Vue from 'vue/dist/vue.esm'
+import VueResourcePlugin from 'vue-resource/src'
+
+Vue.use(VueResourcePlugin)
 
 import TogglerMixin from './mixins/toggler'
 

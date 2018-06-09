@@ -109,14 +109,14 @@ class Avatar < ApplicationRecord
 
   class << self
     def properties
-      defined_enums.map{ |name, hash| [name.in?(PLURAL_PROPERTIES.map(&:to_s)) ? name : name.singularize, hash.values] }.to_h
+      defined_enums.map{ |name, hash| [name.in?(PLURAL_PROPERTIES.map(&:to_s)) ? name : name.singularize, hash] }.to_h
     end
   end
 
   properties.each do |property, values|
     validates property, presence: true
 
-    names = values.map{ |value| [value, send(property.pluralize).to_s.gsub('_', '-')] }.to_h
+    names = values.map{ |name, value| [name, name.gsub('_', '-')] }.to_h
     define_singleton_method("#{property}_names") { names }
     define_method("#{property}_name") { names[send(property)] }
   end

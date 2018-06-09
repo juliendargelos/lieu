@@ -1,12 +1,17 @@
 .user-profil
   flex: 1
   text-align: center
+
   &__pseudo
     color: $white
     font-weight: 600
     font-size: 2em
     text-align: center
     margin-bottom: 30px
+
+    &::first-letter
+      text-transform: uppercase
+
   &__avatar
     border: 8px solid $orange
     border-radius: 50%
@@ -14,29 +19,38 @@
     height: 250px
     background: $white
     text-align: center
-    margin-bottom: 30px
+    margin: 30px auto
+
+    .avatar
+      margin-top: 10px
+
   &__content
     display: flex
     justify-content: center
     align-items: center
+
   &__library
     background: $white
     padding: 10px 10px
     border-radius: 20px
     width: 60px
     height: 60px
+
   &__details
     color: $white
+
   &__separate
     width: 5px
     height: 100px
     background: $orange
     margin: 0 20px
+
   &__detail
     font-size: 1.2em
     letter-spacing: 1px
     line-height: 30px
     text-align: left
+
     span
       font-size: 1.6em
       font-weight: 200

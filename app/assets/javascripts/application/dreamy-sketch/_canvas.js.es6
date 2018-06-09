@@ -61,13 +61,31 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
     return this.element.toBlob(callback);
   }
 
-  load(url) {
+  load(url, callback) {
     var image = new Image()
     image.onload = () => {
       this.clear()
       this.context.drawImage(image, 0, 0)
+      this.blank = false
+      if(typeof callback === 'function') callback.call(this)
     }
     image.src = url
+  }
+
+  transition(duration, callback) {
+    this.element.style.transition = (duration/1000) + 's'
+    setTimeout(() => callback.call(this), 1)
+    setTimeout(() => this.element.style.transition = null, duration + 1)
+  }
+
+  show(duration = 0) {
+    if(duration === 0) this.element.style.opacity = null
+    else this.transition(duration, () => this.element.style.opacity = null)
+  }
+
+  hide(duration = 0) {
+    if(duration === 0) this.element.style.opacity = 0
+    else this.transition(duration, () => this.element.style.opacity = 0)
   }
 
   resize() {

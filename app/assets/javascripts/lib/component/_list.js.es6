@@ -8,6 +8,14 @@ Component.List = class List extends Component {
     this.items = items;
   }
 
+  get any() {
+    return !!this.length;
+  }
+
+  get empty() {
+    return !this.any;
+  }
+
   get length() {
     return this.items.length;
   }

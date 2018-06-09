@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show
   resources :readings, only: [:show, :create, :update]
   resources :draws, only: [:show, :create]
+  resources :chapters, only: :show
 
   resources :books, only: :index
 

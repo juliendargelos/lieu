@@ -9,7 +9,10 @@
 
     <%= stylesheet_link_tag 'application', media: :all, 'data-turbolinks-track': :reload %>
     <%= javascript_include_tag 'application' %>
-    <%= javascript_pack_tag 'application' if vue? %>
+    <% if vue? %>
+      <%= vue_data %>
+      <%= javascript_pack_tag 'application' %>
+    <% end %>
   </head>
 
   <body class="view <%= view_class %>">

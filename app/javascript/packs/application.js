@@ -1,24 +1,43 @@
 import Vue from 'vue/dist/vue.esm'
 
+import TogglerMixin from './mixins/toggler'
+
+Vue.mixin(TogglerMixin)
+
 import AvatarView from './views/Avatar.vue'
 import ReadingView from './views/Reading.vue'
 
-document.addEventListener('DOMContentLoaded', () => {
-  [
-    AvatarView,
-    ReadingView
-  ].find(view => {
-    var name = view.toString().slice(0, -4)
-    var application = document.querySelector(`[data-vue="${name}"]`)
+window.addEventListener('load', () => {
+  var data = document.getElementById('vue-data')
+
+  if(data) {
+    data = JSON.parse(data.textContent)
+
+    console.log(data)
+
+    Vue.mixin({
+      data: function() {
+        return data
+      }
+    })
+  }
+
+  var views = {
+    Avatar: AvatarView,
+    Reading: ReadingView
+  }
+
+  for(var view in views) {
+    var application = document.querySelector(`[data-vue="${view}"]`)
 
     if(application) {
       return new Vue({
         el: application,
-        template: `<${name}/>`,
+        template: `<${view}/>`,
         components: {
-          [name]: view
+          [view]: views[view]
         }
       })
     }
-  })
+  }
 })

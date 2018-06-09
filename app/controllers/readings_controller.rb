@@ -8,7 +8,7 @@ class ReadingsController < ApplicationController
     @connecting = session.delete :reading_connecting
     @connecting = true # TODO: remove
 
-    @data = @book.chapters.map do |chapter|
+    @chapters = @reading.book.chapters.map do |chapter|
       {
         id: chapter.id,
         title: chapter.title,

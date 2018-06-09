@@ -49,6 +49,6 @@
     </div>
   </div>
   <div class="dashboard-index__timeline">
-    <%= render partial: "readings/timeline" %>
+    <%= render 'readings/timeline', reading: current_user.readings.current %>
   </div>
 </main>

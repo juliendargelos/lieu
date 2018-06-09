@@ -1,13 +1,7 @@
 <% if false %>
   <% unless @reading.beggined? %>
     <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
-      <div class="readings-show__book-content readings-show__book-content--<%= @book.color %>">
-        <%= image_tag @book.icon.url, class: 'readings-show__book-icon' if @book.icon.exists? %>
-        <h1 class="readings-show__book-title"><%= @book.title %></h1>
-        <h2 class="readings-show__book-author"><%= @book.author %></h2>
-        <div class="readings-show__book-separator"></div>
-        <div class="readings-show__book-number-of-chapters"><%= @book.number_of_chapters %></div>
-      </div>
+      <%= render 'readings/book_cover', book: @reading.book %>
       <span class="next-step" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></span>
     </div>
 
@@ -36,4 +30,4 @@
   <% end %>
 <% end %>
 
-<%= vue :reading, chapters: @data %>
+<%= vue :reading, chapters: @chapters %>

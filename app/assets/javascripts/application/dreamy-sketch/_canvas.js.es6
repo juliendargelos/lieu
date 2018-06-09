@@ -9,6 +9,7 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
       this.resizeTimeout = setTimeout(() => this.resize(), 200);
     }
     this.autoResize = true;
+    this.blank = true
   }
 
   get parent() {
@@ -53,10 +54,20 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
 
   clear() {
     this.context.clearRect(0, 0, this.width, this.height);
+    this.blank = true
   }
 
   blob(callback) {
     return this.element.toBlob(callback);
+  }
+
+  load(url) {
+    var image = new Image()
+    image.onload = () => {
+      this.clear()
+      this.context.drawImage(image, 0, 0)
+    }
+    image.src = url
   }
 
   resize() {
@@ -67,7 +78,7 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
       this.blob(blob => {
         this.width = this.parent.offsetWidth;
         this.height = this.parent.offsetHeight;
-        image.src = URL.createObjectURL(blob);
+        if(blob) image.src = URL.createObjectURL(blob);
       });
     }
   }

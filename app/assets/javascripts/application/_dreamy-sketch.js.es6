@@ -25,41 +25,81 @@ Application.DreamySketch = class DreamySketch extends Component {
       this.touches.updateFromTouchEvent(event)
     };
 
-
-    this.canvas.element.addEventListener('mousedown', event => {
+    this.mousedown = event => {
       updateFromMouseEvent(event);
       window.addEventListener('mousemove', updateFromMouseEvent);
       draw();
-    });
+    };
 
-    this.canvas.element.addEventListener('touchstart', event => {
+    this.mouseup = () => {
+      this.touches.clear();
+      window.removeEventListener('mousemove', updateFromMouseEvent);
+    };
+
+    this.touchstart = event => {
       updateFromTouchEvent(event);
       window.addEventListener('touchmove', updateFromTouchEvent);
       draw();
-    });
+    };
 
-    window.addEventListener('mouseup', () => {
-      this.touches.clear()
-      window.removeEventListener('mousemove', updateFromMouseEvent);
-    });
-
-    this.canvas.element.addEventListener('touchend', event => {
-      this.touches.updateFromTouchEvent(event)
+    this.touchend = event => {
+      this.touches.updateFromTouchEvent(event);
       if(!this.drawing) window.removeEventListener('touchmove', updateFromTouchEvent);
-    });
-  }
-
-  draw() {
-    this.brush.shapes(this.touches).draw(this.canvas.context);
+    };
   }
 
   get drawing() {
     return this.touches.any;
   }
 
+  get enabled() {
+    return this._enabled
+  }
+
+  set enabled(v) {
+    v = !!v
+    if(v !== this._enabled) {
+      this._enabled = v
+      var method = (v ? 'add' : 'remove') + 'EventListener'
+      this.canvas.element[method]('mousedown', this.mousedown);
+      window[method]('mouseup', this.mouseup);
+      this.canvas.element[method]('touchstart', this.touchstart);
+      this.canvas.element[method]('touchend', this.touchend);
+    }
+  }
+
+  enable() {
+    this.enabled = true
+
+    return this
+  }
+
+  disable() {
+    this.enabled = false
+
+    return this
+  }
+
+  enable() {
+    this.canvas.element.addEventListener('mousedown', this.mousedown);
+    window.addEventListener('mouseup', this.mouseup);
+    this.canvas.element.addEventListener('touchstart', this.touchstart);
+    this.canvas.element.addEventListener('touchend', this.touchend);
+  }
+
+  disable() {
+    this.canvas.element.removeEventListener('mousedown', this.mousedown);
+    window.removeEventListener('mouseup', this.mouseup);
+    this.canvas.element.removeEventListener('touchstart', this.touchstart);
+    this.canvas.element.removeEventListener('touchend', this.touchend);
+    this.touches.clear();
+  }
+
+  draw() {
+    this.brush.shapes(this.touches).draw(this.canvas);
+  }
+
   static init() {
     super.init();
-    this.singleton = new this(document.querySelector('.dreamy-sketch'));
-    return this.singleton;
   }
 }

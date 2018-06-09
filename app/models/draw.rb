@@ -24,6 +24,8 @@ class Draw < ApplicationRecord
   has_attached_file :image
   validates_attachment_content_type :image, content_type: 'image/png'
 
+  scope :for, -> (chapter) { find_by chapter: chapter }
+
   alias_method :base_image=, :image=
   def image=(v)
     if v.is_a?(String) && (result = /\Adata:image\/png;base64,(?<data>.+)/.match(v))

@@ -4,7 +4,7 @@ class DrawsController < ApplicationController
   before_action :set_reading, :set_chapter, only: :create
 
   def show
-
+    render json: { image: @draw.image.url }
   end
 
   def create

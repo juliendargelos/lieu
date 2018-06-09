@@ -7,6 +7,21 @@ class ReadingsController < ApplicationController
     @chapters = @book.chapters
     @connecting = session.delete :reading_connecting
     @connecting = true # TODO: remove
+
+    @chapters = @reading.book.chapters.map do |chapter|
+      {
+        id: chapter.id,
+        title: chapter.title,
+        content: chapter.content,
+        instruction: chapter.instruction,
+        brush: chapter.brush_class,
+        position: chapter.position,
+        draw: {
+          mine: @reading.draws.for(chapter).try(:image),
+          connected: @reading.connected? ? @reading.connected_reading.draws.for(chapter).try(:image) : nil
+        }
+      }
+    end
   end
 
   def create

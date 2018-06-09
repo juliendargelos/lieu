@@ -1,7 +1,13 @@
-<% if false %>
+<main>
   <% unless @reading.beggined? %>
     <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
-      <%= render 'readings/book_cover', book: @reading.book %>
+      <div class="readings-show__book-content readings-show__book-content--<%= @book.color %>">
+        <%= image_tag @book.icon.url, class: 'readings-show__book-icon' if @book.icon.exists? %>
+        <h1 class="readings-show__book-title"><%= @book.title %></h1>
+        <h2 class="readings-show__book-author"><%= @book.author %></h2>
+        <div class="readings-show__book-separator"></div>
+        <div class="readings-show__book-number-of-chapters"><%= @book.number_of_chapters %></div>
+      </div>
       <span class="next-step" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></span>
     </div>
 
@@ -28,26 +34,20 @@
       </script>
     <% end %>
   <% end %>
-<% end %>
 
-<<<<<<< HEAD
   <div class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__container">
+    <!-- <div class="readings-show__home">
+      <%= image_tag("home_blue.svg", :class => "readings-show__icon-home") %>
+    </div> -->
     <div class="readings-show__home">
       <%= link_to image_tag("home_blue.svg", :border => 0, :alt => '', :class => "readings-show__icon-home"), dashboard_path %>
-    </div>
-
-    <div class="readings-show__avatars">
-      <ul class="readings-show__avatars-list">
-        <li class="readings-show__avatars-item"><%= render current_user.avatar %></li>
-        <li class="readings-show__avatars-item"><%= render current_user.readings.current.connected_reading.user.avatar %></li>
-      </ul>
     </div>
 
     <div class="readings-show__sections">
       <section class="readings-show__section readings-show__draw">
 
         <div class="dreamy-sketch">
-          <div class="emojis" style="display:none">
+          <div class="emojis">
             <ul class="emojis__list">
               <% Emoji.kinds.keys.each do |kind| %>
                 <li class="emojis__item"><%= image_tag("emojis/#{kind}.svg", :class => "emojis__item-icon") %><li>
@@ -55,7 +55,7 @@
             </ul>
           </div>
           <% @chapters.each.with_index do |chapter, n| %>
-            <div class="dreamy-sketch__challenge <%= ' dreamy-sketch__challenge--current' if chapter.id == @reading.chapter.id %>">
+            <div class="dreamy-sketch__challenge <%= ' dreamy-sketch__challenge--current' if chapter.id == @reading.chapter.id %>" data-id="<%= chapter.id %>">
               <span class="dreamy-sketch__challenge-number"><%= chapter.number %></span>
               <h3 class="dreamy-sketch__instruction"><%= chapter.instruction %></h3>
             </div>
@@ -107,7 +107,13 @@
     </div>
 
     <section class="readings-show__timeline">
-      <%= render partial: "timeline" %>
+      <div class="timeline">
+        <div class="timeline__chapters">
+          <% @book.chapter_ids.each do |id| %>
+            <div class="timeline__chapter" onclick="goToChapter(<%= id %>)"></div>
+          <% end %>
+        </div>
+      </div>
     </section>
 
   </div>
@@ -120,7 +126,7 @@
     var drawSection = document.querySelector('.readings-show__draw');
     var readSection = document.querySelector('.readings-show__section--corner')
     var currentChallenge = document.querySelector('.readings-show__challenge--current');
-    if (currentChallenge.classList.contains("readings-show_no-challenge") == true ) {
+    if (currentChallenge && currentChallenge.classList.contains("readings-show_no-challenge") == true ) {
       drawSection.classList.add('readings-show__section--hidden')
       readSection.classList.add('readings-show__section--full')
     } else {
@@ -132,13 +138,13 @@
   var nextChapter = function() {
 
     var challenge = document.querySelector('.readings-show__challenge--current');
-    challenge.classList.remove('readings-show__challenge--current');
+    if(challenge) challenge.classList.remove('readings-show__challenge--current');
 
     var instruction = document.querySelector('.dreamy-sketch__challenge--current');
-    instruction.classList.remove('dreamy-sketch__challenge--current');
+    if(instruction) instruction.classList.remove('dreamy-sketch__challenge--current');
 
     var chapter = document.querySelector('.readings-show__chapter--current');
-    chapter.classList.remove('readings-show__chapter--current');
+    if(chapter) chapter.classList.remove('readings-show__chapter--current');
 
     //var nextChallenge = document.querySelector('.readings-show__challenge[data-id="' + chapter.getAttribute('data-id') + '"]')
     var nextChallenge = challenge.nextElementSibling;
@@ -170,6 +176,39 @@
   }
 
   checkChallengePresence()
+
+  var goToChapter = function(id) {
+    var challenge = document.querySelector('.readings-show__challenge--current');
+    if(challenge) challenge.classList.remove('readings-show__challenge--current');
+
+    var instruction = document.querySelector('.dreamy-sketch__challenge--current');
+    if(instruction) instruction.classList.remove('dreamy-sketch__challenge--current');
+
+    var chapter = document.querySelector('.readings-show__chapter--current');
+    if(chapter) chapter.classList.remove('readings-show__chapter--current');
+
+    var nextChapter = document.querySelector('.readings-show__chapter[data-id="' + id + '"]');
+    if(nextChapter) {
+      var nextChallenge = document.querySelector('.readings-show__challenge[data-id="' + id + '"]');
+      if(nextChallenge) {
+        var nextInstruction = document.querySelector('dreamy-sketch__challenge[data-id="' + id + '"]');
+        if(nextInstruction) nextInstruction.classList.add('dreamy-sketch__challenge--current')
+        var request = new Request(<%= chapter_path(id: ':id').to_json.html_safe %>)
+        request.url.path.id = id
+        request.send().then(response => {
+          if(response.json.image) Application.DreamySketch.singleton.canvas.load(response.json.image)
+        })
+      }
+
+      var nextInstruction = document.querySelector('.readings-show__instruction[data-id="' + id + '"]');
+      if(nextInstruction) {
+        nextInstruction.classList.add('dreamy-sketch__challenge--current');
+      }
+
+      nextChapter.classList.add('readings-show__chapter--current');
+      checkChallengePresence()
+    }
+  }
 
   var watch = function(selector, event, callback) {
     var elements = document.querySelectorAll(selector);
@@ -214,6 +253,3 @@
     }, 1000);
   });
 </script>
-=======
-<%= vue :reading, chapters: @chapters %>
->>>>>>> e067d9bf4551a56140139a69d97f1ed9056272ce

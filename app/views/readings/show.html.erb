@@ -36,11 +36,15 @@
   <% end %>
 
   <div class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__container">
-    <!-- <div class="readings-show__home">
-      <%= image_tag("home_blue.svg", :class => "readings-show__icon-home") %>
-    </div> -->
     <div class="readings-show__home">
       <%= link_to image_tag("home_blue.svg", :border => 0, :alt => '', :class => "readings-show__icon-home"), dashboard_path %>
+    </div>
+
+    <div class="readings-show__avatars">
+      <ul class="readings-show__avatars-list">
+        <li class="readings-show__avatars-item"><%= render current_user.avatar %></li>
+        <li class="readings-show__avatars-item"><%= render current_user.readings.current.connected_reading.user.avatar %></li>
+      </ul>
     </div>
 
     <div class="readings-show__sections">

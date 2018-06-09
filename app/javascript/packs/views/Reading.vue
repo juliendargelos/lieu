@@ -5,6 +5,7 @@
         <div
           v-if="visible('challenge--small')"
           class="readings-show__challenge readings-show__challenge--small"
+          :class="{'readings-show__challenge--bounce': bouncing}"
         >
           <p class="readings-show__challenge-instruction">{{chapter.instruction}}</p>
         </div>
@@ -14,18 +15,20 @@
         <div
           v-if="visible('challenge--big')"
           class="readings-show__challenge readings-show__challenge--big"
+          :class="{'readings-show__challenge--bounce': bouncing}"
         >
           <p class="readings-show__challenge-instruction">{{chapter.instruction}}</p>
           <span
             class="button button--orange"
             @click="hide('challenge--big').show('challenge--small').sketch.enable()"
+            @touchstart="hide('challenge--big').show('challenge--small').sketch.enable()"
           >
             Je suis prêt
           </span>
         </div>
       </transition>
 
-      <span v-if="false" class="button button--orange" @click="next()">TADAAAA&nbsp;!</span>
+      <span v-if="false" class="button button--orange" @click="next()" @touchstart="next()">TADAAAA&nbsp;!</span>
 
       <div class="dreamy-sketch">
         <canvas class="dreamy-sketch__canvas"></canvas>
@@ -34,12 +37,12 @@
 
     <section class="readings-show__section readings-show__chapter">
       <transition name="page" mode="out-in">
-        <div class="readings-show__chapter-page readings-show__corner" v-bind:key="chapter.id">
+        <div class="readings-show__chapter-page readings-show__corner" :key="chapter.id">
           <div class="readings-show__chapter-container">
             <div class="readings-show__chapter-title">{{chapter.title}}</div>
             <p class="readings-show__chapter-content">{{chapter.content}}</p>
           </div>
-          <p class="readings-show__chapter-next" @click="next()"></p>
+          <p class="readings-show__chapter-next" @click="next()" @touchstart="next()"></p>
         </div>
       </transition>
     </section>
@@ -54,6 +57,7 @@
     },
     data: function() {
       return {
+        bouncing: false,
         sketch: null,
         chapter: {},
       }
@@ -62,12 +66,28 @@
       setTimeout(() => this.sketch.canvas.resize(), this.chapter.instruction ? 900 : 300)
     },
     watch: {
-      chapter: function(v) {
+      chapter: function(chapter, previousChapter) {
         this.hide('challenge--big', 'challenge--small')
         this.sketch.disable()
-        setTimeout(() => this.sketch.canvas.clear(), 600)
-        if(this.chapter.brush) this.sketch.brush = new Application.DreamySketch.Brush[this.chapter.brush]()
-        if(this.chapter.instruction) this.show('challenge--big')
+
+        if(previousChapter.instruction && !this.sketch.blank) {
+          this.$http.post('/draws', {
+            authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+            draw: {
+              chapter_id: previousChapter.id,
+              reading_id: this.reading.id,
+              image: this.sketch.url
+            }
+          })
+        }
+
+        if(chapter.brush) this.sketch.brush = new Application.DreamySketch.Brush[this.chapter.brush]()
+        if(chapter.instruction) this.show('challenge--big')
+
+        setTimeout(() => {
+          this.sketch.canvas.clear()
+          if(chapter.draw.mine) this.sketch.load(chapter.draw.mine)
+        }, 600)
       }
     },
     computed: {
@@ -83,6 +103,12 @@
     methods: {
       next: function() {
         if(!this.chapter.instruction || !this.sketch.canvas.blank) this.index++
+        else this.bounce()
+      },
+
+      bounce: function() {
+        this.bouncing = true
+        setTimeout(() => { this.bouncing = false }, 400)
       }
     }
   }

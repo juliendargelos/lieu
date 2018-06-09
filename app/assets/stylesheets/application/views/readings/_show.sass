@@ -95,7 +95,7 @@
     display: block
     cursor: pointer
     position: absolute
-    transform: translate(-50%, -50%) rotate(135deg)
+    transform: translate3d(-50%, -50%, 0) rotate(135deg)
     border: 100px solid $blue
     z-index: 6
     transition: .2s
@@ -122,20 +122,26 @@
   &__challenge
     position: absolute
 
-  &__challenge--small
-    width: 100%
-    height: auto
-    text-align: center
-    top: 30px
+    &--small
+      width: 100%
+      height: auto
+      text-align: center
+      top: 30px
 
-  &__challenge--big
-    top: 50%
-    left: 50%
-    font-weight: 600
-    max-width: 300px
-    line-height: 22px
-    transform: translate(-50%, -50%)
-    text-align: center
+    &--big
+      top: 50%
+      left: 50%
+      font-weight: 600
+      max-width: 300px
+      line-height: 22px
+      transform: translate(-50%, -50%)
+      text-align: center
+
+    &--bounce
+      animation: bounce .4s
+
+    &--big#{&}--bounce
+      animation: bounce-center .4s
 
   &__challenge-instruction
     padding: 0 30px
@@ -156,6 +162,7 @@
 
     &-enter
       opacity: 0
+      transform: translateY(30px)
 
     &-leave-active
       transition: .3s
@@ -186,5 +193,12 @@
 
     &-leave-to
       .readings-show__chapter-next
-        border-width: 100vw
-        transform: translate(-50%, -50%) rotate(135deg)
+        border-width: 110vw
+
+@keyframes bounce
+  50%
+    transform: scale(1.2)
+
+@keyframes bounce-center
+  50%
+    transform: translate(-50%, -50%) scale(1.2)

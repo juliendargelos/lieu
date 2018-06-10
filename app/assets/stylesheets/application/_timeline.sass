@@ -1,5 +1,8 @@
+$timeline-cursor-background-colors: (turquoise: #a6fff8, yellow: #ffe36c, pink: #ff6cbd, purple: #b86eff, green: #8ee54a, grey: #dbdbdb)
+
 .timeline
   width: 100%
+  position: relative
 
   &__chapters
     display: flex
@@ -11,6 +14,33 @@
     width: 20px
     background: $white
     flex: 1
+    transition: .3s
+    cursor: pointer
 
     &:not(:last-of-type)
       margin-right: 5px
+
+    &--disabled
+      opacity: .5
+      cursor: default
+
+  &__cursor
+    width: 31px
+    height: 31px
+    border: 3px solid $orange
+    top: -8px
+    left: 0
+    border-radius: 31px
+    transform: translateX(-50%)
+    color: $blue
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    position: absolute
+    font:
+      size: 14px
+      weight: bold
+    transition: .2s
+
+    +modifiers(background-color, $timeline-cursor-background-colors)

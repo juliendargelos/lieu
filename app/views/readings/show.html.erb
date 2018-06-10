@@ -30,12 +30,32 @@
   <% end %>
 <% end %>
 
-<% connected_user = @reading.connected_reading&.user %>
+<%
+  connected_user = @reading.connected_reading&.user
+
+  if connected_user.present?
+    connected_user = {
+      pseudo: connected_user.pseudo,
+      initial: connected_user.initial,
+      avatar: {
+        sweater: connected_user.avatar.sweater
+      }
+    }
+  else
+    connected_user = { avatar: {} }
+  end
+%>
 
 <%= vue(:reading,
   chapters: @chapters,
-  connected_user: {
-    pseudo: connected_user&.pseudo,
-    avatar: connected_user.present? ? render(connected_user.avatar) : nil
-  }
+  chapter_id: @reading.chapter_id,
+  reading_id: @reading.id,
+  current_user: {
+    pseudo: current_user.pseudo,
+    initial: current_user.initial,
+    avatar: {
+      sweater: current_user.avatar.sweater
+    }
+  },
+  connected_user: connected_user
 ) %>

@@ -82,8 +82,22 @@
       </section>
     </div>
     <div class="readings-show__timeline timeline">
+      <div
+        :class="[
+          'timeline__cursor',
+          `timeline__cursor--${current_user.avatar.sweater}`
+        ]"
+        :style="{left: cursorPosition*100 + '%'}"
+      >
+        {{current_user.initial}}
+      </div>
       <div class="timeline__chapters">
-        <div v-for="chapter in chapters" class="timeline__chapter"></div>
+        <div
+          v-for="chapter in chapters"
+          class="timeline__chapter"
+          @click="goTo(chapter)"
+          :class="{'timeline__chapter--disabled': chapter.position > current.position}"
+        ></div>
       </div>
     </div>
   </main>
@@ -92,7 +106,8 @@
 <script>
   export default {
     mounted: function() {
-      this.index = 0
+      this.current = this.chapters.find(chapter => chapter.id == this.chapter_id)
+      this.index = this.chapters.indexOf(this.current)
       this.sketch = new Application.DreamySketch(document.querySelector('.dreamy-sketch'))
     },
     data: function() {
@@ -103,6 +118,7 @@
         lastChapterId: null,
         drawImage: null,
         chapter: {draw: {}},
+        current: {draw: {}}
       }
     },
     updated: function() {
@@ -130,7 +146,7 @@
           }
         }
 
-        setTimeout(() => this.sketch.canvas.resize(), this.chapter.instruction ? 800 : 300)
+        setTimeout(() => this.sketch.canvas.resize(), 800)
       }
     },
     watch: {
@@ -138,6 +154,17 @@
         this.hide('challenge--big', 'challenge--small')
         this.sketch.disable()
         this.showConnectedDraw = false
+
+        if(chapter.position > this.current.position) {
+          this.$http.patch('/readings/' + this.reading_id, {
+            authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+            reading: {
+              chapter_id: chapter.id
+            }
+          })
+
+          this.current = this.chapter
+        }
 
         if(previousChapter.instruction && !this.chapter.draw.mine && !this.sketch.canvas.blank) {
           this.$http.post('/draws', {
@@ -166,17 +193,34 @@
         set: function(v) {
           this.chapter = this.chapters[v%this.chapters.length]
         }
+      },
+
+      progress: function() {
+        return this.indexOf(this.chapter)/this.chapters.length
+      },
+
+      cursorPosition: function() {
+        return this.progress + 0.5/this.chapters.length
       }
     },
     methods: {
       next: function() {
-        if(!this.chapter.instruction || !this.sketch.canvas.blank) this.index++
+        if(!this.chapter.instruction || this.chapter.draw.mine || !this.sketch.canvas.blank) this.index++
         else this.bounce()
       },
 
       bounce: function() {
         this.bouncing = true
         setTimeout(() => { this.bouncing = false }, 400)
+      },
+
+      indexOf(chapter) {
+        if(typeof chapter !== 'object' || chapter === null) chapter = {id: chapter}
+        return this.chapters.findIndex(c => c.id === chapter.id)
+      },
+
+      goTo(chapter) {
+        if(chapter.position <= this.current.position) this.chapter = chapter
       }
     }
   }

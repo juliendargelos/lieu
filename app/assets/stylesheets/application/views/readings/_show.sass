@@ -200,6 +200,18 @@
       position: absolute
       transform: translateX(-50%)
 
+  &__draw-submit
+    top: 100%
+    left: 100%
+    margin:
+      top: -30px
+      left: -30px
+    position: absolute
+    transform: translate(-100%, -100%)
+
+    &--bounce
+      animation: bounce-bottom-left .4s
+
   &__challenge
     position: absolute
 
@@ -245,6 +257,13 @@
     &--hidden
       opacity: 0
       transtion: 0
+
+  .fade
+    &-enter-active, &-leave-active
+      transition: .3s
+
+    &-enter, &-leave-to
+      opacity: 0
 
   .fade-up, .fade-up-center
     &-enter-active
@@ -305,3 +324,7 @@
 @keyframes bounce-center
   50%
     transform: translate(-50%, -50%) scale(1.2)
+
+@keyframes bounce-bottom-left
+  50%
+    transform: translate(-100%, -100%) scale(1.2)

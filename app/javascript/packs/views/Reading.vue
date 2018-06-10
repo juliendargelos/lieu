@@ -6,15 +6,15 @@
           v-if="chapter.draw.connected"
           class="readings-show__section readings-show__draw readings-show__draw--connected"
           :class="{
-            'readings-show__draw--hidden': !showConnectedDraw,
-            'readings-show__section--hidden': !showConnectedDraw
+            'readings-show__draw--hidden': this.hidden('draw--connected'),
+            'readings-show__section--hidden': this.hidden('draw--connected')
           }"
           :style="{backgroundImage: 'url(' + chapter.draw.connected + ')'}"
         >
           <p class="readings-show__draw-title">
             {{reading.connected_reading.user.pseudo}} t'a dessiné sa vision&nbsp;!
           </p>
-          <div class="readings-show__draw-fold" @click="showConnectedDraw = !showConnectedDraw"></div>
+          <div class="readings-show__draw-fold" @click="toggleConnectedDraw()"></div>
         </section>
       </transition>
 
@@ -29,7 +29,7 @@
           <div
             v-if="visible('challenge--small')"
             class="readings-show__challenge readings-show__challenge--small"
-            :class="{'readings-show__challenge--bounce': bouncing}"
+            :class="{'readings-show__challenge--bounce': this.bouncing('challenge')}"
           >
             <p class="readings-show__challenge-instruction">{{chapter.instruction}}</p>
           </div>
@@ -39,7 +39,7 @@
           <div
             v-if="visible('challenge--big')"
             class="readings-show__challenge readings-show__challenge--big"
-            :class="{'readings-show__challenge--bounce': bouncing}"
+            :class="{'readings-show__challenge--bounce': this.bouncing('challenge')}"
           >
             <p class="readings-show__challenge-instruction">{{chapter.instruction}}</p>
             <span
@@ -51,7 +51,14 @@
           </div>
         </transition>
 
-        <span v-if="false" class="button button--orange" @click="next()">TADAAAA&nbsp;!</span>
+        <transition name="fade">
+          <span
+            v-if="!blank && !chapter.draw.mine"
+            class="readings-show__draw-submit button button--orange"
+            @click="submitDraw()"
+            :class="{'readings-show__draw-submit--bounce': this.bouncing('draw-submit')}"
+          >TADAAAA&nbsp;!</span>
+        </transition>
 
         <div
           class="dreamy-sketch"
@@ -65,8 +72,8 @@
       <section
         class="readings-show__section readings-show__chapter"
         :class="{
-          'readings-show__chapter--hidden': showConnectedDraw,
-          'readings-show__section--hidden': showConnectedDraw
+          'readings-show__chapter--hidden': this.visible('draw--connected'),
+          'readings-show__section--hidden': this.visible('draw--connected')
         }">
         <transition name="page" mode="out-in">
           <div class="readings-show__chapter-page readings-show__corner" :key="chapter.id">
@@ -138,8 +145,6 @@
     },
     data: function() {
       return {
-        showConnectedDraw: false,
-        bouncing: false,
         sketch: null,
         lastChapterId: null,
         drawImage: null,
@@ -177,10 +182,10 @@
       }
     },
     watch: {
-      chapter: function(chapter, previousChapter) {
+      chapter: function(chapter) {
         this.hide('challenge--big', 'challenge--small')
         this.sketch.disable()
-        this.showConnectedDraw = false
+        this.hide('draw--connected')
 
         if(chapter.position > this.current.position) {
           this.$http.patch('/readings/' + this.reading.id, {
@@ -193,19 +198,6 @@
           this.current = chapter
         }
 
-        if(previousChapter.instruction && !previousChapter.draw.mine && !this.sketch.canvas.blank) {
-          var url = this.sketch.canvas.url
-          previousChapter.draw.mine = url
-
-          this.$http.post('/draws', {
-            authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
-            draw: {
-              chapter_id: previousChapter.id,
-              image: url
-            }
-          })
-        }
-
         if(chapter.brush) this.sketch.brush = new Application.DreamySketch.Brush[chapter.brush]()
         if(chapter.instruction) this.show('challenge--big')
 
@@ -213,6 +205,9 @@
           this.sketch.canvas.clear()
           if(chapter.draw.mine) this.hide('challenge--big').show('challenge--small')
         }, 600)
+      },
+      blank: function(blank, previousBlank) {
+        if(!blank && previousBlank) setTimeout(() => this.bounce('draw-submit'), 1000)
       }
     },
     computed: {
@@ -223,6 +218,10 @@
         set: function(v) {
           this.chapter = this.reading.chapters[v%this.reading.chapters.length]
         }
+      },
+
+      blank: function() {
+        return this.sketch ? this.sketch.canvas.blank : true
       },
 
       connectedIndex: function() {
@@ -245,13 +244,17 @@
     },
     methods: {
       next: function() {
-        if(!this.chapter.instruction || this.chapter.draw.mine || !this.sketch.canvas.blank) this.index++
-        else this.bounce()
+        if(this.chapter.instruction && !this.chapter.draw.mine) this.bounce(this.blank ? 'challenge' : 'draw-submit')
+        else this.index++
       },
 
-      bounce: function() {
-        this.bouncing = true
-        setTimeout(() => { this.bouncing = false }, 400)
+      bounce: function(selector) {
+        this.hide(selector + ':bouncing')
+        setTimeout(() => { this.show(selector + ':bouncing') }, 400)
+      },
+
+      bouncing: function(selector) {
+        return this.hidden(selector + ':bouncing')
       },
 
       goTo(chapter) {
@@ -263,6 +266,30 @@
         var progress = index/length
 
         return `calc(${(progress + 0.5/length)*100}% + ${offset + 5*(progress - 0.5)}px)`
+      },
+
+      submitDraw: function() {
+        if(!this.blank) {
+          var url = this.sketch.canvas.url
+          this.chapter.draw.mine = url
+
+          this.$http.post('/draws', {
+            authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+            draw: {
+              chapter_id: this.chapter.id,
+              image: url
+            }
+          })
+
+          if(this.chapter.draw.connected) this.toggleConnectedDraw()
+          else this.next()
+        }
+        else this.bounce('challenge')
+      },
+
+      toggleConnectedDraw: function() {
+        if(this.chapter.draw.mine) this.toggle('draw--connected')
+        else this.bounce(this.blank ? 'challenge' : 'draw-submit')
       }
     }
   }

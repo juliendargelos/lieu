@@ -13,11 +13,11 @@ Application.DreamySketch.Brush.Shape = class Shape extends Component {
     canvas.changed = true
 
     canvas.context.beginPath();
-    this.path(canvas);
+    this.path(canvas.context);
     canvas.context.closePath();
 
-    if(this.stroked) this.stroke(canvas);
-    if(this.filled) this.fill(canvas);
+    if(this.stroked) this.stroke(canvas.context);
+    if(this.filled) this.fill(canvas.context);
   }
 
   path(context) {

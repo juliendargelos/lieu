@@ -2,6 +2,8 @@
   height: 100%
   overflow: hidden
   position: fixed
+  opacity: 0
+  animation: readings-show .4s .5s forwards
 
   &__first
     width: 100%
@@ -143,6 +145,14 @@
     &:hover
       border-width: 110px
 
+  &__chapter-end
+    top: 100%
+    left: 50%
+    z-index: 3
+    margin-top: -30px
+    position: absolute
+    transform: translate(-50%, -100%)
+
   &__draw
     background-color: $white
     margin-right: 10px
@@ -265,6 +275,16 @@
     &-enter, &-leave-to
       opacity: 0
 
+  .fade-delay
+    &-enter-active
+      transition: .3s 1s
+
+    &-leave-active
+      transition: .3s
+
+    &-enter, &-leave-to
+      opacity: 0
+
   .fade-up, .fade-up-center
     &-enter-active
       transition: .4s
@@ -316,6 +336,13 @@
     &-leave-to
       .readings-show__chapter-next
         border-width: 110vw
+
+@keyframes readings-show
+  from
+    opacity: 0
+
+  to
+    opacity: 1
 
 @keyframes bounce
   50%

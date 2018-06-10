@@ -17,7 +17,7 @@ class Reading < ApplicationRecord
   has_one :book, through: :chapter
   has_one :connection, -> (reading) { unscope(:where).where 'reading_id = :id or other_reading_id = :id', id: reading.id }
 
-  scope :current, -> { find_by finished: false }
+  scope :current, -> { where(finished: false).limit(1).first }
   scope :for, -> (book) { find_by chapter_id: book.chapter_ids }
 
   def beggined?
@@ -41,6 +41,7 @@ class Reading < ApplicationRecord
     {
       id: id,
       chapter_id: chapter_id,
+      finished: finished,
       user: {
         pseudo: user.pseudo,
         initial: user.initial,

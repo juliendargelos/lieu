@@ -24,11 +24,12 @@
       <% if book.published? %>
         <% book_button_class_name = "button button--#{book.white? ? :blue : :white} button--text--#{book.color}" %>
         <% if current_user.reading? book %>
-          <%= link_to 'Continuer à lire', current_user.readings.for(book), class: book_button_class_name %>
+          <% reading = current_user.reading for: book %>
+          <%= link_to reading.finished ? 'Je veux revoir ce livre' : 'Je veux continuer à lire', reading, class: book_button_class_name %>
         <% else %>
           <%= form_for :reading, url: readings_path do |f| %>
             <%= f.hidden_field :chapter_id, value: book.chapters.first.id %>
-            <%= f.submit 'Commencer', class: book_button_class_name %>
+            <%= f.submit 'Je veux lire ce livre', class: book_button_class_name %>
           <% end %>
         <% end %>
       <% else %>

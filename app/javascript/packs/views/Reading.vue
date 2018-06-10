@@ -3,7 +3,7 @@
     <div class="readings-show__container">
       <transition name="enter-right">
         <section
-          v-if="chapter.draw.connected"
+          v-if="reading.connected_reading && chapter.draw.connected"
           class="readings-show__section readings-show__draw readings-show__draw--connected"
           :class="{
             'readings-show__draw--hidden': this.hidden('draw--connected'),
@@ -63,7 +63,7 @@
         <div
           class="dreamy-sketch"
           :class="{'dreamy-sketch-hidden': hidden('dreamy-sketch')}"
-          :style="{backgroundImage: drawImage ? 'url(' + drawImage + ')' : 'none'}"
+          :style="{backgroundImage: 'url(' + (drawImage || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAEElEQVR42gEFAPr/AAAAAAAABQABepInTwAAAABJRU5ErkJggg==') + ')'}"
         >
           <canvas class="dreamy-sketch__canvas"></canvas>
         </div>
@@ -78,18 +78,29 @@
         <transition name="page" mode="out-in">
           <div class="readings-show__chapter-page readings-show__corner" :key="chapter.id">
             <div class="readings-show__chapter-wrapper">
-              <div class="readings-show__chapter-container">
+              <div
+                class="readings-show__chapter-container"
+                @scroll="updateFinished()"
+              >
                 <div class="readings-show__chapter-title">{{chapter.title}}</div>
                 <p class="readings-show__chapter-content">{{chapter.content}}</p>
               </div>
             </div>
-            <p class="readings-show__chapter-next" @click="next()"></p>
+            <div class="readings-show__chapter-next" @click="next()"></div>
+            <transition name="fade-delay">
+              <a
+                v-if="index >= reading.chapters.length - 1 && finished"
+                class="button button--orange readings-show__chapter-end"
+                href="/books"
+              >J'ai fini de lire&nbsp;!</a>
+            </transition>
           </div>
         </transition>
       </section>
     </div>
     <div class="readings-show__timeline timeline">
       <div
+        v-if="reading.connected_reading"
         :class="[
           'timeline__cursor',
           `timeline__cursor--${reading.connected_reading.user.avatar.sweater}`
@@ -139,12 +150,17 @@
   export default {
     mounted: function() {
       this.current = this.reading.chapters.find(chapter => chapter.id == this.reading.chapter_id)
-      this.connectedChapter = this.reading.chapters.find(chapter => chapter.id == this.reading.connected_reading.chapter_id)
-      this.index = this.reading.chapters.indexOf(this.current)
+
+      if(this.reading.connected_reading) {
+        this.connectedChapter = this.reading.chapters.find(chapter => chapter.id == this.reading.connected_reading.chapter_id)
+      }
+      this.index = this.reading.finished ? 0 : this.reading.chapters.indexOf(this.current)
       this.sketch = new Application.DreamySketch(document.querySelector('.dreamy-sketch'))
+      this.finished = this.reading.finished
     },
     data: function() {
       return {
+        finished: false,
         sketch: null,
         lastChapterId: null,
         drawImage: null,
@@ -186,37 +202,48 @@
         this.hide('challenge--big', 'challenge--small')
         this.sketch.disable()
         this.hide('draw--connected')
+        var finished = this.reading.chapters.indexOf(chapter) >= this.reading.chapters.length - 1 && !this.instruction
 
         if(chapter.position > this.current.position) {
           this.$http.patch('/readings/' + this.reading.id, {
-            authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+            authenticity_token: this.authenticityToken,
             reading: {
-              chapter_id: chapter.id
+              chapter_id: chapter.id,
+              finished: finished
             }
           })
 
           this.current = chapter
         }
 
-        if(chapter.brush) this.sketch.brush = new Application.DreamySketch.Brush[chapter.brush]()
-        if(chapter.instruction) this.show('challenge--big')
+        if(chapter.instruction) {
+          this.sketch.brush = new Application.DreamySketch.Brush[chapter.brush]()
+          if(chapter.draw.mine) setTimeout(() => this.show('challenge--small'), 100)
+          else this.show('challenge--big')
+        }
 
         setTimeout(() => {
           this.sketch.canvas.clear()
-          if(chapter.draw.mine) this.hide('challenge--big').show('challenge--small')
+          if(finished) this.updateFinished()
         }, 600)
       },
       blank: function(blank, previousBlank) {
+        console.log(blank, previousBlank)
+        this.updateFinished()
         if(!blank && previousBlank) setTimeout(() => this.bounce('draw-submit'), 1000)
       }
     },
     computed: {
+      authenticityToken: function() {
+        return document.querySelector('meta[name="csrf-token"]').content
+      },
+
       index: {
         get: function() {
           return this.reading.chapters.indexOf(this.chapter)
         },
         set: function(v) {
-          this.chapter = this.reading.chapters[v%this.reading.chapters.length]
+          this.chapter = this.reading.chapters[Math.max(Math.min(this.reading.chapters.length - 1, v), 0)]
         }
       },
 
@@ -268,18 +295,39 @@
         return `calc(${(progress + 0.5/length)*100}% + ${offset + 5*(progress - 0.5)}px)`
       },
 
+      updateFinished: function() {
+        var element = document.querySelector('.readings-show__chapter-container')
+
+        if(
+          !this.finished &&
+          this.reading.chapters.indexOf(this.chapter) === this.reading.chapters.length - 1 &&
+          (element.scrollHeight - element.offsetHeight <= 0 || element.scrollTop > 0) &&
+          (!this.chapter.instruction || this.chapter.draw.mine)
+        ) {
+          this.finished = true
+        }
+      },
+
       submitDraw: function() {
         if(!this.blank) {
           var url = this.sketch.canvas.url
           this.chapter.draw.mine = url
 
           this.$http.post('/draws', {
-            authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+            authenticity_token: this.authenticityToken,
             draw: {
               chapter_id: this.chapter.id,
               image: url
             }
           })
+
+          if(this.index >= this.reading.chapters.length - 1) {
+            this.finished = true
+            this.$http.patch('/readings/' + this.reading.id, {
+              authenticity_token: this.authenticityToken,
+              reading: {finished: true}
+            })
+          }
 
           if(this.chapter.draw.connected) this.toggleConnectedDraw()
           else this.next()

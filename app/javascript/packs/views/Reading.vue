@@ -75,8 +75,7 @@
             authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
             draw: {
               chapter_id: previousChapter.id,
-              reading_id: this.reading.id,
-              image: this.sketch.url
+              image: this.sketch.canvas.url
             }
           })
         }
@@ -86,8 +85,13 @@
 
         setTimeout(() => {
           this.sketch.canvas.clear()
-          if(chapter.draw.mine) this.sketch.load(chapter.draw.mine)
+          if(chapter.draw.mine) this.hide('challenge--big').show('challenge--small')
         }, 600)
+
+        if(chapter.draw.mine) setTimeout(() => {
+          this.sketch.canvas.hide()
+          this.sketch.canvas.load(chapter.draw.mine, () => this.sketch.canvas.show(300))
+        }, 1000)
       }
     },
     computed: {

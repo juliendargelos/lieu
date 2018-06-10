@@ -22,7 +22,9 @@ class Draw < ApplicationRecord
   validates :chapter_id, inclusion: { in: -> (user) { user.reading&.book&.chapter_ids || [] } }
 
   has_attached_file :image
+
   validates_attachment_content_type :image, content_type: 'image/png'
+  validate { |draw| draw.chapter.id.in? reading.book.chapter_ids }
 
   scope :for, -> (chapter) { find_by chapter: chapter }
 

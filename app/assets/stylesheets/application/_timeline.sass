@@ -38,9 +38,50 @@ $timeline-cursor-background-colors: (turquoise: #a6fff8, yellow: #ffe36c, pink: 
     justify-content: center
     align-items: center
     position: absolute
+    z-index: 2
     font:
       size: 14px
       weight: bold
     transition: .2s
 
     +modifiers(background-color, $timeline-cursor-background-colors)
+
+  &__draws
+    background: $white
+    width: calc(100% - 10px)
+    height: 21px
+    max-width: 44px
+    border: 3px solid $orange
+    border-radius: 6px
+    margin: -3px auto
+    display: flex
+    overflow: hidden
+
+    &::before
+      content: ''
+      background: $orange
+      width: 3px
+      height: 100%
+      order: 1
+      display: block
+      flex-grow: 0
+      flex-shrink: 0
+      transition: .3s
+
+    &--filled::before
+      width: 1.5px
+
+  &__draw
+    height: 100%
+    transition: .3s
+    flex-grow: 1
+    flex-shrink: 0
+
+    &:first-of-type
+      order: 0
+
+    &:last-of-type
+      order: 2
+
+    &--filled
+      background-color: $orange

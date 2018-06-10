@@ -36,4 +36,23 @@ class Reading < ApplicationRecord
   def connected_reading
     connection.other_reading_for self
   end
+
+  def as_json(options = {})
+    {
+      id: id,
+      chapter_id: chapter_id,
+      user: {
+        pseudo: user.pseudo,
+        initial: user.initial,
+        avatar: user.avatar.as_json
+      },
+    }.tap do |json|
+      if options[:recursive] != false
+        json.merge!(
+          chapters: book.chapters.as_json(reading: self),
+          connected_reading: connected_reading&.as_json(recursive: false)
+        )
+      end
+    end
+  end
 end

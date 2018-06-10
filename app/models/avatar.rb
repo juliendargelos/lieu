@@ -120,4 +120,8 @@ class Avatar < ApplicationRecord
     define_singleton_method("#{property}_names") { names }
     define_method("#{property}_name") { names[send(property)] }
   end
+
+  def as_json(options = {})
+    self.class.properties.keys.map{ |p| [p, send(p)] }.to_h
+  end
 end

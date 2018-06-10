@@ -30,4 +30,12 @@
   <% end %>
 <% end %>
 
-<%= vue :reading, chapters: @chapters, reading: { id: @reading.id } %>
+<% connected_user = @reading.connected_reading&.user %>
+
+<%= vue(:reading,
+  chapters: @chapters,
+  connected_user: {
+    pseudo: connected_user&.pseudo,
+    avatar: connected_user.present? ? render(connected_user.avatar) : nil
+  }
+) %>

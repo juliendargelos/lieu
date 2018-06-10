@@ -8,13 +8,16 @@ Application.DreamySketch.Brush.Shape = class Shape extends Component {
     this.width = 1;
   }
 
-  draw(context) {
-    context.beginPath();
-    this.path(context);
-    context.closePath();
+  draw(canvas) {
+    canvas.blank = false
+    canvas.changed = true
 
-    if(this.stroked) this.stroke(context);
-    if(this.filled) this.fill(context);
+    canvas.context.beginPath();
+    this.path(canvas.context);
+    canvas.context.closePath();
+
+    if(this.stroked) this.stroke(canvas.context);
+    if(this.filled) this.fill(canvas.context);
   }
 
   path(context) {

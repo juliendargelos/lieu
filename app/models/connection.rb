@@ -15,6 +15,9 @@ class Connection < ApplicationRecord
   has_one :book, through: :reading
 
   scope :pending, -> { where other_reading: nil }
+  default_scope { order created_at: :asc }
+  # To automatically selects the oldest pending connection
+  # when someone is looking for connection
 
   def other_reading_for(a_reading)
     [reading, other_reading].find &a_reading.method(:!=)

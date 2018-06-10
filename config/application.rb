@@ -19,7 +19,6 @@ module Lilu
 
     config.sass.preferred_syntax = :sass
     config.generators { |g| g.javascript_engine :js }
-    config.assets.js_compressor = Uglifier.new harmony: true
 
     I18n.available_locales = [:fr, :en]
     I18n.default_locale = :fr

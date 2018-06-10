@@ -1,5 +1,7 @@
 .readings-show
+  height: 100%
   overflow: hidden
+  position: fixed
 
   &__first
     width: 100%
@@ -16,17 +18,52 @@
     justify-content: center
     align-items: center
 
-  &__container
+  &__wrapper
+    height: 100%
     display: flex
+    flex-direction: column
+
+  &__container
+    height: 100%
+    display: flex
+    flex-grow: 1
+
+  &__timeline
+    margin-top: 10px
+    flex-grow: 0
+    flex-shrink: 0
 
   &__section
-    height: calc(100vh - 20px)
+    height: 100%
     flex-grow: 1
     flex-basis: 0
+
+    &::before
+      content: ''
+      background: $white
+      width: 100%
+      height: 100%
+      top: 0
+      left: 0
+      opacity: 0
+      z-index: 10
+      pointer-events: none
+      position: absolute
+      display: block
+      transition: .2s
+
+    &--hidden::before
+      opacity: 1
 
   &__chapter
     position: relative
     perspective: 5000px
+    transition: .3s
+
+    &--hidden
+      width: 0
+      flex-grow: 0
+      margin-right: -10px
 
   &__chapter-page
     background: $white
@@ -43,6 +80,7 @@
       left: 0
       pointer-events: none
       position: absolute
+      z-index: 2
       display: block
 
     &::before
@@ -60,20 +98,22 @@
       height: calc(100% - 80px)
       top: 40px
 
-  &__chapter-container
-    overflow: auto
+  &__chapter-wrapper
     width: 100%
     height: 100%
-    padding: 90px 50px
-    margin:
-      left: auto
-      right: auto
     max-width: 800px
+    margin: 0 auto
+    overflow: hidden
 
-    &::-webkit-scrollbar
-      width: 0px
-      background: transparent
-
+  &__chapter-container
+    overflow: auto
+    -webkit-overflow-scrolling: touch
+    width: calc(100% + 60px)
+    height: 100%
+    left: 50%
+    padding: 90px 110px
+    position: relative
+    transform: translateX(-50%)
 
   &__chapter-content
     font-size: 20px
@@ -97,14 +137,14 @@
     position: absolute
     transform: translate3d(-50%, -50%, 0) rotate(135deg)
     border: 100px solid $blue
-    z-index: 6
+    z-index: 11
     transition: .2s
 
     &:hover
       border-width: 110px
 
   &__draw
-    background: $white
+    background-color: $white
     margin-right: 10px
     position: relative
     transition: .3s .5s
@@ -118,6 +158,47 @@
       .dreamy-sketch
         opacity: 0
         transition: .3s
+
+    &--connected
+      background:
+        repeat: no-repeat
+        position: center center
+        size: contain
+      transition: .3s
+
+  &__draw-title
+    width: 100%
+    padding: 30px
+    color: $orange
+    font-size: 16px
+    text-align: center
+    line-height: 2em
+
+  &__draw-fold
+    background: $orange
+    width: 30px
+    height: 30px
+    top: 50%
+    left: 100%
+    z-index: 4
+    cursor: pointer
+    position: absolute
+    transform: translateY(-50%)
+    transition: .2s
+
+    &:hover
+      width: 40px
+
+    &::after
+      content: ''
+      top: 0
+      left: 100%
+      border: 15px solid transparent
+        top-color: $orange
+        bottom-color: $orange
+      display: block
+      position: absolute
+      transform: translateX(-50%)
 
   &__challenge
     position: absolute
@@ -149,12 +230,21 @@
     margin-bottom: 30px
     color: $orange
     font-size: 16px
+    line-height: 2em
 
   .dreamy-sketch
-    background: $white
+    background:
+      repeat: no-repeat
+      position: center center
+      size: contain
     width: 100%
     height: 100%
     z-index: 0
+    transition: .3s
+
+    &--hidden
+      opacity: 0
+      transtion: 0
 
   .fade-up, .fade-up-center
     &-enter-active
@@ -179,6 +269,19 @@
 
     &-leave-to
       transform: translate(-50%, calc(-50% - 30px))
+
+  .enter-right
+    &-enter-active
+      &, .readings-show__draw-fold
+        transition: .2s .5s
+
+    &-leave-active
+      &, .readings-show__draw-fold
+        transition: .2s
+
+    &-enter, &-leave-to
+      .readings-show__draw-fold
+        transform: translate(calc(-100% - 15px), -50%)
 
   .page
     &-enter-active

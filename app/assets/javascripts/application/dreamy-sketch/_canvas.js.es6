@@ -4,12 +4,12 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
 
     this.element = element;
     this.context = this.element.getContext('2d');
-    this.resizeListener = () => {
-      clearTimeout(this.resizeTimeout);
-      this.resizeTimeout = setTimeout(() => this.resize(), 200);
-    }
+    this.resizing = false;
+    this.needsAResize = false;
+    this.resizeListener = () => this.resize();
     this.autoResize = true;
-    this.blank = true
+    this.changed = false;
+    this.blank = true;
   }
 
   get parent() {
@@ -32,6 +32,10 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
     this.element.height = v;
   }
 
+  get ratio() {
+    return this.width/this.height
+  }
+
   get autoResize() {
     return this._autoResize || false;
   }
@@ -41,32 +45,55 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
 
     if(v !== this.autoResize) {
       if(v) {
-        window.addEventListener('resize', this.resizeListener);
+        window.addEventListener('resize', this.resizeListener, {passive: true});
         this.resize();
       }
-      else window.removeEventListener('resize', this.resizeListener);
+      else window.removeEventListener('resize', this.resizeListener, {passive: true});
     }
   }
 
   get url() {
-    return this.element.toDataURL();
+    if(!this._url || this.changed) {
+      this._url = this.element.toDataURL();
+      this.changed = false
+    }
+
+    return this._url
   }
 
-  clear() {
+  draw(image, changed) {
+    var ratio = image.width/image.height
+    var width, height, top, left
+
+    if(this.ratio > ratio) {
+      height = this.height
+      width = ratio*height
+      top = 0
+      left = (this.width - width)/2
+    }
+    else {
+      width = this.width
+      height = width/ratio
+      top = (this.height - height)/2
+      left = 0
+    }
+
+    this.clear(changed)
+    this.context.drawImage(image, left, top, width, height)
+    this.blank = false
+    if(changed !== false) this.changed = true
+  }
+
+  clear(changed) {
     this.context.clearRect(0, 0, this.width, this.height);
-    this.blank = true
-  }
-
-  blob(callback) {
-    return this.element.toBlob(callback);
+    if(changed !== false) this.blank = true
+    if(changed !== false) this.changed = false
   }
 
   load(url, callback) {
     var image = new Image()
     image.onload = () => {
-      this.clear()
-      this.context.drawImage(image, 0, 0)
-      this.blank = false
+      this.draw(image)
       if(typeof callback === 'function') callback.call(this)
     }
     image.src = url
@@ -90,14 +117,42 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
 
   resize() {
     if(this.parent) {
-      var image = new Image();
-      image.onload = () => this.context.drawImage(image, 0, 0);
+      if(this.resizing) {
+        this.needsAResize = true
+        return false
+      }
 
-      this.blob(blob => {
+      this.resizing = true;
+
+      if(this.url) {
+        var image = new Image();
+        image.onerror = () => {
+          this.resizing = false;
+
+          if(this.needsAResize) {
+            this.needsAResize = false
+            this.resize()
+          }
+        };
+
+        image.onload = () => {
+          if(!this.needsAResize) this.draw(image, false);
+          image.onerror()
+        };
+
         this.width = this.parent.offsetWidth;
         this.height = this.parent.offsetHeight;
-        if(blob) image.src = URL.createObjectURL(blob);
-      });
+        image.src = this.url;
+      }
+      else {
+        this.width = this.parent.offsetWidth;
+        this.height = this.parent.offsetHeight;
+        this.resizing = false;
+      }
+
+      return true
     }
+
+    return false
   }
 }

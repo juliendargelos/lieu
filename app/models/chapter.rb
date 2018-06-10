@@ -34,4 +34,26 @@ class Chapter < ActiveRecord::Base
   def brush_class
     brush.to_s.classify
   end
+
+  def as_json(options = {})
+    {
+      id: id,
+      title: title,
+      content: content,
+      instruction: instruction,
+      brush: brush_class,
+      position: position
+    }.tap do |json|
+      if options[:reading]
+        reading = options[:reading]
+        my_draw = reading.draws.for(self).try :image
+        my_draw = my_draw.url if my_draw&.exists?
+
+        connected_draw = reading.connected? ? reading.connected_reading.draws.for(self).try(:image) : nil
+        connected_draw = connected_draw.url if connected_draw&.exists?
+
+        json.merge! draw: { mine: my_draw, connected: connected_draw }
+      end
+    end
+  end
 end

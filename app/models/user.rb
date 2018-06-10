@@ -42,6 +42,10 @@ class User < ApplicationRecord
     pseudo
   end
 
+  def initial
+    pseudo[0].upcase
+  end
+
   def has_avatar?
     avatar.user_id == id
   end

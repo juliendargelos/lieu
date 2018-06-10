@@ -12,7 +12,7 @@
           :style="{backgroundImage: 'url(' + chapter.draw.connected + ')'}"
         >
           <p class="readings-show__draw-title">
-            {{connected_user.pseudo}} t'a dessiné sa vision&nbsp;!
+            {{reading.connected_reading.user.pseudo}} t'a dessiné sa vision&nbsp;!
           </p>
           <div class="readings-show__draw-fold" @click="showConnectedDraw = !showConnectedDraw"></div>
         </section>
@@ -82,8 +82,47 @@
       </section>
     </div>
     <div class="readings-show__timeline timeline">
+      <div
+        :class="[
+          'timeline__cursor',
+          `timeline__cursor--${reading.connected_reading.user.avatar.sweater}`
+        ]"
+        :style="{left: connectedCursorPosition}"
+        @click="goTo(connectedChapter)"
+      >
+        {{reading.connected_reading.user.initial}}
+      </div>
+      <div
+        :class="[
+          'timeline__cursor',
+          `timeline__cursor--${reading.user.avatar.sweater}`
+        ]"
+        :style="{left: cursorPosition}"
+      >
+        {{reading.user.initial}}
+      </div>
       <div class="timeline__chapters">
-        <div v-for="chapter in chapters" class="timeline__chapter"></div>
+        <div
+          v-for="chapter in reading.chapters"
+          class="timeline__chapter"
+          @click="goTo(chapter)"
+          :class="{'timeline__chapter--disabled': chapter.position > current.position}"
+        >
+          <div
+            v-if="chapter.instruction"
+            class="timeline__draws"
+            :class="{'timeline__draws--filled': chapter.draw.mine || chapter.draw.connected}"
+          >
+            <div
+              class="timeline__draw"
+              :class="{'timeline__draw--filled': chapter.draw.mine}"
+            ></div>
+            <div
+              class="timeline__draw"
+              :class="{'timeline__draw--filled': chapter.draw.connected}"
+            ></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -92,7 +131,9 @@
 <script>
   export default {
     mounted: function() {
-      this.index = 0
+      this.current = this.reading.chapters.find(chapter => chapter.id == this.reading.chapter_id)
+      this.connectedChapter = this.reading.chapters.find(chapter => chapter.id == this.reading.connected_reading.chapter_id)
+      this.index = this.reading.chapters.indexOf(this.current)
       this.sketch = new Application.DreamySketch(document.querySelector('.dreamy-sketch'))
     },
     data: function() {
@@ -102,7 +143,9 @@
         sketch: null,
         lastChapterId: null,
         drawImage: null,
+        connectedChapter: {draw: {}},
         chapter: {draw: {}},
+        current: {draw: {}}
       }
     },
     updated: function() {
@@ -130,7 +173,7 @@
           }
         }
 
-        setTimeout(() => this.sketch.canvas.resize(), this.chapter.instruction ? 800 : 300)
+        setTimeout(() => this.sketch.canvas.resize(), 800)
       }
     },
     watch: {
@@ -139,17 +182,31 @@
         this.sketch.disable()
         this.showConnectedDraw = false
 
-        if(previousChapter.instruction && !this.chapter.draw.mine && !this.sketch.canvas.blank) {
+        if(chapter.position > this.current.position) {
+          this.$http.patch('/readings/' + this.reading.id, {
+            authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
+            reading: {
+              chapter_id: chapter.id
+            }
+          })
+
+          this.current = chapter
+        }
+
+        if(previousChapter.instruction && !previousChapter.draw.mine && !this.sketch.canvas.blank) {
+          var url = this.sketch.canvas.url
+          previousChapter.draw.mine = url
+
           this.$http.post('/draws', {
             authenticity_token: document.querySelector('meta[name="csrf-token"]').content,
             draw: {
               chapter_id: previousChapter.id,
-              image: this.sketch.canvas.url
+              image: url
             }
           })
         }
 
-        if(chapter.brush) this.sketch.brush = new Application.DreamySketch.Brush[this.chapter.brush]()
+        if(chapter.brush) this.sketch.brush = new Application.DreamySketch.Brush[chapter.brush]()
         if(chapter.instruction) this.show('challenge--big')
 
         setTimeout(() => {
@@ -161,22 +218,51 @@
     computed: {
       index: {
         get: function() {
-          return this.chapters.indexOf(this.chapter)
+          return this.reading.chapters.indexOf(this.chapter)
         },
         set: function(v) {
-          this.chapter = this.chapters[v%this.chapters.length]
+          this.chapter = this.reading.chapters[v%this.reading.chapters.length]
         }
+      },
+
+      connectedIndex: function() {
+        return this.reading.chapters.indexOf(this.connectedChapter)
+      },
+
+      cursorPosition: function() {
+        var offset = 0
+        if(this.chapter.instruction) offset = -28
+        else if(this.chapter === this.connectedChapter) offset = -10
+        return this.cursorPositionFor(this.index, offset)
+      },
+
+      connectedCursorPosition: function() {
+        var offset = 0
+        if(this.connectedChapter.instruction) offset = 28
+        else if(this.chapter === this.connectedChapter) offset = 10
+        return this.cursorPositionFor(this.connectedIndex, offset)
       }
     },
     methods: {
       next: function() {
-        if(!this.chapter.instruction || !this.sketch.canvas.blank) this.index++
+        if(!this.chapter.instruction || this.chapter.draw.mine || !this.sketch.canvas.blank) this.index++
         else this.bounce()
       },
 
       bounce: function() {
         this.bouncing = true
         setTimeout(() => { this.bouncing = false }, 400)
+      },
+
+      goTo(chapter) {
+        if(chapter.id !== this.chapter.id && chapter.position <= this.current.position) this.chapter = chapter
+      },
+
+      cursorPositionFor: function(index, offset = 0) {
+        var length = this.reading.chapters.length
+        var progress = index/length
+
+        return `calc(${(progress + 0.5/length)*100}% + ${offset + 5*(progress - 0.5)}px)`
       }
     }
   }

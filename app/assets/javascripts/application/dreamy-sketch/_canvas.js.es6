@@ -80,16 +80,18 @@ Application.DreamySketch.Canvas = class Canvas extends Component {
 
     this.clear(changed)
     this.context.drawImage(image, left, top, width, height)
-    this.blank = false
-    if(changed !== false) this.changed = true
+    if(changed !== false) {
+      this.blank = false;
+      this.changed = true;
+    }
   }
 
   clear(changed) {
     this.context.clearRect(0, 0, this.width, this.height);
     if(changed !== false) {
-      this.blank = true
-      this.changed = false
-      this._url = null
+      this.blank = true;
+      this.changed = false;
+      this._url = null;
     }
   }
 

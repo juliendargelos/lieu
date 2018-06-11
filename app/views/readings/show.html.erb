@@ -1,20 +1,62 @@
-<% if false %>
-  <% unless @reading.beggined? %>
-    <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
-      <%= render 'readings/book_cover', book: @reading.book %>
-      <span class="next-step" onclick="this.parentNode.parentNode.removeChild(this.parentNode)"></span>
+<% unless @reading.beggined? && !@reading.finished %>
+  <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
+    <div class="readings-show__users">
+      <div class="readings-show__user">
+        <div class="readings-show__user-avatar">
+          <%= render @reading.user.avatar %>
+        </div>
+        <span class="readings-show__user-pseudo"><%= @reading.user.pseudo %></span>
+      </div>
+      <div class="readings-show__user">
+        <div class="readings-show__user-avatar<%= ' readings-show__user--empty' unless @reading.connected_reading %>">
+          <%= render @reading.connected_reading.user.avatar if @reading.connected_reading %>
+        </div>
+        <span class="readings-show__user-pseudo"><%= @reading.connected_reading.user.pseudo if @reading.connected_reading %></span>
+      </div>
+    </div>
+    <%= render 'readings/book_cover', book: @reading.book %>
+    <span class="readings-show__chapter-next"></span>
+  </div>
+
+  <script>
+    var next = document.querySelector('.readings-show__first .readings-show__chapter-next')
+
+    if(next) {
+      next.addEventListener('click', function() {
+        var cover = next.parentNode
+        next.style.transition = '.6s'
+
+        setTimeout(function() {
+          next.style.borderWidth = '100vw'
+        }, 1)
+
+        setTimeout(function() {
+          cover.style.transition = '.3s'
+          setTimeout(function() {
+            cover.style.opacity = 0
+          }, 1)
+        }, 601)
+
+        setTimeout(function() {
+          cover.parentNode.removeChild(cover)
+        }, 902)
+      })
+    }
+  </script>
+
+  <% if @connecting %>
+    <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container" id="reading-connection-<%= @reading.connection.id %>">
+      <div class="readings-show__connection container container--full-screen">
+        <%= render @reading.connection %>
+      </div>
     </div>
 
-    <% if @connecting %>
-      <div class="readings-show__first container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container" id="reading-connection-<%= @reading.connection.id %>">
-        <div class="readings-show__connection container container--full-screen">
-          <%= render @reading.connection %>
-        </div>
-      </div>
+    <script>
+      var connection = document.getElementById(<%= "reading-connection-#{@reading.connection.id}".to_json.html_safe %>);
 
-      <script>
+      if(connection) {
         setTimeout(function() {
-          var connection = document.getElementById(<%= "reading-connection-#{@reading.connection.id}".to_json.html_safe %>)
+
 
           connection.style.transition = '1s'
           setTimeout(function() {
@@ -25,8 +67,8 @@
             connection.parentNode.removeChild(connection)
           }, 1001)
         }, 7000)
-      </script>
-    <% end %>
+      }
+    </script>
   <% end %>
 <% end %>
 

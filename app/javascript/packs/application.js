@@ -16,8 +16,6 @@ window.addEventListener('load', () => {
   if(data) {
     data = JSON.parse(data.textContent)
 
-    console.log(data)
-
     Vue.mixin({
       data: function() {
         return data

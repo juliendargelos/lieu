@@ -4,13 +4,13 @@ class ReadingsController < ApplicationController
 
   def show
     @connecting = session.delete :reading_connecting
-    @connecting = true # TODO: remove
+    # @connecting = true # TODO: remove
   end
 
   def create
     @reading = Reading.new reading_params.merge!(user: current_user)
 
-    @existing_reading = current_user.readings.for @reading.book
+    @existing_reading = current_user.reading for: @reading.book
     redirect_to @existing_reading and return if @existing_reading.present?
 
     @reading.connect!
@@ -31,7 +31,7 @@ class ReadingsController < ApplicationController
   private
 
   def reading_params
-    params.require(:reading).permit :chapter_id
+    params.require(:reading).permit :chapter_id, :finished
   end
 
   def set_reading

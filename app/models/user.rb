@@ -50,8 +50,12 @@ class User < ApplicationRecord
     avatar.user_id == id
   end
 
+  def reading(options = {})
+    options[:for] ? readings.find_by(chapter_id: options[:for].chapter_ids) : readings.find_by(finished: false)
+  end
+
   def reading?(book = nil)
-    book.present? ? readings.for(book).present? : readings.current.present?
+    reading(for: book).present?
   end
 
   protected

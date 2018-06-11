@@ -10,7 +10,7 @@ class ChaptersController < ApplicationController
 
   def show
     render json: {
-      image: current_user.readings.for(@chapter.book).draws.for(@chapter).try(:image).try(:url)
+      image: current_user.reading(for: @chapter.book).draws.for(@chapter).try(:image).try(:url)
     }
   end
 

@@ -63,7 +63,7 @@
         }"
       >
         <transition name="fade-scale-emojis">
-          <div v-if="chapter.draw.mine">
+          <div :key="JSON.stringify(chapter.draw.mine)" v-if="chapter.draw.mine">
             <img
               v-for="emoji in chapter.draw.mine.emojis"
               class="readings-show__emoji readings-show__emoji--positioned"
@@ -344,8 +344,17 @@
 
       goTo(chapter) {
         if(chapter.id !== this.chapter.id && chapter.position <= this.current.position) {
-          this.chapter = chapter
-          this.updateChapter()
+          if(this.visible('draw--connected')) {
+            this.hide('draw--connected')
+            setTimeout(() => {
+              this.chapter = chapter
+              this.updateChapter()
+            }, 200)
+          }
+          else {
+            this.chapter = chapter
+            this.updateChapter()
+          }
         }
       },
 
@@ -431,18 +440,20 @@
           y: (event.detail.position.center.y - bounds.y)/bounds.height
         }
 
-        this.chapter.draw.connected.emojis.push({position: position, kind: kind})
+        if(position.x >= 0.05 && position.x <= 0.95 && position.y >= 0.05 && position.y <= 0.95) {
+          this.chapter.draw.connected.emojis.push({position: position, kind: kind})
 
-        this.$http.post('/emojis', {
-          authenticity_token: this.authenticityToken,
-          emoji: {
-            kind: kind,
-            position: position,
-            reading_id: this.reading.id,
-            subject_id: this.chapter.draw.connected.id,
-            subject_type: 'Draw'
-          }
-        })
+          this.$http.post('/emojis', {
+            authenticity_token: this.authenticityToken,
+            emoji: {
+              kind: kind,
+              position: position,
+              reading_id: this.reading.id,
+              subject_id: this.chapter.draw.connected.id,
+              subject_type: 'Draw'
+            }
+          })
+        }
       },
 
       update() {

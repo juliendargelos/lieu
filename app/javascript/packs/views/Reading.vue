@@ -431,13 +431,13 @@
       },
 
       dropEmoji: function(event) {
-        var kind = event.target.getAttribute('data-value')
         event.preventDefault()
-        var bounds = document.querySelector('.readings-show__draw--connected').getBoundingClientRect()
+        var kind = event.target.getAttribute('data-value')
+        var parent = document.querySelector('.readings-show__draw--connected')
 
         var position = {
-          x: (event.detail.position.center.x - bounds.x)/bounds.width,
-          y: (event.detail.position.center.y - bounds.y)/bounds.height
+          x: (event.detail.position.center.x - 10)/parent.offsetWidth,
+          y: (event.detail.position.center.y - 10)/parent.offsetHeight
         }
 
         if(position.x >= 0.05 && position.x <= 0.95 && position.y >= 0.05 && position.y <= 0.95) {

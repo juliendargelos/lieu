@@ -1,14 +1,16 @@
 <template>
   <main class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__wrapper">
-    <div class="readings-show__users" :class="{'readings-show__users--center': visible('draw--connected')}">
-      <transition name="fade-scale" mode="out-in">
-        <div :key="visible('draw--connected') + ''" class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
+    <transition name="fade-scale" mode="out-in">
+      <div
+        :key="visible('draw--connected') + ''"
+        class="readings-show__users"
+        :class="{'readings-show__users--center': visible('draw--connected')}"
+      >
+        <div class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
           <div class="readings-show__user-avatar" v-html="reading.user.avatar.html"></div>
           <span class="readings-show__user-pseudo">{{reading.user.pseudo}}</span>
         </div>
-      </transition>
-      <transition name="fade-scale" mode="out-in">
-        <div :key="visible('draw--connected') + ''" class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
+        <div class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
           <div
             class="readings-show__user-avatar"
             v-html="reading.connected_reading ? reading.connected_reading.user.avatar.html : ''"
@@ -16,8 +18,8 @@
           ></div>
           <span class="readings-show__user-pseudo">{{reading.connected_reading ? reading.connected_reading.user.pseudo : ''}}</span>
         </div>
-      </transition>
-    </div>
+      </div>
+    </transition>
 
     <div class="readings-show__container">
       <transition name="enter-right">
@@ -28,8 +30,24 @@
             'readings-show__draw--hidden': this.hidden('draw--connected'),
             'readings-show__section--hidden': this.hidden('draw--connected')
           }"
-          :style="{backgroundImage: 'url(' + chapter.draw.connected + ')'}"
+          :style="{backgroundImage: 'url(' + chapter.draw.connected.image + ')'}"
         >
+          <img
+            v-for="emoji in chapter.draw.connected.emojis"
+            class="readings-show__emoji readings-show__emoji--positioned"
+            :src="emojis[emoji.kind]"
+            :style="{top: emoji.position.y*100 + '%', left: emoji.position.x*100 + '%'}"
+          >
+          <div class="readings-show__emojis">
+            <img
+              v-for="(path, value) in emojis"
+              class="readings-show__emoji readings-show__emoji--rotate"
+              :src="path"
+              :data-value="value"
+              v-draggable="{placeholder: { className: 'readings-show__emoji' }}"
+              @dragend="dropEmoji($event)"
+            >
+          </div>
           <p class="readings-show__draw-title">
             {{reading.connected_reading.user.pseudo}} t'a dessiné sa vision&nbsp;!
           </p>
@@ -208,11 +226,11 @@
         if(this.chapter.instruction) {
           if(this.chapter.draw.mine) {
             var image = new Image()
-            var src = this.chapter.draw.mine
+            var src = this.chapter.draw.mine.image
             this.hide('dreamy-sketch')
 
             image.onload = () => {
-              if(this.chapter.draw.mine === src) {
+              if(this.chapter.draw.mine.image === src) {
                 this.drawImage = src
                 this.show('dreamy-sketch')
               }
@@ -351,7 +369,7 @@
       submitDraw: function() {
         if(!this.blank) {
           var url = this.sketch.canvas.url
-          this.chapter.draw.mine = url
+          this.chapter.draw.mine = {image: url, emojis: []}
 
           this.$http.post('/draws', {
             authenticity_token: this.authenticityToken,
@@ -379,6 +397,30 @@
       toggleConnectedDraw: function() {
         if(this.chapter.draw.mine) this.toggle('draw--connected')
         else this.bounce(this.blank ? 'challenge' : 'draw-submit')
+      },
+
+      dropEmoji: function(event) {
+        var kind = event.target.getAttribute('data-value')
+        event.preventDefault()
+        var bounds = document.querySelector('.readings-show__draw--connected').getBoundingClientRect()
+
+        var position = {
+          x: (event.detail.position.center.x - bounds.x)/bounds.width,
+          y: (event.detail.position.center.y - bounds.y)/bounds.height
+        }
+
+        this.chapter.draw.connected.emojis.push({position: position, kind: kind})
+
+        this.$http.post('/emojis', {
+          authenticity_token: this.authenticityToken,
+          emoji: {
+            kind: kind,
+            position: position,
+            reading_id: this.reading.id,
+            subject_id: this.chapter.draw.connected.id,
+            subject_type: 'Draw'
+          }
+        })
       }
     }
   }

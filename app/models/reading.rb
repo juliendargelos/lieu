@@ -20,6 +20,10 @@ class Reading < ApplicationRecord
   scope :current, -> { where(finished: false).limit(1).first }
   scope :for, -> (book) { find_by chapter_id: book.chapter_ids }
 
+  def draw_for(chapter)
+    draws.find_by chapter_id: chapter.id
+  end
+
   def beggined?
     !chapter.position.zero?
   end

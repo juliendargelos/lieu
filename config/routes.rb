@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :draws, only: [:show, :create]
   resources :chapters, only: :show
   resources :libraries, only: [:index]
+  resource :emojis, only: :create
 
   resources :books, only: :index
 

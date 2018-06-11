@@ -46,11 +46,9 @@ class Chapter < ActiveRecord::Base
     }.tap do |json|
       if options[:reading]
         reading = options[:reading]
-        my_draw = reading.draws.for(self).try :image
-        my_draw = my_draw.url if my_draw&.exists?
+        my_draw = reading.draw_for(self).as_json
 
-        connected_draw = reading.connected? ? reading.connected_reading.draws.for(self).try(:image) : nil
-        connected_draw = connected_draw.url if connected_draw&.exists?
+        connected_draw = reading.connected? ? reading.connected_reading.draw_for(self).as_json : nil
 
         json.merge! draw: { mine: my_draw, connected: connected_draw }
       end

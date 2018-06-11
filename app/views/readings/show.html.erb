@@ -8,7 +8,7 @@
         <span class="readings-show__user-pseudo"><%= @reading.user.pseudo %></span>
       </div>
       <div class="readings-show__user">
-        <div class="readings-show__user-avatar<%= ' readings-show__user--empty' unless @reading.connected_reading %>">
+        <div class="readings-show__user-avatar<%= ' readings-show__user-avatar--empty' unless @reading.connected_reading %>">
           <%= render @reading.connected_reading.user.avatar if @reading.connected_reading %>
         </div>
         <span class="readings-show__user-pseudo"><%= @reading.connected_reading.user.pseudo if @reading.connected_reading %></span>

@@ -62,6 +62,16 @@
           'readings-show__section--hidden': !chapter.instruction
         }"
       >
+        <transition name="fade-scale-emojis">
+          <div v-if="chapter.draw.mine">
+            <img
+              v-for="emoji in chapter.draw.mine.emojis"
+              class="readings-show__emoji readings-show__emoji--positioned"
+              :src="emojis[emoji.kind]"
+              :style="{top: emoji.position.y*100 + '%', left: emoji.position.x*100 + '%'}"
+            >
+          </div>
+        </transition>
         <transition name="fade-up">
           <div
             v-if="visible('challenge--small')"
@@ -199,17 +209,21 @@
 <script>
   export default {
     mounted: function() {
+      this.sketch = new Application.DreamySketch(document.querySelector('.dreamy-sketch'))
+
       this.current = this.reading.chapters.find(chapter => chapter.id == this.reading.chapter_id)
 
       if(this.reading.connected_reading) {
         this.connectedChapter = this.reading.chapters.find(chapter => chapter.id == this.reading.connected_reading.chapter_id)
       }
       this.index = this.reading.finished ? 0 : this.reading.chapters.indexOf(this.current)
-      this.sketch = new Application.DreamySketch(document.querySelector('.dreamy-sketch'))
       this.finished = this.reading.finished
+
+      setInterval(() => this.update(), 1000)
     },
     data: function() {
       return {
+        updating: false,
         finished: false,
         sketch: null,
         lastChapterId: null,
@@ -249,9 +263,6 @@
     },
     watch: {
       chapter: function(chapter) {
-        this.hide('challenge--big', 'challenge--small')
-        this.sketch.disable()
-        this.hide('draw--connected')
         var finished = this.reading.chapters.indexOf(chapter) >= this.reading.chapters.length - 1 && !this.instruction
 
         if(chapter.position > this.current.position) {
@@ -265,20 +276,8 @@
 
           this.current = chapter
         }
-
-        if(chapter.instruction) {
-          this.sketch.brush = new Application.DreamySketch.Brush[chapter.brush]()
-          if(chapter.draw.mine) setTimeout(() => this.show('challenge--small'), 100)
-          else this.show('challenge--big')
-        }
-
-        setTimeout(() => {
-          this.sketch.canvas.clear()
-          if(finished) this.updateFinished()
-        }, 600)
       },
       blank: function(blank, previousBlank) {
-        console.log(blank, previousBlank)
         this.updateFinished()
         if(!blank && previousBlank) setTimeout(() => this.bounce('draw-submit'), 1000)
       }
@@ -294,6 +293,7 @@
         },
         set: function(v) {
           this.chapter = this.reading.chapters[Math.max(Math.min(this.reading.chapters.length - 1, v), 0)]
+          this.updateChapter()
         }
       },
 
@@ -343,7 +343,10 @@
       },
 
       goTo(chapter) {
-        if(chapter.id !== this.chapter.id && chapter.position <= this.current.position) this.chapter = chapter
+        if(chapter.id !== this.chapter.id && chapter.position <= this.current.position) {
+          this.chapter = chapter
+          this.updateChapter()
+        }
       },
 
       cursorPositionFor: function(index, offset = 0) {
@@ -364,6 +367,25 @@
         ) {
           this.finished = true
         }
+      },
+
+      updateChapter: function() {
+        this.hide('challenge--big', 'challenge--small')
+        this.sketch.disable()
+        this.hide('draw--connected')
+
+        var finished = this.reading.chapters.indexOf(this.chapter) >= this.reading.chapters.length - 1 && !this.instruction
+
+        if(this.chapter.instruction) {
+          this.sketch.brush = new Application.DreamySketch.Brush[this.chapter.brush]()
+          if(this.chapter.draw.mine) setTimeout(() => this.show('challenge--small'), 500)
+          else this.show('challenge--big')
+        }
+
+        setTimeout(() => {
+          this.sketch.canvas.clear()
+          if(finished) this.updateFinished()
+        }, 600)
       },
 
       submitDraw: function() {
@@ -421,6 +443,35 @@
             subject_type: 'Draw'
           }
         })
+      },
+
+      update() {
+        if(!this.updating) {
+          this.updating = true
+
+          this.$http.get('/readings/' + this.reading.id + '.json').then(response => {
+            response.json().then(reading => {
+              if(this.reading.hash === reading.hash) {
+                this.updating = false
+                return
+              }
+
+              var connectedChapter, chapter, current
+
+              if(reading.connected_reading) {
+                chapter = reading.chapters.find(chapter => chapter.id == this.chapter.id)
+                current = reading.chapters.find(chapter => chapter.id == reading.chapter_id)
+                connectedChapter = reading.chapters.find(chapter => chapter.id == reading.connected_reading.chapter_id)
+              }
+
+              this.reading = reading
+              this.chapter = chapter
+              this.current = current
+              this.connectedChapter = connectedChapter
+              setTimeout(() => { this.updating = false }, 10)
+            })
+          })
+        }
       }
     }
   }

@@ -21,8 +21,8 @@ export default {
       return position
     }
 
-    var positionFromMouse = event => { return {x: event.screenX, y: event.screenY} }
-    var positionFromTouch = event => { return {x: event.changedTouches[0].screenX, y: event.changedTouches[0].screenY} }
+    var positionFromMouse = event => { return {x: event.clientX, y: event.clientY} }
+    var positionFromTouch = event => { return {x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY} }
 
     var updatePosition = position => {
       movedEl.style.left = position.x + 'px'

@@ -11,6 +11,8 @@
 #
 
 class Reading < ApplicationRecord
+  require 'digest'
+
   belongs_to :user
   belongs_to :chapter
   has_many :draws
@@ -42,7 +44,7 @@ class Reading < ApplicationRecord
   end
 
   def as_json(options = {})
-    {
+    json = {
       id: id,
       chapter_id: chapter_id,
       finished: finished,
@@ -60,5 +62,9 @@ class Reading < ApplicationRecord
         )
       end
     end
+
+    json[:hash] = Digest::MD5.hexdigest(json.to_json)
+
+    json
   end
 end

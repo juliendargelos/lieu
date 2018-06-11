@@ -1,5 +1,24 @@
 <template>
   <main class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__wrapper">
+    <div class="readings-show__users" :class="{'readings-show__users--center': visible('draw--connected')}">
+      <transition name="fade-scale" mode="out-in">
+        <div :key="visible('draw--connected') + ''" class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
+          <div class="readings-show__user-avatar" v-html="reading.user.avatar.html"></div>
+          <span class="readings-show__user-pseudo">{{reading.user.pseudo}}</span>
+        </div>
+      </transition>
+      <transition name="fade-scale" mode="out-in">
+        <div :key="visible('draw--connected') + ''" class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
+          <div
+            class="readings-show__user-avatar"
+            v-html="reading.connected_reading ? reading.connected_reading.user.avatar.html : ''"
+            :class="{'readings-show__user-avatar--empty': !reading.connected_reading}"
+          ></div>
+          <span class="readings-show__user-pseudo">{{reading.connected_reading ? reading.connected_reading.user.pseudo : ''}}</span>
+        </div>
+      </transition>
+    </div>
+
     <div class="readings-show__container">
       <transition name="enter-right">
         <section
@@ -31,6 +50,7 @@
             class="readings-show__challenge readings-show__challenge--small"
             :class="{'readings-show__challenge--bounce': this.bouncing('challenge')}"
           >
+            <p class="readings-show__challenge-position readings-show__challenge-position--small">{{challengePosition}}</p>
             <p class="readings-show__challenge-instruction">{{chapter.instruction}}</p>
           </div>
         </transition>
@@ -41,9 +61,10 @@
             class="readings-show__challenge readings-show__challenge--big"
             :class="{'readings-show__challenge--bounce': this.bouncing('challenge')}"
           >
-            <p class="readings-show__challenge-instruction">{{chapter.instruction}}</p>
+            <p class="readings-show__challenge-position">{{challengePosition}}</p>
+            <p class="readings-show__challenge-instruction readings-show__challenge-instruction--big">{{chapter.instruction}}</p>
             <span
-              class="button button--orange"
+              class="button button--orange readings-show__challenge-start"
               @click="hide('challenge--big').show('challenge--small').sketch.enable()"
             >
               Je suis prêt
@@ -77,11 +98,22 @@
         }">
         <transition name="page" mode="out-in">
           <div class="readings-show__chapter-page readings-show__corner" :key="chapter.id">
+            <img
+              class="readings-show__chapter-icon"
+              :class="[{'readings-show__chapter-icon--center': !chapter.instruction}, `readings-show__chapter-icon--${reading.book.color}`]"
+              :src="reading.book.icon"
+            >
+            <div v-if="chapter.instruction" class="readings-show__chapter-position readings-show__chapter-position--small">
+              {{(chapter.position + 1 < 10 ? '0' : '') + (chapter.position + 1)}}
+            </div>
             <div class="readings-show__chapter-wrapper">
               <div
                 class="readings-show__chapter-container"
                 @scroll="updateFinished()"
               >
+                <div v-if="!chapter.instruction" class="readings-show__chapter-position">
+                  {{(chapter.position + 1 < 10 ? '0' : '') + (chapter.position + 1)}}
+                </div>
                 <div class="readings-show__chapter-title">{{chapter.title}}</div>
                 <p class="readings-show__chapter-content">{{chapter.content}}</p>
               </div>
@@ -267,6 +299,14 @@
         if(this.connectedChapter.instruction) offset = 28
         else if(this.chapter === this.connectedChapter) offset = 10
         return this.cursorPositionFor(this.connectedIndex, offset)
+      },
+
+      challengePosition: function() {
+        var position = this.reading.chapters
+          .slice(0, this.index)
+          .reduce((position, chapter) => chapter.instruction ? position + 1 : position, 1)
+
+        return (position < 10 ? '0' : '') + position
       }
     },
     methods: {
@@ -316,6 +356,7 @@
           this.$http.post('/draws', {
             authenticity_token: this.authenticityToken,
             draw: {
+              reading_id: this.reading.id,
               chapter_id: this.chapter.id,
               image: url
             }

@@ -17,8 +17,6 @@ class DrawsController < ApplicationController
   end
 
   def draw_params
-    params.require(:draw).permit(:image, :chapter_id).tap do |draw_params|
-      draw_params.merge! reading: current_user.reading
-    end
+    params.require(:draw).permit :image, :chapter_id, :reading_id
   end
 end

@@ -39,4 +39,11 @@ class Book < ActiveRecord::Base
     draft: 0,
     published: 1
   }
+
+  def as_json(options = {})
+    {
+      icon: icon.url,
+      color: color
+    }
+  end
 end

@@ -42,6 +42,7 @@ class Reading < ApplicationRecord
       id: id,
       chapter_id: chapter_id,
       finished: finished,
+      book: book.as_json,
       user: {
         pseudo: user.pseudo,
         initial: user.initial,

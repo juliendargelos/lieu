@@ -4,7 +4,7 @@ class ReadingsController < ApplicationController
 
   def show
     @connecting = session.delete :reading_connecting
-    @connecting = true # TODO: remove
+    # @connecting = true # TODO: remove
   end
 
   def create

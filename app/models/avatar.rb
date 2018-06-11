@@ -122,6 +122,10 @@ class Avatar < ApplicationRecord
   end
 
   def as_json(options = {})
-    self.class.properties.keys.map{ |p| [p, send(p)] }.to_h
+    self.class.properties.keys.map{ |p| [p, send(p)] }.to_h.merge! html: render
+  end
+
+  def render
+    ApplicationController.render self
   end
 end

@@ -16,7 +16,7 @@
 class Draw < ApplicationRecord
   belongs_to :chapter
   belongs_to :reading
-  has_many :emojis, as: :subject
+  has_many :emojis, as: :subject, dependent: :destroy
 
   validates :chapter, presence: true
   validates :reading, presence: true

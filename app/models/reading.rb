@@ -15,9 +15,10 @@ class Reading < ApplicationRecord
 
   belongs_to :user
   belongs_to :chapter
-  has_many :draws
+  has_many :draws, dependent: :destroy
+  has_many :emojis, dependent: :destroy
   has_one :book, through: :chapter
-  has_one :connection, -> (reading) { unscope(:where).where 'reading_id = :id or other_reading_id = :id', id: reading.id }
+  has_one :connection, -> (reading) { unscope(:where).where 'reading_id = :id or other_reading_id = :id', id: reading.id }, dependent: :destroy
 
   scope :current, -> { where(finished: false).limit(1).first }
   scope :for, -> (book) { find_by chapter_id: book.chapter_ids }

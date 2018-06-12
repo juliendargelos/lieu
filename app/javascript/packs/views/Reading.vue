@@ -2,7 +2,7 @@
   <main class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__wrapper">
     <transition name="fade-scale" mode="out-in">
       <div
-        :key="visible('draw--connected') + ''"
+        :key="visible('draw--connected') + '' + !!reading.connected_reading"
         class="readings-show__users"
         :class="{'readings-show__users--center': visible('draw--connected')}"
       >
@@ -263,7 +263,7 @@
     },
     watch: {
       chapter: function(chapter) {
-        var finished = this.reading.chapters.indexOf(chapter) >= this.reading.chapters.length - 1 && !this.instruction
+        var finished = this.reading.chapters.indexOf(chapter) >= this.reading.chapters.length - 1 && !this.chapter.instruction
 
         if(chapter.position > this.current.position) {
           this.$http.patch('/readings/' + this.reading.id, {
@@ -272,7 +272,7 @@
               chapter_id: chapter.id,
               finished: finished
             }
-          })
+          }).then(() => {}, () => {})
 
           this.current = chapter
         }
@@ -330,7 +330,7 @@
     methods: {
       next: function() {
         if(this.chapter.instruction && !this.chapter.draw.mine) this.bounce(this.blank ? 'challenge' : 'draw-submit')
-        else this.index++
+        else if(this.index < this.reading.chapters.length - 1) this.index++
       },
 
       bounce: function(selector) {
@@ -366,16 +366,20 @@
       },
 
       updateFinished: function() {
-        var element = document.querySelector('.readings-show__chapter-container')
+        if(this.finished || this.index < this.reading.chapters.length - 1) return
 
-        if(
-          !this.finished &&
-          this.reading.chapters.indexOf(this.chapter) === this.reading.chapters.length - 1 &&
-          (element.scrollHeight - element.offsetHeight <= 0 || element.scrollTop > 0) &&
-          (!this.chapter.instruction || this.chapter.draw.mine)
-        ) {
-          this.finished = true
+        var element = document.querySelector('.readings-show__chapter-container')
+        var updateFinished = false
+
+        switch(!!this.chapter.instruction) {
+          case false:
+            updateFinished = element.scrollHeight - element.offsetHeight <= 0 || element.scrollTop > 0
+            break
+          case true:
+            updateFinished = this.chapter.draw.mine
         }
+
+        if(updateFinished) this.finished = true
       },
 
       updateChapter: function() {
@@ -383,7 +387,7 @@
         this.sketch.disable()
         this.hide('draw--connected')
 
-        var finished = this.reading.chapters.indexOf(this.chapter) >= this.reading.chapters.length - 1 && !this.instruction
+        var finished = this.index >= this.reading.chapters.length - 1 && !this.chapter.instruction
 
         if(this.chapter.instruction) {
           this.sketch.brush = new Application.DreamySketch.Brush[this.chapter.brush]()
@@ -409,14 +413,15 @@
               chapter_id: this.chapter.id,
               image: url
             }
-          })
+          }).then(() => {}, () => {})
 
-          if(this.index >= this.reading.chapters.length - 1) {
-            this.finished = true
+          this.updateFinished()
+
+          if(this.finished) {
             this.$http.patch('/readings/' + this.reading.id, {
               authenticity_token: this.authenticityToken,
               reading: {finished: true}
-            })
+            }).then(() => {}, () => {})
           }
 
           if(this.chapter.draw.connected) this.toggleConnectedDraw()
@@ -452,7 +457,7 @@
               subject_id: this.chapter.draw.connected.id,
               subject_type: 'Draw'
             }
-          })
+          }).then(() => {}, () => {})
         }
       },
 
@@ -480,8 +485,8 @@
               this.current = current
               this.connectedChapter = connectedChapter
               setTimeout(() => { this.updating = false }, 10)
-            })
-          })
+            }, () => {})
+          }).then(() => {}, () => {})
         }
       }
     }

@@ -16,6 +16,7 @@
 class Draw < ApplicationRecord
   belongs_to :chapter
   belongs_to :reading
+  has_many :emojis, as: :subject
 
   validates :chapter, presence: true
   validates :reading, presence: true
@@ -24,7 +25,9 @@ class Draw < ApplicationRecord
   has_attached_file :image
 
   validates_attachment_content_type :image, content_type: 'image/png'
-  validate { |draw| draw.chapter.id.in? reading.book.chapter_ids }
+  validate do |draw|
+    draw.errors.add :base, 'Invalid' unless draw.chapter.id.in? reading.book.chapter_ids
+  end
 
   scope :for, -> (chapter) { find_by chapter: chapter }
 
@@ -35,6 +38,14 @@ class Draw < ApplicationRecord
     end
 
     self.base_image = v
+  end
+
+  def as_json(options = {})
+    {
+      id: id,
+      image: image.exists? ? image.url : nil,
+      emojis: emojis.as_json
+    }
   end
 
   protected

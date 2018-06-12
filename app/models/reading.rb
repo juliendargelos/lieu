@@ -11,6 +11,8 @@
 #
 
 class Reading < ApplicationRecord
+  require 'digest'
+
   belongs_to :user
   belongs_to :chapter
   has_many :draws
@@ -19,6 +21,10 @@ class Reading < ApplicationRecord
 
   scope :current, -> { where(finished: false).limit(1).first }
   scope :for, -> (book) { find_by chapter_id: book.chapter_ids }
+
+  def draw_for(chapter)
+    draws.find_by chapter_id: chapter.id
+  end
 
   def beggined?
     !chapter.position.zero?
@@ -38,7 +44,7 @@ class Reading < ApplicationRecord
   end
 
   def as_json(options = {})
-    {
+    json = {
       id: id,
       chapter_id: chapter_id,
       finished: finished,
@@ -56,5 +62,9 @@ class Reading < ApplicationRecord
         )
       end
     end
+
+    json[:hash] = Digest::MD5.hexdigest(json.to_json)
+
+    json
   end
 end

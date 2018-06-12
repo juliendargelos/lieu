@@ -5,6 +5,11 @@ class ReadingsController < ApplicationController
   def show
     @connecting = session.delete :reading_connecting
     # @connecting = true # TODO: remove
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @reading }
+    end
   end
 
   def create

@@ -1,5 +1,5 @@
 <%= simple_form_for authentication, url: user_authentication_path  do |f| %>
-  <%= f.input :pseudo, label_html: { class: 'form__label--without-required-mark' } %>
+  <%= f.input :pseudo, label_html: { class: 'form__label--without-required-mark' }, input_html: { autocomplete: :off, autocorrect: :off, autocapitalize: :off, spellcheck: :false } %>
   <%= f.input :password, label_html: { class: 'form__label--without-required-mark' } %>
 
   <div class="form__actions form__actions--fill">

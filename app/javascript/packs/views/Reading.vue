@@ -1,14 +1,16 @@
 <template>
   <main class="container container--full-screen wrapper wrapper--small-padding wrapper--padding--both readings-show__wrapper">
-    <div class="readings-show__users" :class="{'readings-show__users--center': visible('draw--connected')}">
-      <transition name="fade-scale" mode="out-in">
-        <div :key="visible('draw--connected') + ''" class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
+    <transition name="fade-scale" mode="out-in">
+      <div
+        :key="visible('draw--connected') + ''"
+        class="readings-show__users"
+        :class="{'readings-show__users--center': visible('draw--connected')}"
+      >
+        <div class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
           <div class="readings-show__user-avatar" v-html="reading.user.avatar.html"></div>
           <span class="readings-show__user-pseudo">{{reading.user.pseudo}}</span>
         </div>
-      </transition>
-      <transition name="fade-scale" mode="out-in">
-        <div :key="visible('draw--connected') + ''" class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
+        <div class="readings-show__user" :class="{'readings-show__user--center': visible('draw--connected')}">
           <div
             class="readings-show__user-avatar"
             v-html="reading.connected_reading ? reading.connected_reading.user.avatar.html : ''"
@@ -16,8 +18,8 @@
           ></div>
           <span class="readings-show__user-pseudo">{{reading.connected_reading ? reading.connected_reading.user.pseudo : ''}}</span>
         </div>
-      </transition>
-    </div>
+      </div>
+    </transition>
 
     <div class="readings-show__container">
       <transition name="enter-right">
@@ -28,8 +30,24 @@
             'readings-show__draw--hidden': this.hidden('draw--connected'),
             'readings-show__section--hidden': this.hidden('draw--connected')
           }"
-          :style="{backgroundImage: 'url(' + chapter.draw.connected + ')'}"
+          :style="{backgroundImage: 'url(' + chapter.draw.connected.image + ')'}"
         >
+          <img
+            v-for="emoji in chapter.draw.connected.emojis"
+            class="readings-show__emoji readings-show__emoji--positioned"
+            :src="emojis[emoji.kind]"
+            :style="{top: emoji.position.y*100 + '%', left: emoji.position.x*100 + '%'}"
+          >
+          <div class="readings-show__emojis">
+            <img
+              v-for="(path, value) in emojis"
+              class="readings-show__emoji readings-show__emoji--rotate"
+              :src="path"
+              :data-value="value"
+              v-draggable="{placeholder: { className: 'readings-show__emoji' }}"
+              @dragend="dropEmoji($event)"
+            >
+          </div>
           <p class="readings-show__draw-title">
             {{reading.connected_reading.user.pseudo}} t'a dessiné sa vision&nbsp;!
           </p>
@@ -44,6 +62,16 @@
           'readings-show__section--hidden': !chapter.instruction
         }"
       >
+        <transition name="fade-scale-emojis">
+          <div :key="JSON.stringify(chapter.draw.mine)" v-if="chapter.draw.mine">
+            <img
+              v-for="emoji in chapter.draw.mine.emojis"
+              class="readings-show__emoji readings-show__emoji--positioned"
+              :src="emojis[emoji.kind]"
+              :style="{top: emoji.position.y*100 + '%', left: emoji.position.x*100 + '%'}"
+            >
+          </div>
+        </transition>
         <transition name="fade-up">
           <div
             v-if="visible('challenge--small')"
@@ -181,17 +209,21 @@
 <script>
   export default {
     mounted: function() {
+      this.sketch = new Application.DreamySketch(document.querySelector('.dreamy-sketch'))
+
       this.current = this.reading.chapters.find(chapter => chapter.id == this.reading.chapter_id)
 
       if(this.reading.connected_reading) {
         this.connectedChapter = this.reading.chapters.find(chapter => chapter.id == this.reading.connected_reading.chapter_id)
       }
       this.index = this.reading.finished ? 0 : this.reading.chapters.indexOf(this.current)
-      this.sketch = new Application.DreamySketch(document.querySelector('.dreamy-sketch'))
       this.finished = this.reading.finished
+
+      setInterval(() => this.update(), 1000)
     },
     data: function() {
       return {
+        updating: false,
         finished: false,
         sketch: null,
         lastChapterId: null,
@@ -208,11 +240,11 @@
         if(this.chapter.instruction) {
           if(this.chapter.draw.mine) {
             var image = new Image()
-            var src = this.chapter.draw.mine
+            var src = this.chapter.draw.mine.image
             this.hide('dreamy-sketch')
 
             image.onload = () => {
-              if(this.chapter.draw.mine === src) {
+              if(this.chapter.draw.mine.image === src) {
                 this.drawImage = src
                 this.show('dreamy-sketch')
               }
@@ -231,9 +263,6 @@
     },
     watch: {
       chapter: function(chapter) {
-        this.hide('challenge--big', 'challenge--small')
-        this.sketch.disable()
-        this.hide('draw--connected')
         var finished = this.reading.chapters.indexOf(chapter) >= this.reading.chapters.length - 1 && !this.instruction
 
         if(chapter.position > this.current.position) {
@@ -247,20 +276,8 @@
 
           this.current = chapter
         }
-
-        if(chapter.instruction) {
-          this.sketch.brush = new Application.DreamySketch.Brush[chapter.brush]()
-          if(chapter.draw.mine) setTimeout(() => this.show('challenge--small'), 100)
-          else this.show('challenge--big')
-        }
-
-        setTimeout(() => {
-          this.sketch.canvas.clear()
-          if(finished) this.updateFinished()
-        }, 600)
       },
       blank: function(blank, previousBlank) {
-        console.log(blank, previousBlank)
         this.updateFinished()
         if(!blank && previousBlank) setTimeout(() => this.bounce('draw-submit'), 1000)
       }
@@ -276,6 +293,7 @@
         },
         set: function(v) {
           this.chapter = this.reading.chapters[Math.max(Math.min(this.reading.chapters.length - 1, v), 0)]
+          this.updateChapter()
         }
       },
 
@@ -325,7 +343,19 @@
       },
 
       goTo(chapter) {
-        if(chapter.id !== this.chapter.id && chapter.position <= this.current.position) this.chapter = chapter
+        if(chapter.id !== this.chapter.id && chapter.position <= this.current.position) {
+          if(this.visible('draw--connected')) {
+            this.hide('draw--connected')
+            setTimeout(() => {
+              this.chapter = chapter
+              this.updateChapter()
+            }, 200)
+          }
+          else {
+            this.chapter = chapter
+            this.updateChapter()
+          }
+        }
       },
 
       cursorPositionFor: function(index, offset = 0) {
@@ -348,10 +378,29 @@
         }
       },
 
+      updateChapter: function() {
+        this.hide('challenge--big', 'challenge--small')
+        this.sketch.disable()
+        this.hide('draw--connected')
+
+        var finished = this.reading.chapters.indexOf(this.chapter) >= this.reading.chapters.length - 1 && !this.instruction
+
+        if(this.chapter.instruction) {
+          this.sketch.brush = new Application.DreamySketch.Brush[this.chapter.brush]()
+          if(this.chapter.draw.mine) setTimeout(() => this.show('challenge--small'), 500)
+          else this.show('challenge--big')
+        }
+
+        setTimeout(() => {
+          this.sketch.canvas.clear()
+          if(finished) this.updateFinished()
+        }, 600)
+      },
+
       submitDraw: function() {
         if(!this.blank) {
           var url = this.sketch.canvas.url
-          this.chapter.draw.mine = url
+          this.chapter.draw.mine = {image: url, emojis: []}
 
           this.$http.post('/draws', {
             authenticity_token: this.authenticityToken,
@@ -379,6 +428,61 @@
       toggleConnectedDraw: function() {
         if(this.chapter.draw.mine) this.toggle('draw--connected')
         else this.bounce(this.blank ? 'challenge' : 'draw-submit')
+      },
+
+      dropEmoji: function(event) {
+        event.preventDefault()
+        var kind = event.target.getAttribute('data-value')
+        var parent = document.querySelector('.readings-show__draw--connected')
+
+        var position = {
+          x: (event.detail.position.center.x - 10)/parent.offsetWidth,
+          y: (event.detail.position.center.y - 10)/parent.offsetHeight
+        }
+
+        if(position.x >= 0.05 && position.x <= 0.95 && position.y >= 0.05 && position.y <= 0.95) {
+          this.chapter.draw.connected.emojis.push({position: position, kind: kind})
+
+          this.$http.post('/emojis', {
+            authenticity_token: this.authenticityToken,
+            emoji: {
+              kind: kind,
+              position: position,
+              reading_id: this.reading.id,
+              subject_id: this.chapter.draw.connected.id,
+              subject_type: 'Draw'
+            }
+          })
+        }
+      },
+
+      update() {
+        if(!this.updating) {
+          this.updating = true
+
+          this.$http.get('/readings/' + this.reading.id + '.json').then(response => {
+            response.json().then(reading => {
+              if(this.reading.hash === reading.hash) {
+                this.updating = false
+                return
+              }
+
+              var connectedChapter, chapter, current
+
+              if(reading.connected_reading) {
+                chapter = reading.chapters.find(chapter => chapter.id == this.chapter.id)
+                current = reading.chapters.find(chapter => chapter.id == reading.chapter_id)
+                connectedChapter = reading.chapters.find(chapter => chapter.id == reading.connected_reading.chapter_id)
+              }
+
+              this.reading = reading
+              this.chapter = chapter
+              this.current = current
+              this.connectedChapter = connectedChapter
+              setTimeout(() => { this.updating = false }, 10)
+            })
+          })
+        }
       }
     }
   }

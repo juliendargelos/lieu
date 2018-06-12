@@ -76,6 +76,9 @@
     align-items: top
     justify-content: start
 
+    &--center
+      flex-direction: row-reverse
+
   &__user
     display: inline-block
     text-align: center
@@ -89,11 +92,15 @@
       margin: 0 0 0 10px
 
     &--center
+      transform: scale(.7)
+
       &:first-of-type
-        margin: 0 30px 0 auto
+        margin: 0 auto 0 30px
+        transform-origin: left top
 
       &:last-of-type
-        margin: 0 auto 0 30px
+        margin: 0 30px 0 auto
+        transform-origin: right top
 
       .readings-show__user-pseudo
         opacity: 0
@@ -339,6 +346,22 @@
         opacity: 0
         transition: .3s
 
+      .readings-show__draw-title
+        width: 0
+        font-size: 0
+        padding: 30px 0
+        opacity: 0
+
+      .readings-show__emoji
+        transfom: scale(0)
+        opacity: 0
+
+        &--rotate
+          transform: scale(0) rotate(90deg)
+
+        &--positioned
+          transform: scale(0) translate(-50%, -50%)
+
     &--connected
       background:
         repeat: no-repeat
@@ -355,6 +378,8 @@
     text-align: center
     line-height: 2em
     line-height: 1.8em
+    transition: .3s
+    overflow: hidden
 
   &__draw-fold
     background: $orange
@@ -393,6 +418,37 @@
 
     &--bounce
       animation: bounce-bottom-left .4s
+
+  &__emojis
+    max-width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    overflow: hidden
+    z-index: 3
+    position: absolute
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    justify-content: center
+
+  &__emoji
+    width: auto
+    height: calc(16% - 20px)
+    max-height: 80px
+    margin: 10px 0
+    display: block
+    flex-grow: 1
+    flex-shrink: 1
+
+    &--rotate
+      transform: rotate(90deg)
+
+    &--positioned
+      width: 5vw
+      height: 5vw
+      position: absolute
+      transform: translate(-50%, -50%)
 
   &__challenge
     width: 100%
@@ -486,21 +542,44 @@
 
   .fade, .fade-scale
     &-enter-active, &-leave-active
-      transition: .3s
+      &, > *
+        transition: .3s
 
     &-enter, &-leave-to
       opacity: 0
 
   .fade-scale
     &-enter, &-leave-to
-      transform: scale(.8)
+      > *
+        transform: scale(.5)
+
+  .fade-scale-emojis
+    &-enter-active
+      &, .readings-show__emoji
+        transition: .3s .5s
+
+    &-leave-active
+      &, .readings-show__emoji
+        transition: .3s
+
+    &-enter, &-leave-to
+      opacity: 0
+
+      .readings-show__emoji
+        &--rotate
+          transform: rotate(90deg) scale(0)
+
+        &--positionned
+          transform: translate(-50%, -50%) scale(0)
 
   .fade-delay
     &-enter-active
       transition: .3s 1s
+      transform-origin: center center
 
     &-leave-active
       transition: .3s
+      transform-origin: center center
 
     &-enter, &-leave-to
       opacity: 0

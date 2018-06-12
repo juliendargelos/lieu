@@ -27,9 +27,9 @@ class User < ApplicationRecord
 
   has_secure_password validations: false
 
-  has_many :readings
+  has_many :readings, dependent: :destroy
   has_many :draws, through: :readings
-  has_one :avatar
+  has_one :avatar, dependent: :destroy
 
   before_save :set_avatar, unless: :has_avatar?
 

@@ -126,7 +126,7 @@
               <%= render "avatars/faces/trapezium.svg", avatar: avatar %>
             </div>
         </div>
-        <div class="characteristic avatar__eyes avatar__eyes--circles-with-eyelashes" data-avatar-part="3"></div>
+        <div class="characteristic avatar__eyes avatar__eyes--almond-shapes" data-avatar-part="3"></div>
         <div class="characteristic avatar__mouth avatar__mouth--big-smile" data-avatar-part="4"></div>
         <div class="characteristic avatar__haircut-bangs avatar__haircut-bangs--" data-avatar-part="5"></div>
         <div class="characteristic avatar__accessory avatar__accessory--earings" data-avatar-part="6"></div>
@@ -193,6 +193,7 @@
         parents.classList.add('avatars-index__item--choice')
 
         var faceSection = document.querySelector('.avatars-index__faces')
+        var haircutSection = document.querySelector('.avatars-index__haircuts')
         if(faceSection.classList.contains('avatars-index__list--active')) {
           var faces = document.querySelectorAll('.characteristic__face')
           for (var y = 0; y < faces.length; y++) {
@@ -201,6 +202,30 @@
               faces[y].classList.add('characteristic__face--active')
             }
           }
+        } else if (haircutSection.classList.contains('avatars-index__list--active')) {
+          var particularPropertyHair = 'avatar__haircut-bangs'
+          var particularHair = avatar.querySelectorAll('.' + particularPropertyHair)
+          if (['big_bun', 'bob', 'cowlick', 'long_straight', 'quiff', 'straight', 'strand'].indexOf(this.value) >= 0) {
+            console.log('frange');
+            Array.prototype.slice.call(particularHair).forEach(element => {
+              element.setAttribute('class', [
+                particularPropertyHair,
+                particularPropertyHair + '--' + this.value.replace(/_/g, '-')
+              ].join(' '))
+            })
+          } else {
+            console.log('pas de frange');
+            Array.prototype.slice.call(particularHair).forEach(element => {
+              element.setAttribute('class', particularPropertyHair)
+            })
+          }
+          var propertyElementClassName = 'avatar__' + this.getAttribute('data-property')
+          Array.prototype.slice.call(avatar.querySelectorAll('.' + propertyElementClassName)).forEach(element => {
+            element.setAttribute('class', [
+              propertyElementClassName,
+              propertyElementClassName + '--' + this.value.replace(/_/g, '-')
+            ].join(' '))
+          })
         } else {
           var propertyElementClassName = 'avatar__' + this.getAttribute('data-property')
           Array.prototype.slice.call(avatar.querySelectorAll('.' + propertyElementClassName)).forEach(element => {

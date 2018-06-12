@@ -15,7 +15,7 @@
 
 class Chapter < ActiveRecord::Base
   belongs_to :book
-  has_many :readings
+  has_many :readings, dependent: :destroy
   has_many :connections, through: :readings
 
   scope :with_instruction, -> { where.not instruction: nil }

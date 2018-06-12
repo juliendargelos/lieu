@@ -26,9 +26,15 @@
         <%= image_tag("arrow.svg", :class => "popup__arrow") %>
       </div>
       <div class="popup__done popup__hidden">
-        <div class="form__actions form__actions--simple-fill">
+        <%=  simple_form_for current_user, url: user_path(explanations: true) do |f| %>
+          <%= f.hidden_field :tutorial_done, value: :on %>
+          <div class="form__actions form__actions--fill">
+            <%= f.button :submit, 'Ouiii, je veux créer mon avatar&nbsp;!'.html_safe, class: 'button--orange' %>
+          </div>
+        <% end %>
+        <!-- <div class="form__actions form__actions--simple-fill">
           <%= button_link_to 'Ouiii, je veux créer mon avatar&nbsp;!'.html_safe, avatars_path, class: 'button button--orange button--text--white' %>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

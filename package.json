@@ -4,7 +4,6 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "open-request-js": "^1.0.35",
-    "rails-erb-loader": "^5.4.2",
     "scrollsnap-polyfill": "^0.1.0",
     "simplex-noise": "^2.4.0",
     "v-runtime-template": "^1.5.1",

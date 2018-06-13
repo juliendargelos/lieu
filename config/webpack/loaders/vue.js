@@ -10,9 +10,6 @@ module.exports = {
     {
       loader: 'vue-loader',
       options: { extractCSS }
-    },
-    {
-      loader: 'rails-erb-loader'
     }
   ]
 }

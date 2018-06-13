@@ -4,7 +4,6 @@ class ReadingsController < ApplicationController
 
   def show
     @connecting = session.delete :reading_connecting
-    # @connecting = true # TODO: remove
 
     respond_to do |format|
       format.html
@@ -13,10 +12,10 @@ class ReadingsController < ApplicationController
   end
 
   def create
-    @reading = Reading.new reading_params.merge!(user: current_user)
+    @reading = Reading.new reading_params
 
-    @existing_reading = current_user.reading for: @reading.book
-    redirect_to @existing_reading and return if @existing_reading.present?
+    existing_reading = current_user.reading for: @reading.book
+    redirect_to existing_reading and return if existing_reading.present?
 
     @reading.connect!
 
@@ -24,6 +23,7 @@ class ReadingsController < ApplicationController
       session[:reading_connecting] = true
       redirect_to @reading
     else
+      error 'Impossible de commencer cette lecture...'
       redirect_to books_path
     end
   end
@@ -36,7 +36,10 @@ class ReadingsController < ApplicationController
   private
 
   def reading_params
-    params.require(:reading).permit :chapter_id, :finished
+    params
+      .require(:reading)
+      .permit(:chapter_id, :finished)
+      .merge!(user: current_user)
   end
 
   def set_reading

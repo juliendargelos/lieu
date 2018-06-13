@@ -1,20 +1,16 @@
 class ExplanationsController < ApplicationController
   authenticates! :user
-  before_action :redirect_to_books_path, if: :tutorial_done
+  skip_before_action :redirect_to_explanations_path
+  skip_before_action :redirect_to_new_avatar_path
+  before_action :redirect_to_books_path, if: :tutorial_done?
 
-  def index
+  def show
 
-  end
-
-  def tutorial_done
-    current_user.tutorial_done
   end
 
   private
 
-  def redirect_to_books_path
-    redirect_to books_path
+  def tutorial_done?
+    current_user.tutorial_done
   end
-
-
 end

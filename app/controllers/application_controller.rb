@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   authenticates(:user) { redirect_to new_user_authentication_path }
   unauthenticates(:user) { redirect_to explanations_path }
+  before_action :redirect_to_explanations_path, unless: :current_user_tutorial_done?
+  before_action :redirect_to_new_avatar_path, unless: :current_user_has_avatar?
 
   protected
 
@@ -26,5 +28,33 @@ class ApplicationController < ActionController::Base
 
   [:success, :info, :error].each do |type|
     define_method(type) { |message| notificate type, message }
+  end
+
+  def redirect_to_dashboard_path
+    redirect_to dashboard_path
+  end
+
+  def redirect_to_explanations_path
+    redirect_to explanations_path
+  end
+
+  def redirect_to_books_path
+    redirect_to books_path
+  end
+
+  def redirect_to_new_avatar_path
+    redirect_to new_avatar_path
+  end
+
+  def current_user_reading?
+    current_user.reading?
+  end
+
+  def current_user_has_avatar?
+    current_user.blank? || current_user.has_avatar?
+  end
+
+  def current_user_tutorial_done?
+    current_user.blank? || current_user.tutorial_done
   end
 end

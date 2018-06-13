@@ -1,32 +1,48 @@
 class AvatarsController < ApplicationController
   authenticates! :user
-  before_action :redirect_to_books, if: :current_user_has_avatar?
+  skip_before_action :redirect_to_new_avatar_path, only: [:new, :create]
+  before_action :redirect_to_books_path, if: :current_user_has_avatar?
+  before_action :set_avatar, only: [:edit, :update]
 
-  def index
+  def new
+    @avatar = Avatar.new
+  end
+
+  def edit
+
   end
 
   def create
-    @avatar = Avatar.new avatar_params.merge!(user: current_user)
+    @avatar = Avatar.new avatar_params
 
     if @avatar.save
+      success 'Tu as bien créé ton avatar !'
       redirect_to books_path
     else
-      redirect_to explanations_path
+      success "Ton avatar n'a pas pu êtr enregistré..."
+      render :new
     end
+  end
 
+  def update
+    if @avatar.update avatar_params
+      success 'Tu as bien édité ton avatar !'
+      redirect_to dashboard_path
+    else
+      render :edit
+    end
   end
 
   private
 
+  def set_avatar
+    @avatar = current_user.avatar
+  end
+
   def avatar_params
-    params.require(:avatar).permit :haircut, :eyes, :face, :sweater, :mouth, :skin, :accessory
-  end
-
-  def redirect_to_books
-    redirect_to books_path
-  end
-
-  def current_user_has_avatar?
-    current_user.avatar&.persisted?
+    params
+      .require(:avatar)
+      .permit(:haircut, :eyes, :face, :sweater, :mouth, :skin, :accessory)
+      .tap { |p| p.merge! user_id: current_user.id }
   end
 end

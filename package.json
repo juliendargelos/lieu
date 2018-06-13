@@ -4,8 +4,10 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "open-request-js": "^1.0.35",
+    "rails-erb-loader": "^5.4.2",
     "scrollsnap-polyfill": "^0.1.0",
     "simplex-noise": "^2.4.0",
+    "v-runtime-template": "^1.5.1",
     "vue": "^2.5.16",
     "vue-draggable": "^1.0.5",
     "vue-loader": "14.2.2",

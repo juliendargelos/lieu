@@ -12,12 +12,12 @@
 
 <div class="<%= class_name %>">
   <% if avatar.present? %>
-    <div class="avatar__haircut avatar__haircut--<%= avatar.haircut_name %>"></div>
+    <div class="avatar__haircut avatar__haircut--<%= avatar.haircut_modifier %>"></div>
     <%= render "avatars/faces/#{avatar.face || Avatar.faces.keys.first}.svg", avatar: avatar %>
-    <div class="avatar__eyes avatar__eyes--<%= avatar.eyes_name %>"></div>
-    <div class="avatar__mouth avatar__mouth--<%= avatar.mouth_name %>"></div>
-    <div class="avatar__haircut-bangs avatar__haircut-bangs--<%= avatar.haircut_name %>"></div>
-    <div class="avatar__accessory avatar__accessory--<%= avatar.accessory_name %>"></div>
+    <div class="avatar__eyes avatar__eyes--<%= avatar.eyes_modifier %>"></div>
+    <div class="avatar__mouth avatar__mouth--<%= avatar.mouth_modifier %>"></div>
+    <div class="avatar__haircut-bangs avatar__haircut-bangs--<%= avatar.haircut_modifier %>"></div>
+    <div class="avatar__accessory avatar__accessory--<%= avatar.accessory_modifier %>"></div>
   <% else %>
     Pas d'avatar
     <%= render "avatars/faces/circle.svg", avatar: avatar %>

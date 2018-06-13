@@ -1,10 +1,6 @@
 class DrawsController < ApplicationController
   authenticates! :user
-  before_action :set_draw, only: :show
-
-  def show
-    render json: { image: @draw.image.url }
-  end
+  before_action :respond_by_unprocessable_entity, unless: :current_user_reading?
 
   def create
     head Draw.create(draw_params) ? :ok : :unprocessable_entity
@@ -12,11 +8,14 @@ class DrawsController < ApplicationController
 
   protected
 
-  def set_draw
-    @draw = current_user.draws.find params[:id]
+  def draw_params
+    params
+      .require(:draw)
+      .permit(:image)
+      .tap { |p| p.merge! reading_id: current_user.reading.id, chapter_id: current_user.reading.chapter_id }
   end
 
-  def draw_params
-    params.require(:draw).permit :image, :chapter_id, :reading_id
+  def respond_by_unprocessable_entity
+    head :unprocessable_entity
   end
 end

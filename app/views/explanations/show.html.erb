@@ -1,4 +1,4 @@
-<main class="container explanations-index__container">
+<main class="container container--full-screen container--centered">
   <div class="popup">
     <div class="popup__explanations">
       <div class="popup__content popup__content--current">
@@ -29,12 +29,9 @@
         <%=  simple_form_for current_user, url: user_path(explanations: true) do |f| %>
           <%= f.hidden_field :tutorial_done, value: :on %>
           <div class="form__actions form__actions--fill">
-            <%= f.button :submit, 'Ouiii, je veux créer mon avatar&nbsp;!'.html_safe, class: 'button--orange' %>
+            <%= f.button :submit, 'Ouiii, je veux créer mon avatar !'.html_safe, class: 'button--orange' %>
           </div>
         <% end %>
-        <!-- <div class="form__actions form__actions--simple-fill">
-          <%= button_link_to 'Ouiii, je veux créer mon avatar&nbsp;!'.html_safe, avatars_path, class: 'button button--orange button--text--white' %>
-        </div> -->
       </div>
     </div>
   </div>

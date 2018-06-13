@@ -3,7 +3,7 @@
   <%= f.input :password, label_html: { class: 'form__label--without-required-mark' } %>
 
   <div class="form__actions form__actions--fill">
+    <%= button_link_to 'S\'inscrire', new_user_path, class: 'form__action button--transparent' %>
     <%= f.button :submit, 'Se connecter', class: :form__action %>
-    <%= button_link_to 'S\'inscrire', new_user_path, class: :form__action %>
   </div>
 <% end %>

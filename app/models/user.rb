@@ -31,12 +31,7 @@ class User < ApplicationRecord
   has_many :draws, through: :readings
   has_one :avatar, dependent: :destroy
 
-  before_save :set_avatar, unless: :has_avatar?
-
-  alias_method :avatar_base, :avatar
-  def avatar
-    avatar_base || (@avatar ||= Avatar.new)
-  end
+  scope :with_avatar, -> { joins :avatar }
 
   def to_s
     pseudo
@@ -47,7 +42,7 @@ class User < ApplicationRecord
   end
 
   def has_avatar?
-    avatar.user_id == id
+    avatar.present?
   end
 
   def reading(options = {})
@@ -56,11 +51,5 @@ class User < ApplicationRecord
 
   def reading?(book = nil)
     reading(for: book).present?
-  end
-
-  protected
-
-  def set_avatar
-    self.avatar = avatar if avatar.valid?
   end
 end

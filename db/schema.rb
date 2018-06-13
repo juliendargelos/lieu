@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2018_05_15_091442) do
     t.integer "sweater"
     t.integer "mouth"
     t.integer "skin"
-    t.integer "accessory"
+    t.integer "accessory", default: 0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

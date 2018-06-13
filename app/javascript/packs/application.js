@@ -7,12 +7,18 @@ Vue.use(VueResourcePlugin)
 Vue.use(VueDraggablePlugin)
 
 import TogglerMixin from './mixins/toggler'
+import AuthenticityTokenMixin from './mixins/authenticity-token'
 
 Vue.mixin(TogglerMixin)
+Vue.mixin(AuthenticityTokenMixin)
 
 import DraggableDirective from './directives/draggable'
 
 Vue.directive('draggable', DraggableDirective)
+
+import VRuntimeTemplate from 'v-runtime-template'
+
+Vue.component('v-runtime-template', VRuntimeTemplate)
 
 import AvatarView from './views/Avatar.vue'
 import ReadingView from './views/Reading.vue'

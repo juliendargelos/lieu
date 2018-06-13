@@ -1,0 +1,7 @@
+<%
+  faces = Avatar.faces.map do |face|
+
+  end
+%>
+
+<%= vue :avatar, avatar: avatar, method: avatar.persisted? ? :path : :update, properties: Avatar.properties %>

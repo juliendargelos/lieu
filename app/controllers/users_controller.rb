@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
   authenticates! :user, except: [:new, :create]
   unauthenticates! :user, only: [:new, :create]
+  skip_before_action :redirect_to_explanations_path, only: :update
+  skip_before_action :redirect_to_new_avatar_path, only: :update
   before_action :set_user, except: [:new, :create]
-
-  def show
-
-  end
 
   def new
     @user = User.new
@@ -19,9 +17,9 @@ class UsersController < ApplicationController
     @user = User.new user_params
 
     if @user.save
-      success "Bienvenue #{@user.pseudo}"
+      success "Bienvenue #{@user.pseudo} !"
       self.current_user = @user
-      redirect_to root_path
+      redirect_to explanations_path
     else
       render :new
     end
@@ -29,12 +27,18 @@ class UsersController < ApplicationController
 
   def update
     if @user.update user_params
-      success 'Les modifications ont bien été enregistrées' unless params.key? :explanations
+      redirect_to new_avatar_path and return unless @user.has_avatar?
+      success 'Les modifications ont bien été enregistrées'
+      redirect_to dashboard_path
     else
-      error "Impossible d'enregistrer les modifications"
+      if @user.tutorial_done
+        error "Impossible d'enregistrer les modifications"
+        render :edit
+      else
+        error "Impossible de passer à la suite..."
+        redirect_to explanations_path
+      end
     end
-
-    redirect_to params.key?(:explanations) ? books_path : edit_user_path
   end
 
   def destroy

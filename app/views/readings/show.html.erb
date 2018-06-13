@@ -72,4 +72,4 @@
   <% end %>
 <% end %>
 
-<%= vue :reading, reading: @reading.as_json, emojis: Emoji.kinds.keys.map { |k| [k, image_path("emojis/#{k.split('_').join '-'}.svg")] }.to_h %>
+<%= vue :reading, reading: @reading, emojis: Emoji.kinds.keys.map { |k| [k, image_path("emojis/#{k.split('_').join '-'}.svg")] }.to_h %>

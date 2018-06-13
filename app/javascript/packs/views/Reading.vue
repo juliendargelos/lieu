@@ -283,10 +283,6 @@
       }
     },
     computed: {
-      authenticityToken: function() {
-        return document.querySelector('meta[name="csrf-token"]').content
-      },
-
       index: {
         get: function() {
           return this.reading.chapters.indexOf(this.chapter)
@@ -406,7 +402,7 @@
           var url = this.sketch.canvas.url
           this.chapter.draw.mine = {image: url, emojis: []}
 
-          this.$http.post('/draws', {
+          this.$http.post('/draw', {
             authenticity_token: this.authenticityToken,
             draw: {
               reading_id: this.reading.id,
@@ -448,7 +444,7 @@
         if(position.x >= 0.05 && position.x <= 0.95 && position.y >= 0.05 && position.y <= 0.95) {
           this.chapter.draw.connected.emojis.push({position: position, kind: kind})
 
-          this.$http.post('/emojis', {
+          this.$http.post('/emoji', {
             authenticity_token: this.authenticityToken,
             emoji: {
               kind: kind,
@@ -474,16 +470,17 @@
 
               var connectedChapter, chapter, current
 
+              var chapter = reading.chapters.find(chapter => chapter.id == this.chapter.id)
+              var current = reading.chapters.find(chapter => chapter.id == reading.chapter_id)
+
               if(reading.connected_reading) {
-                chapter = reading.chapters.find(chapter => chapter.id == this.chapter.id)
-                current = reading.chapters.find(chapter => chapter.id == reading.chapter_id)
                 connectedChapter = reading.chapters.find(chapter => chapter.id == reading.connected_reading.chapter_id)
               }
 
               this.reading = reading
               this.chapter = chapter
               this.current = current
-              this.connectedChapter = connectedChapter
+              this.connectedChapter = connectedChapter || {draw: {}}
               setTimeout(() => { this.updating = false }, 10)
             }, () => {})
           }).then(() => {}, () => {})

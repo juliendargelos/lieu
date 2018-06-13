@@ -7,7 +7,7 @@ class CreateAvatars < ActiveRecord::Migration[5.2]
       t.integer :sweater
       t.integer :mouth
       t.integer :skin
-      t.integer :accessory
+      t.integer :accessory, default: 0
       t.references :user, foreign_key: true
 
       t.timestamps

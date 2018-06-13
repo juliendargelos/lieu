@@ -1,0 +1,169 @@
+.avatars-form
+  height: 100%
+  display: flex
+  flex-direction: column
+
+  &__title
+    width: 100%
+    height: 30px
+    top: 0
+    left: 0
+    margin: 45px 0 55px 0
+    text-align: center
+    color: $white
+    font-size: 30px
+    font-weight: $font-bold
+    flex-grow: 0
+    flex-shrink: 0
+    +uppercase($letter-spacing: .17em)
+    flex-grow: 0
+    flex-shrink: 0
+
+  &__nav
+    width: 100%
+    display: flex
+    flex-grow: 0
+    flex-shrink: 0
+
+  &__editor
+    display: flex
+    flex-grow: 1
+
+  &__section
+    width: 50%
+
+  &__preview
+    background: $white
+    display: flex
+    align-items: center
+    justify-content: center
+    position: relative
+
+  &__property
+    background-color: $orange
+    padding: 15px
+    display: block
+    color: $white
+    text-align: center
+    flex-basis: 0
+    flex-grow: 1
+    font-weight: bold
+
+    &:not(:first-of-type)
+      margin-left: 4px
+
+    &--selected
+      background-color: $white
+      color: $blue
+
+  &__selector-wrapper
+    width: 100%
+    height: calc(100% - 2vw)
+    box-sizing: border-box
+    padding:
+      top: 2vw
+      bottom: 2vw
+    overflow: hidden
+    position: relative
+
+    &::before
+      content: ''
+      background: linear-gradient(to top, $blue 0%, rgba($blue, 0) 100%), linear-gradient(to bottom, $blue 0%, rgba($blue, 0) 100%)
+        repeat: no-repeat
+        position: left bottom, left top
+        size: 100% 5vw
+      top: 2vw
+      left: 0
+      width: 100%
+      height: calc(100% - 2vw)
+      z-index: 2
+      pointer-events: none
+      position: absolute
+
+  &__values
+    width: calc(100% - 4vw)
+    height: calc(100% - 2vw)
+    padding: 2vw
+      right: calc(2vw + 30px)
+    box-sizing: content-box
+    overflow: scroll
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-wrap: wrap
+
+  &__value
+    background: $white
+    width: 12vw
+    height: 12vw
+    margin: 2vw
+    border-radius: 12vw
+    display: block
+    overflow: hidden
+    position: relative
+    transform: scale(.8)
+    transition: .2s
+
+    &--selected
+      border: 5px solid $orange
+      transform: scale(1)
+
+  &__skin, &__sweater
+    width: 100%
+    height: 100%
+
+  &__skin
+    +modifiers(background-color, $avatar-skins)
+
+  &__sweater
+    +modifiers(background-color, $avatar-sweaters)
+
+  &__accessory--nothing
+    &::before
+      content: ''
+      background: $orange
+      width: 3px
+      height: 150%
+      top: -25%
+      left: 50%
+      position: relative
+      display: block
+      transform: rotate(45deg) translateX(-50%)
+
+  &__avatar-preview
+    width: 25vw
+    height: 25vw
+    border: 4px solid $orange
+      radius: 25vw
+
+  &__button
+    left: 50%
+    top: 100%
+    margin-top: -40px
+    position: absolute
+    transform: translate(-50%, -100%)
+
+  .fade-scale
+    &-enter-active, &-leave-active
+      transition: .2s
+
+    &-enter, &-leave-to
+      opacity: 0
+      transform: translate(-50%, -100%) scale(.8)
+
+  .translate-up
+    &-enter-active, &-leave-active
+      transition: .2s
+
+    &-enter-active
+      position: absolute
+
+    &-enter, &-leave-to
+      opacity: 0
+
+    &-enter
+      transform: translateY(40px)
+
+    &-leave-to
+      transform: translateY(-40px)
+

@@ -96,6 +96,7 @@ $book-colors: (orange: $white, white: $dark-blue, blue: $white)
     transform: translateX(-100%)
     position: absolute
     transition: .3s
+    pointer-events: none
 
   &__avatar
     flex-grow: 0
@@ -136,3 +137,4 @@ $book-colors: (orange: $white, white: $dark-blue, blue: $white)
   &--opened &__actions
     opacity: 1
     transition: .3s .3s
+    pointer-events: auto

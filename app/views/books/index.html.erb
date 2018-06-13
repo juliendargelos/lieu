@@ -1,8 +1,10 @@
 <main class="container container--full-screen wrapper wrapper--fill-height wrapper--small-padding wrapper--padding--both books-index__container">
   <h1 class="books-index__title">Choisis ton livre</h1>
-  <ul class="books books-index__books">
-    <%= render @books, tag: :li, class_name: :books__item %>
-  </ul>
+  <div class="books-index__books">
+    <ul class="books">
+      <%= render @books, tag: :li, class_name: :books__item %>
+    </ul>
+  </div>
 </main>
 
 <script>

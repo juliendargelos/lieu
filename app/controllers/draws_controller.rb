@@ -3,7 +3,8 @@ class DrawsController < ApplicationController
   before_action :respond_by_unprocessable_entity, unless: :current_user_reading?
 
   def create
-    head Draw.create(draw_params) ? :ok : :unprocessable_entity
+    draw = Draw.new draw_params
+    head draw.save ? :ok : :unprocessable_entity
   end
 
   protected

@@ -43,6 +43,6 @@ class ReadingsController < ApplicationController
   end
 
   def set_reading
-    @reading = current_user.readings.find params[:id]
+    @reading = Reading.find params[:id]
   end
 end

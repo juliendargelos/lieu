@@ -266,7 +266,7 @@
         var finished = this.reading.chapters.indexOf(chapter) >= this.reading.chapters.length - 1 && !this.chapter.instruction
 
         if(chapter.position > this.current.position) {
-          this.$http.patch('/readings/' + this.reading.id, {
+          Request.patch('/readings/' + this.reading.id, {
             authenticity_token: this.authenticityToken,
             reading: {
               chapter_id: chapter.id,
@@ -402,7 +402,7 @@
           var url = this.sketch.canvas.url
           this.chapter.draw.mine = {image: url, emojis: []}
 
-          this.$http.post('/draw', {
+          Request.post('/draw', {
             authenticity_token: this.authenticityToken,
             draw: {
               reading_id: this.reading.id,
@@ -414,7 +414,7 @@
           this.updateFinished()
 
           if(this.finished) {
-            this.$http.patch('/readings/' + this.reading.id, {
+            Request.patch('/readings/' + this.reading.id, {
               authenticity_token: this.authenticityToken,
               reading: {finished: true}
             }).then(() => {}, () => {})
@@ -444,7 +444,7 @@
         if(position.x >= 0.05 && position.x <= 0.95 && position.y >= 0.05 && position.y <= 0.95) {
           this.chapter.draw.connected.emojis.push({position: position, kind: kind})
 
-          this.$http.post('/emoji', {
+          Request.post('/emoji', {
             authenticity_token: this.authenticityToken,
             emoji: {
               kind: kind,
@@ -461,29 +461,29 @@
         if(!this.updating) {
           this.updating = true
 
-          this.$http.get('/readings/' + this.reading.id + '.json').then(response => {
-            response.json().then(reading => {
-              if(this.reading.hash === reading.hash) {
-                this.updating = false
-                return
-              }
+          Request.get('/readings/' + this.reading.id + '.json').then(response => {
+            var reading = response.json
 
-              var connectedChapter, chapter, current
+            if(this.reading.hash === reading.hash) {
+              this.updating = false
+              return
+            }
 
-              var chapter = reading.chapters.find(chapter => chapter.id == this.chapter.id)
-              var current = reading.chapters.find(chapter => chapter.id == reading.chapter_id)
+            var connectedChapter, chapter, current
 
-              if(reading.connected_reading) {
-                connectedChapter = reading.chapters.find(chapter => chapter.id == reading.connected_reading.chapter_id)
-              }
+            var chapter = reading.chapters.find(chapter => chapter.id == this.chapter.id)
+            var current = reading.chapters.find(chapter => chapter.id == reading.chapter_id)
 
-              this.reading = reading
-              this.chapter = chapter
-              this.current = current
-              this.connectedChapter = connectedChapter || {draw: {}}
-              setTimeout(() => { this.updating = false }, 10)
-            }, () => {})
-          }).then(() => {}, () => {})
+            if(reading.connected_reading) {
+              connectedChapter = reading.chapters.find(chapter => chapter.id == reading.connected_reading.chapter_id)
+            }
+
+            this.reading = reading
+            this.chapter = chapter
+            this.current = current
+            this.connectedChapter = connectedChapter || {draw: {}}
+            setTimeout(() => { this.updating = false }, 10)
+          }, () => {})
         }
       }
     }

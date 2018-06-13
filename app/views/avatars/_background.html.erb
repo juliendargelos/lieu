@@ -1,0 +1,5 @@
+<%= cache 'avatars/background' do %>
+  <div class="avatars-background">
+    <%= render partial: '/avatars/avatar', collection: Avatar.random(100) %>
+  </div>
+<% end %>

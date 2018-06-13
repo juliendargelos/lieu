@@ -162,6 +162,14 @@ class Avatar < ApplicationRecord
         ]
       end.to_h
     end
+
+    def random(amount = nil)
+      if amount.nil?
+        new properties.transform_values{ |p| p[:values].keys.sample }
+      else
+        Array.new(amount).map &method(:random)
+      end
+    end
   end
 
   properties.each do |key, property|

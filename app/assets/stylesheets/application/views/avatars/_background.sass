@@ -1,0 +1,35 @@
+.avatars-background
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+  z-index: -1
+  position: fixed
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  align-items: center
+
+  > *
+    width: 9%
+    height: 9%
+    margin: .5%
+    opacity: .3
+    animation: avatars-background 25s infinite linear
+
+    @for $i from 1 through 100
+      &:nth-of-type(#{$i})
+        $direction: normal
+
+        @if random(2) == 1
+          $direction: reverse
+
+        animation-delay: #{-(random(100) - 1)/4}s
+        animation-direction: $direction
+
+@keyframes avatars-background
+  0%
+    transform: rotate(0)
+
+  100%
+    transform: rotate(2turn)

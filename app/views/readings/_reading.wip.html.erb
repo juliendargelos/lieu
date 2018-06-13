@@ -1,0 +1,71 @@
+<%
+  chapters_count = reading.chapters.count.to_f
+
+  cursor_position_for = proc do |index, offset = 0|
+    progress = index.to_f/chapters_count
+    "calc(#{(progress + 0.5/chapters_count)*100}% + #{offset + 5*(progress - 0.5)}px)"
+  end
+
+  if reading.connected?
+    offset = reading.connected_reading.chapter.instruction ? 28 : (reading.chapter_id == )
+    if this.connectedChapter.instruction
+      offset = 28
+    elsif this.chapter === this.connectedChapter
+      offset = 10
+    end
+    connected_cursor_position = cursor_position_for.call reading.connected.reading.chapter.position, offset
+  return this.cursorPositionFor(this.connectedIndex, offset)
+%>
+
+
+<div class="reading">
+  <div class="reading__container">
+    <div class="reading__book">
+      <%= render readingf.book %>
+    </div>
+  </div>
+  <div class="reading__timeline">
+    <div class="timeline">
+      <% if reading.connected? %>
+        <div
+          class="timeline__cursor timeline__cursor--<%= reading.connected_reading.user.avatar.sweater %>"
+          style="left: <%= %>"
+        >
+          {{reading.connected_reading.user.initial}}
+        </div>
+      <% end %>
+      <div
+        :class="[
+          'timeline__cursor',
+          `timeline__cursor--${reading.user.avatar.sweater}`
+        ]"
+        :style="{left: cursorPosition}"
+      >
+        {{reading.user.initial}}
+      </div>
+      <div class="timeline__chapters">
+        <div
+          v-for="chapter in reading.chapters"
+          class="timeline__chapter"
+          @click="goTo(chapter)"
+          :class="{'timeline__chapter--disabled': chapter.position > current.position}"
+        >
+          <div
+            v-if="chapter.instruction"
+            class="timeline__draws"
+            :class="{'timeline__draws--filled': chapter.draw.mine || chapter.draw.connected}"
+          >
+            <div
+              class="timeline__draw"
+              :class="{'timeline__draw--filled': chapter.draw.mine}"
+            ></div>
+            <div
+              class="timeline__draw"
+              :class="{'timeline__draw--filled': chapter.draw.connected}"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

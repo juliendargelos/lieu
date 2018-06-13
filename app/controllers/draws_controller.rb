@@ -12,8 +12,7 @@ class DrawsController < ApplicationController
   def draw_params
     params
       .require(:draw)
-      .permit(:image)
-      .tap { |p| p.merge! reading_id: current_user.reading.id, chapter_id: current_user.reading.chapter_id }
+      .permit(:image, :reading_id, :chapter_id)
   end
 
   def respond_by_unprocessable_entity

@@ -19,6 +19,7 @@
               v-for="(value, key) in property.values"
               :class="[
                 'avatars-form__value',
+                `avatars-form__value--${property.key}`,
                 `${avatar[property.key] === key ? 'avatars-form__value--selected' : ''}`
               ]"
               @click="avatar[property.key] = key"

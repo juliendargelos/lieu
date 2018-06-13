@@ -1,1 +1,1 @@
-<%= vue :avatar, avatar: avatar, method: avatar.persisted? ? :path : :update, properties: Avatar.properties %>
+<%= vue :avatar, avatar: avatar, method: avatar.persisted? ? :patch : :post, properties: Avatar.properties %>

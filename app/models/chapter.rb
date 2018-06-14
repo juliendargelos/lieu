@@ -15,6 +15,7 @@
 
 class Chapter < ActiveRecord::Base
   belongs_to :book
+  has_many :draws, dependent: :destroy
   has_many :readings, dependent: :destroy
   has_many :connections, through: :readings
 

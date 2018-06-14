@@ -1,6 +1,4 @@
 task reset: :environment do
-  puts 'Destroying users...'
-  User.destroy_all
 
   puts 'Destroying books...'
   Book.destroy_all
@@ -19,6 +17,11 @@ task reset: :environment do
 
     puts ''
   end
+
+  puts ''
+
+  puts 'Destroying users...'
+  User.destroy_all
 
   puts ''
 

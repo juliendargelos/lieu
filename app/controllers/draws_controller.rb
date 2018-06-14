@@ -1,6 +1,5 @@
 class DrawsController < ApplicationController
   authenticates! :user
-  before_action :respond_by_unprocessable_entity, unless: :current_user_reading?
 
   def create
     draw = Draw.new draw_params
@@ -13,9 +12,5 @@ class DrawsController < ApplicationController
     params
       .require(:draw)
       .permit(:image, :reading_id, :chapter_id)
-  end
-
-  def respond_by_unprocessable_entity
-    head :unprocessable_entity
   end
 end

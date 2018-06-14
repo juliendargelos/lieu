@@ -52,4 +52,12 @@ class User < ApplicationRecord
   def reading?(book = nil)
     reading(for: book).present?
   end
+
+  def as_json(options = {})
+    {
+      pseudo: pseudo,
+      initial: initial,
+      avatar: avatar.as_json
+    }
+  end
 end

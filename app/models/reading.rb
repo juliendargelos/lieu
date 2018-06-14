@@ -50,11 +50,7 @@ class Reading < ApplicationRecord
       chapter_id: chapter_id,
       finished: finished,
       book: book.as_json,
-      user: {
-        pseudo: user.pseudo,
-        initial: user.initial,
-        avatar: user.avatar.as_json
-      },
+      user: user.as_json,
     }.tap do |json|
       if options[:recursive] != false
         json.merge!(
@@ -64,7 +60,7 @@ class Reading < ApplicationRecord
       end
     end
 
-    json[:hash] = Digest::MD5.hexdigest(json.to_json)
+    json[:hash] = Digest::MD5.hexdigest json.to_json if options[:recursive] != false
 
     json
   end

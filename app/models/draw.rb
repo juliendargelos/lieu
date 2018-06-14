@@ -20,7 +20,6 @@ class Draw < ApplicationRecord
 
   validates :chapter, presence: true
   validates :reading, presence: true
-  validates :chapter_id, inclusion: { in: -> (user) { user.reading&.book&.chapter_ids || [] } }
 
   has_attached_file :image
 

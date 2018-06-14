@@ -7,7 +7,13 @@ class ReadingsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @reading }
+      format.json do
+        response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
+
+        render json: @reading
+      end
     end
   end
 
@@ -39,7 +45,7 @@ class ReadingsController < ApplicationController
     params
       .require(:reading)
       .permit(:chapter_id, :finished)
-      .merge!(user: current_user)
+      .tap { |p| p.merge! user: current_user if action_name == 'create' }
   end
 
   def set_reading
